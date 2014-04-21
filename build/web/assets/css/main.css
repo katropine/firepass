@@ -1,0 +1,23 @@
+body{
+    padding-top: 70px;
+}
+.master-loginform{
+    position: relative;
+    top: 100px;
+    width: 350px;
+    margin: 0 auto;
+    padding: 40px;
+    -moz-box-shadow:    0 2px 2px #ccc;
+    -webkit-box-shadow: 0 2px 2px #ccc;
+    box-shadow:         0 2px 2px #ccc;
+    background-color: #F7F7F7;
+}
+.formField{
+    padding: 5px 0;
+}
+.formField .btn{
+    width: 100%;
+}
+.frm-small{
+    height: 25px;
+}
