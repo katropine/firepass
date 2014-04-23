@@ -6,8 +6,11 @@
 
 package com.katropine.controller;
 
+import com.katropine.dao.ResourceDaoLocal;
+import com.katropine.model.Resource;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ResourceServlet", urlPatterns = {"/resource"})
 public class ResourceServlet extends CoreServlet {
-
+    @EJB
+    private ResourceDaoLocal resDao;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -36,13 +40,43 @@ public class ResourceServlet extends CoreServlet {
         super.processRequest(request, response);
         
         String action = request.getParameter("action");
-        String grpIdStr = request.getParameter("id");
-        int grpId = 0;
-        if(grpIdStr != null && !grpIdStr.equals("")){
-            grpId = Integer.parseInt(grpIdStr);
+        String resIdStr = request.getParameter("id");
+        int resId = 0;
+        if(resIdStr != null && !resIdStr.equals("")){
+            resId = Integer.parseInt(resIdStr);
         }
-        System.out.println("action: "+action+", id: "+grpId);
+        System.out.println("action: "+action+", id: "+resId);
         
+        String title = request.getParameter("title");
+        String body = request.getParameter("body");
+        
+        Resource resource = new Resource(title); 
+        
+        if("Details".equalsIgnoreCase(action)){
+            resource = resDao.getResource(resId);
+        }else if("Edit".equalsIgnoreCase(action)){
+            
+            if(resId > 0){
+                resource.setId(resId);
+                resource.setBody(body);
+                resDao.editResource(resource);
+            }else{
+                resource.setBody(body);
+                resDao.addResource(resource);
+            }
+            
+        }else if("Delete".equalsIgnoreCase(action)){
+            resDao.deleteResource(resId);
+        }
+        
+        
+        if("Details".equalsIgnoreCase(action)){
+            request.setAttribute("resource", resource);
+            request.getRequestDispatcher("resource-edit.jsp").forward(request, response);
+        }else{
+            request.setAttribute("allResources", resDao.getAllResources());
+            request.getRequestDispatcher("resource.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

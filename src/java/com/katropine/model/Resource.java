@@ -45,7 +45,11 @@ public class Resource implements Serializable{
         this.id = id;
         this.title = title;
     }
-
+    
+    public Resource(String title) {
+        this.title = title;
+    }
+    
     public Resource() {
     }
 
