@@ -12,7 +12,16 @@
                 
                     <label>Title</label>
                     <input type="text" name="title" class="form-control" value="${resource.title}">
-                </div> 
+                </div>
+                <div class="form-group">
+                    <lable>Group</lable>
+                    <select name="resource_group_id" class="form-control">
+                        <option value="">Select...</option>
+                        <c:forEach items="${allResourceGroups}" var="grp">
+                            <option value="${grp.id}">${grp.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>    
                 <div class="form-group">
                     <label>Data</label>
                     <textarea type="text" name="body" class="form-control">${resource.body}</textarea>

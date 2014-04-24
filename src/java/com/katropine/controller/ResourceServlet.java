@@ -7,7 +7,9 @@
 package com.katropine.controller;
 
 import com.katropine.dao.ResourceDaoLocal;
+import com.katropine.dao.ResourceGroupDaoLocal;
 import com.katropine.model.Resource;
+import com.katropine.model.ResourceGroup;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -20,10 +22,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kriss
  */
-@WebServlet(name = "ResourceServlet", urlPatterns = {"/resource"})
+@WebServlet(name = "ResourceServlet", urlPatterns = {"/secure/resource"})
 public class ResourceServlet extends CoreServlet {
     @EJB
     private ResourceDaoLocal resDao;
+    
+    @EJB
+    private ResourceGroupDaoLocal resGrpDao;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -45,12 +50,19 @@ public class ResourceServlet extends CoreServlet {
         if(resIdStr != null && !resIdStr.equals("")){
             resId = Integer.parseInt(resIdStr);
         }
+        String resGrpIdStr = request.getParameter("resource_group_id");
+        int resGrpId = 0;
+        if(resGrpIdStr != null && !resGrpIdStr.equals("")){
+            resGrpId = Integer.parseInt(resGrpIdStr);
+        }
+        
         System.out.println("action: "+action+", id: "+resId);
         
         String title = request.getParameter("title");
         String body = request.getParameter("body");
         
         Resource resource = new Resource(title); 
+        ResourceGroup group = resGrpDao.getResourceGroup(resGrpId);
         
         if("Details".equalsIgnoreCase(action)){
             resource = resDao.getResource(resId);
@@ -59,9 +71,11 @@ public class ResourceServlet extends CoreServlet {
             if(resId > 0){
                 resource.setId(resId);
                 resource.setBody(body);
+                resource.setGroup(group);
                 resDao.editResource(resource);
             }else{
                 resource.setBody(body);
+                resource.setGroup(group);
                 resDao.addResource(resource);
             }
             
@@ -72,6 +86,7 @@ public class ResourceServlet extends CoreServlet {
         
         if("Details".equalsIgnoreCase(action)){
             request.setAttribute("resource", resource);
+            request.setAttribute("allResourceGroups", resGrpDao.getAllResourceGroup());
             request.getRequestDispatcher("resource-edit.jsp").forward(request, response);
         }else{
             request.setAttribute("allResources", resDao.getAllResources());

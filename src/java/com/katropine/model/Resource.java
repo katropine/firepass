@@ -7,6 +7,7 @@
 package com.katropine.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -37,6 +40,10 @@ public class Resource implements Serializable{
     
     @Column
     private String body = "";
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date created = new Date();
     
     @ManyToOne
     private ResourceGroup group = new ResourceGroup();
@@ -83,6 +90,14 @@ public class Resource implements Serializable{
 
     public void setGroup(ResourceGroup group) {
         this.group = group;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
     
     

@@ -6,6 +6,9 @@
     <jsp:body>
         <h1>Resources:</h1>
         <div class="section">
+            <a href="${pageContext.request.contextPath}/secure/resource?id=0&action=details" class="btn btn-primary">Add new</a>
+        </div>
+        <div class="section">
             <table class="table table-hover table-striped">
                 <tr>
                     <th>Id</th>

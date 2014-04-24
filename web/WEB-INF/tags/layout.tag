@@ -27,6 +27,7 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="">Dashboard</a></li>
                         <li><a href="${pageContext.request.contextPath}/secure/user">User</a></li>
+                        <li><a href="${pageContext.request.contextPath}/secure/resource">Resource</a></li>
                         <li><a href="${pageContext.request.contextPath}/secure/resourcegroup">Resource Groups</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
