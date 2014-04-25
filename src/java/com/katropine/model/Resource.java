@@ -6,22 +6,30 @@
 
 package com.katropine.model;
 
+import com.katropine.controller.ResourceServlet;
+import com.katropine.libs.SymmetricEncryption;
 import java.io.Serializable;
-import java.sql.Blob;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
-import javax.persistence.CascadeType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
 
 /**
  *
@@ -45,10 +53,6 @@ public class Resource implements Serializable{
     
     @Column(name="body_iv", length=100000)
     private byte[] bodyIv;
-    
-    // just for presentation
-    @Transient
-    private String bodyMessage; 
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column
@@ -85,12 +89,54 @@ public class Resource implements Serializable{
         this.title = title;
     }
 
-    public byte[] getBody() {
-        return this.body;
+    public String getBody() {
+        
+        try {
+            // im shure this should this be done better?!
+            SymmetricEncryption se = new SymmetricEncryption();
+            return se.decrypt(this.body, this.bodyIv);
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeyException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidAlgorithmParameterException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalBlockSizeException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BadPaddingException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+        
     }
 
-    public void setBody(byte[] body) {
-        this.body = body;
+    public void setBody(String body) throws UnsupportedEncodingException {
+        try {
+            SymmetricEncryption se = new SymmetricEncryption();
+            se.encrypt(body);
+
+            this.body = se.getCiphertext();
+            this.bodyIv = se.getIv();
+            
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeyException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalBlockSizeException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BadPaddingException ex) {
+            Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ResourceGroup getGroup() {
@@ -108,23 +154,5 @@ public class Resource implements Serializable{
     public void setCreated(Date created) {
         this.created = created;
     }
-
-    public byte[] getBodyIv() {
-        return bodyIv;
-    }
-
-    public void setBodyIv(byte[] bodyIv) {
-        this.bodyIv = bodyIv;
-    }
-
-    public String getBodyMessage() {
-        return bodyMessage;
-    }
-
-    public void setBodyMessage(String bodyMessage) {
-        this.bodyMessage = bodyMessage;
-    }
-    
-    
-    
+  
 }

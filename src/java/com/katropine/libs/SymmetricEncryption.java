@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package com.katropine.libs;
 
@@ -40,7 +35,7 @@ public class SymmetricEncryption {
         byte[] salt = passphrase.getBytes();
         int iterations = 10100;
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        SecretKey tmp = factory.generateSecret(new PBEKeySpec(passphrase.toCharArray(), salt, iterations, 128));
+        SecretKey tmp = factory.generateSecret(new PBEKeySpec(passphrase.toCharArray(), salt, iterations, 256));
         this.key = new SecretKeySpec(tmp.getEncoded(), "AES");
     } 
     

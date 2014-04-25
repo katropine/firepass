@@ -8,20 +8,9 @@ package com.katropine.controller;
 
 import com.katropine.dao.ResourceDaoLocal;
 import com.katropine.dao.ResourceGroupDaoLocal;
-import com.katropine.libs.SymmetricEncryption;
 import com.katropine.model.Resource;
 import com.katropine.model.ResourceGroup;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -79,89 +68,22 @@ public class ResourceServlet extends CoreServlet {
         
         
         if("Details".equalsIgnoreCase(action)){
-            resource = resDao.getResource(resId);
-            if(resId > 0){
-                try {
-                    // im shure this should this be done better?!
-                    SymmetricEncryption se = new SymmetricEncryption();
-                    String bodyDe = se.decrypt(resource.getBody(), resource.getBodyIv());
-
-                    resource.setBodyMessage(bodyDe);
-
-
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvalidKeySpecException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSuchPaddingException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvalidKeyException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvalidAlgorithmParameterException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalBlockSizeException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (BadPaddingException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
+            resource = resDao.getResource(resId); 
         }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
             
             if(resId > 0){
-                
-                try {
-                    SymmetricEncryption se = new SymmetricEncryption();
-                    se.encrypt(body);
                     
-                    resource.setId(resId);
-                    resource.setBody(se.getCiphertext());
-                    resource.setBodyIv(se.getIv());
-                    resource.setGroup(group);
-                    resDao.editResource(resource);  
-                    
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvalidKeySpecException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSuchPaddingException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvalidKeyException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalBlockSizeException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (BadPaddingException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                resource.setId(resId);
+                resource.setBody(body);
+                resource.setGroup(group);
+                resDao.editResource(resource);  
                 
             }else{
                 
-                try {
-                    
-                    SymmetricEncryption se = new SymmetricEncryption();
-                    se.encrypt(body);
-                    
-                    resource.setBody(se.getCiphertext());
-                    resource.setBodyIv(se.getIv());
-                    resource.setGroup(group);
-                    resDao.addResource(resource);
-                
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvalidKeySpecException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSuchPaddingException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InvalidKeyException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalBlockSizeException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (BadPaddingException ex) {
-                    Logger.getLogger(ResourceServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                
-            }
+                resource.setBody(body);
+                resource.setGroup(group);
+                resDao.addResource(resource);
+             }
             
         }else if("Delete".equalsIgnoreCase(action)){
             resDao.deleteResource(resId);

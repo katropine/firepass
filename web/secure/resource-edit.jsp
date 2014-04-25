@@ -31,7 +31,7 @@
                 </div>    
                 <div class="form-group">
                     <label>Data</label>
-                    <textarea type="text" name="body" class="form-control">${resource.bodyMessage}</textarea>
+                    <textarea type="text" name="body" class="form-control">${resource.body}</textarea>
                 </div> 
                 
                         <input type="hidden" name="action" value="save">
