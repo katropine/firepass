@@ -6,6 +6,7 @@
 
 package com.katropine.dao;
 
+import com.katropine.libs.BCrypt;
 import com.katropine.model.User;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -59,9 +60,11 @@ public class UserDao implements UserDaoLocal {
     public User authenticate(User user) {
         List<User> users = this.em.createNamedQuery("User.authenticate")
                     .setParameter("email", user.getEmail())
-                    .setParameter("password", user.getPassword())
                     .getResultList();
-        return (!users.isEmpty())? users.get(0) : new User(); 
+        if (!users.isEmpty() && users.get(0).getId() > 0 && BCrypt.checkpw(user.getCandidatePassword(), users.get(0).getPassword())){
+            return users.get(0);
+        }
+        return new User(); 
     }
     
     

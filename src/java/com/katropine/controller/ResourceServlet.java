@@ -29,6 +29,8 @@ public class ResourceServlet extends CoreServlet {
     
     @EJB
     private ResourceGroupDaoLocal resGrpDao;
+    
+    private String requestMethod = null;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -56,7 +58,7 @@ public class ResourceServlet extends CoreServlet {
             resGrpId = Integer.parseInt(resGrpIdStr);
         }
         
-        System.out.println("action: "+action+", id: "+resId);
+        System.out.println("action: "+action+", request: "+this.requestMethod);
         
         String title = request.getParameter("title");
         String body = request.getParameter("body");
@@ -66,7 +68,7 @@ public class ResourceServlet extends CoreServlet {
         
         if("Details".equalsIgnoreCase(action)){
             resource = resDao.getResource(resId);
-        }else if("Edit".equalsIgnoreCase(action)){
+        }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
             
             if(resId > 0){
                 resource.setId(resId);
@@ -106,6 +108,7 @@ public class ResourceServlet extends CoreServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.requestMethod = "GET";
         processRequest(request, response);
     }
 
@@ -120,6 +123,7 @@ public class ResourceServlet extends CoreServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.requestMethod = "POST";
         processRequest(request, response);
     }
 

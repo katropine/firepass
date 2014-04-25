@@ -7,6 +7,7 @@ package com.katropine.model;
  */
 
 
+import com.katropine.libs.BCrypt;
 import java.io.Serializable;
 import java.security.Timestamp;
 import java.util.Date;
@@ -20,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 /**
  *
  * @author kriss
@@ -28,7 +30,7 @@ import javax.persistence.TemporalType;
 @Table(name="user")
 @NamedQueries({
     @NamedQuery(name="User.getAll", query="SELECT e FROM User e"), 
-    @NamedQuery(name="User.authenticate", query="SELECT e FROM User e WHERE e.email=:email AND e.password=:password")
+    @NamedQuery(name="User.authenticate", query="SELECT e FROM User e WHERE e.email=:email")
 })
 public class User implements Serializable{
     
@@ -44,6 +46,10 @@ public class User implements Serializable{
     private String email;
     @Column
     private String password;
+    
+    @Transient
+    private String candidatePassword;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column
     private Date created = new Date();
@@ -53,13 +59,13 @@ public class User implements Serializable{
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.password = password;
-        
-        
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());    
     }
     
     public User(){}
 
+    
+    
     public int getId() {
         return id;
     }
@@ -97,7 +103,8 @@ public class User implements Serializable{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.password = hashed;
     }
 
     public Date getCreated() {
@@ -107,6 +114,16 @@ public class User implements Serializable{
     public void setCreated(Date created) {
         this.created = created;
     }
+
+    public String getCandidatePassword() {
+        return candidatePassword;
+    }
+
+    public void setCandidatePassword(String candidatePassword) {
+        this.candidatePassword = candidatePassword;
+    }
+    
+    
     
     @Override
     public String toString(){

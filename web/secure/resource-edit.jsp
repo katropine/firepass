@@ -18,7 +18,14 @@
                     <select name="resource_group_id" class="form-control">
                         <option value="">Select...</option>
                         <c:forEach items="${allResourceGroups}" var="grp">
-                            <option value="${grp.id}">${grp.name}</option>
+                            <c:choose>
+                                <c:when test="${grp.id==resource.group.id}">
+                                    <option value="${grp.id}" selected="selected">${grp.name}</option>
+                                </c:when>    
+                                <c:otherwise>
+                                    <option value="${grp.id}">${grp.name}</option>
+                                </c:otherwise>    
+                            </c:choose>
                         </c:forEach>
                     </select>
                 </div>    
@@ -27,9 +34,9 @@
                     <textarea type="text" name="body" class="form-control">${resource.body}</textarea>
                 </div> 
                 
-                
+                        <input type="hidden" name="action" value="save">
                         <input type="hidden" name="id" value="${resource.id}">
-                        <input type="submit" name="action" value="Edit" class="btn btn-primary">
+                        <input type="submit" value="Save" class="btn btn-primary">
                         <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default">Back</button>
                     
             </form>

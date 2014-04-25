@@ -50,8 +50,8 @@ public class LoginServlet extends HttpServlet {
 
                 User user = new User();
                 user.setEmail(email);
-                user.setPassword(password);
-                System.out.println("pass: "+user.getPassword());
+                user.setCandidatePassword(password);
+                System.out.println("pass: "+user.getCandidatePassword());
                 User member = userDao.authenticate(user);
                 if(member!=null && member.getId() > 0){
 
