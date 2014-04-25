@@ -7,6 +7,7 @@
 package com.katropine.model;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -38,9 +40,16 @@ public class Resource implements Serializable{
     @Column(unique=true)
     private String title;
     
-    @Column
-    private String body = "";
-
+    @Column(length=100000)
+    private byte[] body;
+    
+    @Column(name="body_iv", length=100000)
+    private byte[] bodyIv;
+    
+    // just for presentation
+    @Transient
+    private String bodyMessage; 
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column
     private Date created = new Date();
@@ -76,11 +85,11 @@ public class Resource implements Serializable{
         this.title = title;
     }
 
-    public String getBody() {
-        return body;
+    public byte[] getBody() {
+        return this.body;
     }
 
-    public void setBody(String body) {
+    public void setBody(byte[] body) {
         this.body = body;
     }
 
@@ -98,6 +107,22 @@ public class Resource implements Serializable{
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public byte[] getBodyIv() {
+        return bodyIv;
+    }
+
+    public void setBodyIv(byte[] bodyIv) {
+        this.bodyIv = bodyIv;
+    }
+
+    public String getBodyMessage() {
+        return bodyMessage;
+    }
+
+    public void setBodyMessage(String bodyMessage) {
+        this.bodyMessage = bodyMessage;
     }
     
     
