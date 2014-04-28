@@ -11,11 +11,14 @@ import com.katropine.libs.BCrypt;
 import java.io.Serializable;
 import java.security.Timestamp;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -54,6 +57,10 @@ public class User implements Serializable{
     @Column
     private Date created = new Date();
 
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.PERSIST)
+    private List<UserGroup> userGroups;
+    
+    
     public User(int id, String firstname, String lastname, String email, String password) {
         this.id = id;
         this.firstname = firstname;
@@ -121,6 +128,14 @@ public class User implements Serializable{
 
     public void setCandidatePassword(String candidatePassword) {
         this.candidatePassword = candidatePassword;
+    }
+
+    public List<UserGroup> getUserGroups() {
+        return userGroups;
+    }
+
+    public void setUserGroups(List<UserGroup> userGroups) {
+        this.userGroups = userGroups;
     }
     
     

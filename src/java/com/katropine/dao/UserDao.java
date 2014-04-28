@@ -60,7 +60,7 @@ public class UserDao implements UserDaoLocal {
     public User authenticate(User user) {
         List<User> users = this.em.createNamedQuery("User.authenticate")
                     .setParameter("email", user.getEmail())
-                    .getResultList();
+                    .getResultList(); 
         if (!users.isEmpty() && users.get(0).getId() > 0 && BCrypt.checkpw(user.getCandidatePassword(), users.get(0).getPassword())){
             return users.get(0);
         }
