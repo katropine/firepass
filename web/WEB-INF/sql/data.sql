@@ -1,2 +1,2 @@
-INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `created`) VALUES
-(1, 'kriss', 'kross', 'kriss@test.com', '$2a$10$uozHooPEvjzY6.yp/YePKOJPNnHDPebZvvRpFE6O/W3aUX3tRefla', '2014-04-25 21:24:50');
+INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `created`, group_id) VALUES
+(1, 'kriss', 'kross', 'kriss@test.com', '$2a$10$uozHooPEvjzY6.yp/YePKOJPNnHDPebZvvRpFE6O/W3aUX3tRefla', '2014-04-25 21:24:50', 1);

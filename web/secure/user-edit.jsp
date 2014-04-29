@@ -24,10 +24,26 @@
                 <div class="form-group">
                     <label>Password Name</label>
                     <input type="password" name="password" class="form-control" value="${user.password}">
-                </div>  
-                
+                </div>
+                <div class="form-group">
+                    <lable>Group</lable>
+                    <select name="usergroup_id" class="form-control">
+                        <option value="">Select...</option>
+                        <c:forEach items="${allUserGroups}" var="grp">
+                            <c:choose>
+                                <c:when test="${grp.id==user.userGroup.id}">
+                                    <option value="${grp.id}" selected="selected">${grp.name}</option>
+                                </c:when>    
+                                <c:otherwise>
+                                    <option value="${grp.id}">${grp.name}</option>
+                                </c:otherwise>    
+                            </c:choose>
+                        </c:forEach>
+                    </select>
+                </div>    
+                        <input type="hidden" name="action" value="save">
                         <input type="hidden" name="id" value="${user.id}">
-                        <input type="submit" name="action" value="Edit" class="btn btn-primary">
+                        <input type="submit" name="action" value="Save" class="btn btn-primary">
                         <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default">Back</button>
                     
             </form>

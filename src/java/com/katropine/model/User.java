@@ -15,12 +15,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -57,8 +61,9 @@ public class User implements Serializable{
     @Column
     private Date created = new Date();
 
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.PERSIST)
-    private List<UserGroup> userGroups;
+   @ManyToOne(fetch=FetchType.LAZY)
+   @JoinColumn(name="usergroup_id")
+    private UserGroup userGroup = new UserGroup();
     
     
     public User(int id, String firstname, String lastname, String email, String password) {
@@ -66,10 +71,15 @@ public class User implements Serializable{
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());    
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());   
+        // user
+        this.userGroup.setId(3);
     }
     
-    public User(){}
+    public User(){
+        // user
+        this.userGroup.setId(3);
+    }
 
     
     
@@ -130,19 +140,19 @@ public class User implements Serializable{
         this.candidatePassword = candidatePassword;
     }
 
-    public List<UserGroup> getUserGroups() {
-        return userGroups;
+    public UserGroup getUserGroup() {
+        return userGroup;
     }
 
-    public void setUserGroups(List<UserGroup> userGroups) {
-        this.userGroups = userGroups;
+    public void setUserGroups(UserGroup userGroup) {
+        this.userGroup = userGroup;
     }
     
     
     
     @Override
     public String toString(){
-        return this.firstname+" "+this.lastname;
+        return this.firstname+" "+this.lastname+" "+this.userGroup.getId();
     }
     
     

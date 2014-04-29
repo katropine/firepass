@@ -7,27 +7,7 @@
         
         <h1>Users</h1>
         <div class="section">
-            <form method="post" action="${pageContext.request.contextPath}/secure/user">
-            <table class="table ">
-                <tr>
-                    <td>First Name</td>
-                    <td>Last Name</td>
-                    <td>Email</td>
-                    <td>Password</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="firstname" class="form-control" value="${user.firstname}"></td>
-                    <td><input type="text" name="lastname" class="form-control" value="${user.lastname}"></td>
-                    <td><input type="text" name="email" class="form-control" value="${user.email}"></td>
-                    <td><input type="password" name="password" class="form-control" value="${user.password}"></td>
-                    <td>
-                        <input type="hidden" name="id" value="${user.id}">
-                        <input type="submit" name="action" class="btn btn-primary" value="Add">
-                    </td>
-                </tr>
-            </table>
-            </form>
+            <a href="${pageContext.request.contextPath}/secure/user?id=0&action=details" class="btn btn-primary">Add new</a>
         </div>
         <div class="section">
             <table class="table table-hover table-striped">

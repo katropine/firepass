@@ -7,7 +7,9 @@
 package com.katropine.controller;
 
 import com.katropine.dao.UserDaoLocal;
+import com.katropine.dao.UserGroupLocal;
 import com.katropine.model.User;
+import com.katropine.model.UserGroup;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -25,6 +27,10 @@ import javax.servlet.http.HttpSession;
 public class UserServlet extends CoreServlet {
     @EJB
     private UserDaoLocal userDao;
+    @EJB
+    private UserGroupLocal groupDao;
+    
+    private String requestMethod = null;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -43,35 +49,51 @@ public class UserServlet extends CoreServlet {
         
         String action = request.getParameter("action");
         String userIdStr = request.getParameter("id");
+        String usergroupIdStr = request.getParameter("usergroup_id");
         
         int userId = 0;
         if(userIdStr != null && !userIdStr.equals("")){
             userId = Integer.parseInt(userIdStr);
         }
-        System.out.println("action: "+action+", id: "+userId);
+        int usergroupId = 0;
+        if(usergroupIdStr != null && !usergroupIdStr.equals("")){
+            usergroupId = Integer.parseInt(usergroupIdStr);
+        }
+        
+        System.out.println("action: "+action+", id: "+userId+" request: "+this.requestMethod);
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
         User user = new User(userId, firstname, lastname, email, password);
+        UserGroup usergroup = new UserGroup();
+        if(usergroupId > 0){
+            usergroup.setId(usergroupId);
+        }
+        user.setUserGroups(usergroup);
         
-        if("Add".equalsIgnoreCase(action)){
-            userDao.addUser(user);
-        }else if("Edit".equalsIgnoreCase(action)){
-            userDao.editUser(user);
+        if("Details".equalsIgnoreCase(action)){
+            user = userDao.getUser(userId);
+        }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
+            
+            if(userId > 0){
+                userDao.editUser(user);
+            }else{
+                userDao.addUser(user);
+            }
+            System.out.println("user: "+user.toString());
         }else if("Delete".equalsIgnoreCase(action)){
             userDao.deleteUser(userId);
-        }else if("Search".equalsIgnoreCase(action)){
-            //user = userDao.getUser(userId);
-        }else if("Details".equalsIgnoreCase(action)){
-            user = userDao.getUser(userId);
         }
+        
         
         request.setAttribute("user", user);
         request.setAttribute("allUsers", userDao.getAllUsers());
         
         if("Details".equalsIgnoreCase(action)){
+            
+            request.setAttribute("allUserGroups", groupDao.getAllUserGroups());
             request.getRequestDispatcher("user-edit.jsp").forward(request, response);
         }else{
             request.getRequestDispatcher("user.jsp").forward(request, response);
@@ -90,6 +112,7 @@ public class UserServlet extends CoreServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.requestMethod = "GET";
         processRequest(request, response);
     }
 
@@ -104,6 +127,7 @@ public class UserServlet extends CoreServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.requestMethod = "POST";
         processRequest(request, response);
     }
 
