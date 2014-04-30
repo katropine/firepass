@@ -4,7 +4,7 @@
 
 <t:layout>
     <jsp:body>
-        
+        <c:if test="${acl.allowView('RESOURCE_GROUP')}"></c:if>
         <h1>Resource Groups</h1>
         <div class="section">
             <form method="post" action="${pageContext.request.contextPath}/secure/resourcegroup">
@@ -36,8 +36,12 @@
                         <td>${gr.name}</td>
                         <td></td>
                         <td>
+                            <c:if test="${acl.allowUpdate('RESOURCE_GROUP')}">
                             <a href="${pageContext.request.contextPath}/secure/resourcegroup?id=${gr.id}&action=details" class="btn btn-success btn-xs">edit</a>
+                            </c:if>
+                            <c:if test="${acl.allowDelete('RESOURCE_GROUP')}">
                             <a href="${pageContext.request.contextPath}/secure/resourcegroup?id=${gr.id}&action=delete" class="btn btn-danger btn-xs">delete</a>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

@@ -6,8 +6,14 @@
 
 package com.katropine.controller;
 
+import com.katropine.dao.AccessControlListDaoLocal;
+import com.katropine.dao.UserDaoLocal;
+import com.katropine.helper.Acl;
+import com.katropine.helper.Permission;
+import com.katropine.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +27,14 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "CoreServlet", urlPatterns = {"/CoreServlet"})
 public class CoreServlet extends HttpServlet {
-
+    
+    @EJB
+    protected AccessControlListDaoLocal aclDao;
+    
+    @EJB
+    private UserDaoLocal userDao;
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -36,6 +49,17 @@ public class CoreServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         request.setAttribute("sessionUserName", session.getAttribute("username"));
+        int user_id = Integer.parseInt(session.getAttribute("user_id").toString());
+        System.out.println("user_id: "+user_id);
+        
+       
+        User user = userDao.getUser(user_id);
+        
+        Acl acl = new Acl(user, aclDao);
+        System.out.println("acl-allow: "+acl.allowView(Permission.USER));
+        request.setAttribute("acl", acl);
+       
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

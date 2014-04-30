@@ -31,3 +31,14 @@ CREATE TABLE IF NOT EXISTS `user_group` (
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `access_control_list` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `permission` enum('USER','ACL','USER_GROUP','RESOURCE','RESOURCE_GROUP') NOT NULL,
+  `usergroup_id` int(11) NOT NULL,
+  `can_view` tinyint(1) NOT NULL,
+  `can_insert` tinyint(1) NOT NULL,
+  `can_update` tinyint(1) NOT NULL,
+  `can_delete` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;

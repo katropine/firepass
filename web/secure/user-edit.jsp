@@ -4,7 +4,7 @@
 
 <t:layout>
     <jsp:body>
-        
+        <c:if test="${(acl.allowUpdate('USER') and user.id gt 0) or (acl.allowInsert('USER'))}">
         <h1>User: ${user.id} </h1>
         <div>
             <form method="post" action="${pageContext.request.contextPath}/secure/user">
@@ -42,12 +42,14 @@
                     </select>
                 </div>    
                         <input type="hidden" name="action" value="save">
+                        <c:if test="${acl.allowUpdate('USER')}">
                         <input type="hidden" name="id" value="${user.id}">
+                        </c:if>
                         <input type="submit" name="action" value="Save" class="btn btn-primary">
                         <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default">Back</button>
                     
             </form>
         </div>
-        
+        </c:if>
   </jsp:body>                    
 </t:layout>  
