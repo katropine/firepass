@@ -152,7 +152,7 @@ public class User implements Serializable{
     
     @Override
     public String toString(){
-        return this.firstname+" "+this.lastname+" "+this.userGroup.getId();
+        return this.firstname+" "+this.lastname;
     }
     
     

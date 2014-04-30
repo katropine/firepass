@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `resource` (
   `created` datetime NOT NULL,
   `title` varchar(255) NOT NULL,
   `body` blob NOT NULL,
-  `body_vi` blob NOT NULL,
+  `body_iv` blob NOT NULL,
   `group_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

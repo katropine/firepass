@@ -2,9 +2,7 @@
 <%@attribute name="header" fragment="true" %>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@tag import="com.katropine.helper.Permission" %>
-
-
-<!DOCTYPE html>
+<%@tag trimDirectiveWhitespaces="true"%><!DOCTYPE html>
 <html>
     <head>
         <title>Users - FirePass</title>
