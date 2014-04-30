@@ -56,6 +56,11 @@ public class ResourceServlet extends CoreServlet {
         if(resGrpIdStr != null && !resGrpIdStr.equals("")){
             resGrpId = Integer.parseInt(resGrpIdStr);
         }
+        String groupIdStr = request.getParameter("group");
+        int groupId = 0;
+        if(groupIdStr != null && !groupIdStr.equals("")){
+            groupId = Integer.parseInt(groupIdStr);
+        }
         
         System.out.println("action: "+action+", request: "+this.requestMethod);
         
@@ -89,13 +94,12 @@ public class ResourceServlet extends CoreServlet {
             resDao.deleteResource(resId);
         }
         
-        
+        request.setAttribute("allResourceGroups", resGrpDao.getAllResourceGroup());
         if("Details".equalsIgnoreCase(action)){
             request.setAttribute("resource", resource);
-            request.setAttribute("allResourceGroups", resGrpDao.getAllResourceGroup());
             request.getRequestDispatcher("resource-edit.jsp").forward(request, response);
         }else{
-            request.setAttribute("allResources", resDao.getAllResources());
+            request.setAttribute("allResources", resDao.getAllResourcesByGroup(groupId));
             request.getRequestDispatcher("resource.jsp").forward(request, response);
         }
     }

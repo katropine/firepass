@@ -42,6 +42,8 @@ public class ResourceDao implements ResourceDaoLocal {
         return this.em.find(Resource.class, id);
     }
     
+    
+    
     @Override
     public List<Resource> getAllResources() {
         return this.em.createNamedQuery("Resource.getAll").getResultList();
@@ -50,6 +52,14 @@ public class ResourceDao implements ResourceDaoLocal {
     @Override
     public void getResource() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Resource> getAllResourcesByGroup(int groupId) {
+        List<Resource> res =this.em.createNamedQuery("Resource.getAllByGroup")
+                    .setParameter("groupid", groupId)
+                    .getResultList();
+        return res;
     }
     
     

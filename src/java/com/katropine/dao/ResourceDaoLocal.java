@@ -28,5 +28,7 @@ public interface ResourceDaoLocal {
     List<Resource> getAllResources();
     
     void getResource();
+
+    List<Resource> getAllResourcesByGroup(int groupId);
     
 }
