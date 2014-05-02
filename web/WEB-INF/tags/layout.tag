@@ -36,6 +36,9 @@
                         <c:if test="${acl.allowView('USER')}">
                         <li><a href="${pageContext.request.contextPath}/secure/user">User</a></li>
                         </c:if>
+                        <c:if test="${acl.allowView('USER_GROUP')}">
+                        <li><a href="${pageContext.request.contextPath}/secure/usergroup">User Groups</a></li>
+                        </c:if>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="">Logdin as ${sessionUserName}</a> </li>

@@ -42,7 +42,7 @@ import javax.persistence.Transient;
 public class User implements Serializable{
     
     @Id
-    //@GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
     @Column
@@ -61,8 +61,8 @@ public class User implements Serializable{
     @Column
     private Date created = new Date();
 
-   @ManyToOne(fetch=FetchType.LAZY)
-   @JoinColumn(name="usergroup_id")
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="usergroup_id")
     private UserGroup userGroup = new UserGroup();
     
     

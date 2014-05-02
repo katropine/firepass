@@ -6,6 +6,7 @@
 
 package com.katropine.dao;
 
+import com.katropine.model.UserGroup;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,7 +15,7 @@ import javax.ejb.Local;
  * @author kriss
  */
 @Local
-public interface UserGroupLocal {
+public interface UserGroupDaoLocal {
 
     void addUserGroup(UserGroup group);
 
@@ -23,6 +24,8 @@ public interface UserGroupLocal {
     void deleteUserGroup(int id);
 
     UserGroup getUserGroup(int id);
+    
+    UserGroup getUserGroup();
 
     List<UserGroup> getAllUserGroups();
     

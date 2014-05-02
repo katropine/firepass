@@ -7,7 +7,7 @@
 package com.katropine.controller;
 
 import com.katropine.dao.UserDaoLocal;
-import com.katropine.dao.UserGroupLocal;
+import com.katropine.dao.UserGroupDaoLocal;
 import com.katropine.model.User;
 import com.katropine.model.UserGroup;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class UserServlet extends CoreServlet {
     @EJB
     private UserDaoLocal userDao;
     @EJB
-    private UserGroupLocal groupDao;
+    private UserGroupDaoLocal groupDao;
     
     private String requestMethod = null;
     /**

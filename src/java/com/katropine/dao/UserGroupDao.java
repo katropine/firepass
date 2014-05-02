@@ -6,6 +6,7 @@
 
 package com.katropine.dao;
 
+import com.katropine.model.UserGroup;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,7 +17,7 @@ import javax.persistence.PersistenceContext;
  * @author kriss
  */
 @Stateless
-public class UserGroup implements UserGroupLocal {
+public class UserGroupDao implements UserGroupDaoLocal {
 
     @PersistenceContext
     private EntityManager em;
@@ -39,6 +40,11 @@ public class UserGroup implements UserGroupLocal {
     @Override
     public UserGroup getUserGroup(int id) {
         return this.em.find(UserGroup.class, id);
+    }
+    
+    @Override
+    public UserGroup getUserGroup() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

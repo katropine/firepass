@@ -8,6 +8,8 @@ package com.katropine.dao;
 
 import com.katropine.helper.Permission;
 import com.katropine.model.AccessControlList;
+import com.katropine.model.UserGroup;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -42,5 +44,33 @@ public class AccessControlListDao implements AccessControlListDaoLocal {
  
         return acl; 
     }
+
+    @Override
+    public List<AccessControlList> getAclByUserGroup(int userGroupId) {
+        return this.em.createNamedQuery("AccessControlList.getAllByUserGroupId")
+                .setParameter("userGroupId", userGroupId)
+                .getResultList();
+    }
+
+    @Override
+    public void editAclByUserGroup(UserGroup userGroup) {
+        
+    }
+
+    @Override
+    public void addAclList(ArrayList<AccessControlList> acls) {
+
+        for(AccessControlList acl : acls){
+            this.em.persist(acl);
+            this.em.flush();
+        }
+        this.em.clear();
+        
+        
+    }
+    
+    
+    
+    
  
 }

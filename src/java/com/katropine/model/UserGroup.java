@@ -6,7 +6,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,13 +28,21 @@ public class UserGroup implements Serializable{
     
     @Id
     @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     
     @Column
     private String name;
     
+    @Column(columnDefinition="BOOLEAN NOT NULL DEFAULT '0'")
+    private boolean locked = false;
+    
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="userGroup")
     private List<User> users;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="userGroup", fetch=FetchType.EAGER, orphanRemoval=true)
+    @JoinColumn(name = "usergroup_id") 
+    private List<AccessControlList> acl;
     
     public UserGroup(){}
     
@@ -66,6 +77,22 @@ public class UserGroup implements Serializable{
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public List<AccessControlList> getAcl() {
+        return acl;
+    }
+
+    public void setAcl(List<AccessControlList> acl) {
+        this.acl = acl;
     }
     
     

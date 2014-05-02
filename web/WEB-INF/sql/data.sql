@@ -15,7 +15,7 @@ INSERT INTO `access_control_list` (`id`, `permission`, `usergroup_id`, `can_view
 (11, 'RESOURCE', 3, 1, 1, 1, 0),
 (12, 'RESOURCE_GROUP', 3, 1, 0, 0, 0);
 
-INSERT INTO `user_group` (`id`, `name`) VALUES
-(1, 'Super Administrator'),
-(2, 'Administrator'),
-(3, 'User');
+INSERT INTO `user_group` (`id`, `name`, `locked`) VALUES
+(1, 'Super Administrator', 1),
+(2, 'User', 1),
+(3, 'Administrator', 0);
