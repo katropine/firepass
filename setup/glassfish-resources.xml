@@ -5,8 +5,8 @@
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="firepass"/>
-        <property name="User" value="root"/>
-        <property name="Password" value="3223"/>
+        <property name="User" value="firepass"/>
+        <property name="Password" value=""/>
         <property name="URL" value="jdbc:mysql://localhost:3306/firepass?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
