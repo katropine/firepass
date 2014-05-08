@@ -67,24 +67,28 @@ public class ResourceServlet extends CoreServlet {
         String title = request.getParameter("title");
         String body = request.getParameter("body");
         
-        Resource resource = new Resource(title); 
+        Resource resource = new Resource(resId, title); 
         ResourceGroup group = resGrpDao.getResourceGroup(resGrpId);
-        
+        if(resGrpId > 0){
+            group.setId(resGrpId);
+        }
+        resource.setGroup(group);            
+                
         
         
         if("Details".equalsIgnoreCase(action)){
-            resource = resDao.getResource(resId); 
+            resource = resDao.getResource(resId);
         }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
             
             if(resId > 0){
-                    
+                resource.setTitle(title);
                 resource.setId(resId);
                 resource.setBody(body);
                 resource.setGroup(group);
                 resDao.editResource(resource);  
                 
             }else{
-                
+                resource.setTitle(title);
                 resource.setBody(body);
                 resource.setGroup(group);
                 resDao.addResource(resource);
@@ -94,9 +98,10 @@ public class ResourceServlet extends CoreServlet {
             resDao.deleteResource(resId);
         }
         
+        request.setAttribute("resource", resource);
         request.setAttribute("allResourceGroups", resGrpDao.getAllResourceGroup());
         if("Details".equalsIgnoreCase(action)){
-            request.setAttribute("resource", resource);
+            
             request.getRequestDispatcher("resource-edit.jsp").forward(request, response);
         }else{
             request.setAttribute("allResources", resDao.getAllResourcesByGroup(groupId));

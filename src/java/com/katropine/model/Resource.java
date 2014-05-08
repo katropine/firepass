@@ -22,6 +22,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -44,6 +46,8 @@ import javax.persistence.TemporalType;
 public class Resource implements Serializable{
     
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
     
     @Column(unique=true)
@@ -91,7 +95,7 @@ public class Resource implements Serializable{
     }
 
     public String getBody() {
-        
+        if(this.body == null) return "";
         try {
             // im shure this should this be done better?!
             SymmetricEncryption se = new SymmetricEncryption();
@@ -155,5 +159,9 @@ public class Resource implements Serializable{
     public void setCreated(Date created) {
         this.created = created;
     }
-  
+    
+    @Override
+    public String toString(){
+        return this.id+" "+this.title;
+    }
 }

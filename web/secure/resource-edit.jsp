@@ -7,7 +7,7 @@
         <c:if test="${(acl.allowUpdate('RESOURCE') and resource.id gt 0) or (acl.allowInsert('RESOURCE'))}">
         <h1>Resource: ${resource.id} </h1>
         <div>
-            <form method="post" action="${pageContext.request.contextPath}/secure/resource">
+            <form method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/resource">
                 <div class="form-group">
                 
                     <label>Title</label>

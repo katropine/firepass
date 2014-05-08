@@ -7,7 +7,7 @@
         <c:if test="${(acl.allowUpdate('USER') and user.id gt 0) or (acl.allowInsert('USER'))}">
         <h1>User: ${user.id} </h1>
         <div>
-            <form method="post" action="${pageContext.request.contextPath}/secure/user">
+            <form method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/user">
                 <div class="form-group">
                 
                     <label>First Name</label>

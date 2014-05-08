@@ -67,6 +67,7 @@ public class UserServlet extends CoreServlet {
         String password = request.getParameter("password");
         
         User user = new User(userId, firstname, lastname, email, password);
+        
         UserGroup usergroup = new UserGroup();
         if(usergroupId > 0){
             usergroup.setId(usergroupId);

@@ -47,6 +47,10 @@ public class CoreServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+        response.setHeader("Pragma","no-cache"); //HTTP 1.0
+        response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
+        
         
         HttpSession session = request.getSession();
         userSess = (UserSession) session.getAttribute("userSession");
