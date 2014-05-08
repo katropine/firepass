@@ -10,5 +10,5 @@ package com.katropine.helper;
  *
  * @author kriss
  */
-public enum Permission { USER, ACL, USER_GROUP, RESOURCE, RESOURCE_GROUP }
+public enum Permission { USER, USER_GROUP, RESOURCE, RESOURCE_GROUP }
 

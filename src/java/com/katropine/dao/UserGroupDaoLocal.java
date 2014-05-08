@@ -7,6 +7,7 @@
 package com.katropine.dao;
 
 import com.katropine.model.UserGroup;
+import com.katropine.model.UserSession;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -27,7 +28,7 @@ public interface UserGroupDaoLocal {
     
     UserGroup getUserGroup();
 
-    List<UserGroup> getAllUserGroups();
+    List<UserGroup> getAllUserGroups(UserSession us);
     
     
 }

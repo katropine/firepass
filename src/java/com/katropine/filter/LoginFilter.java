@@ -8,8 +8,8 @@ package com.katropine.filter;
 
 
 
+import com.katropine.model.UserSession;
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -38,11 +38,13 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
-
-        if (session == null || session.getAttribute("user_id") == null) {
-            response.sendRedirect(request.getContextPath() + "/login"); // No logged-in user found, so redirect to login page.
-        } else {
+        
+        UserSession userSession = (UserSession) session.getAttribute("userSession");
+        
+        if (userSession != null && userSession.getUser().getId() > 0) {
             chain.doFilter(req, res); // Logged-in user found, so just continue request.
+        } else {
+            response.sendRedirect(request.getContextPath() + "/login"); // No logged-in user found, so redirect to login page.
         }
     }
 

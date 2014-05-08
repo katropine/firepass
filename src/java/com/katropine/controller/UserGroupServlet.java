@@ -12,9 +12,7 @@ import com.katropine.helper.Permission;
 import com.katropine.model.AccessControlList;
 import com.katropine.model.UserGroup;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -68,7 +66,6 @@ public class UserGroupServlet extends CoreServlet {
         
         
         if("Details".equalsIgnoreCase(action)){
-            System.out.println("usergroupId: "+usergroupId);
             
             if(usergroup == null){
                 usergroup = new UserGroup();
@@ -81,26 +78,32 @@ public class UserGroupServlet extends CoreServlet {
             for (Permission permission : Permission.values()) {
                 AccessControlList aclRow = new AccessControlList();
                 
-                if(usergroup.getId() > 0){
-                    int aclId = Integer.parseInt(request.getParameter(permission+"_id"));
-                    aclRow.setId(aclId);
+                String aclIdStr = request.getParameter(permission+"_id");
+                int aclId = 0;
+                if(aclIdStr != null && !aclIdStr.equals("")){
+                    aclId = Integer.parseInt(aclIdStr);
                 }
-                boolean canView = Boolean.parseBoolean(request.getParameter(permission+"_can_view"));
-                aclRow.setCanView(canView);
-System.out.println(permission+"_can_view :"+request.getParameter(permission+"_can_view"));
-                boolean canInsert = Boolean.parseBoolean(request.getParameter(permission+"_can_insert"));
-                aclRow.setCanInsert(canInsert);
+                if(aclId > 0){ // if group was rendered in html due permitions
+                    if(usergroup.getId() > 0){   
+                        aclRow.setId(aclId);
+                    }
+                    boolean canView = Boolean.parseBoolean(request.getParameter(permission+"_can_view"));
+                    aclRow.setCanView(canView);
+  
+                    boolean canInsert = Boolean.parseBoolean(request.getParameter(permission+"_can_insert"));
+                    aclRow.setCanInsert(canInsert);
 
-                boolean canUpdate = Boolean.parseBoolean(request.getParameter(permission+"_can_update"));
-                aclRow.setCanUpdate(canUpdate);
+                    boolean canUpdate = Boolean.parseBoolean(request.getParameter(permission+"_can_update"));
+                    aclRow.setCanUpdate(canUpdate);
 
-                boolean canDelete = Boolean.parseBoolean(request.getParameter(permission+"_can_delete"));
-                aclRow.setCanDelete(canDelete);
+                    boolean canDelete = Boolean.parseBoolean(request.getParameter(permission+"_can_delete"));
+                    aclRow.setCanDelete(canDelete);
 
-                aclRow.setUserGroup(usergroup);
-                aclRow.setPermission(permission);
-                System.out.println("permission : "+aclRow.toString());
-                aclList.add(aclRow);
+                    aclRow.setUserGroup(usergroup);
+                    aclRow.setPermission(permission);
+               
+                    aclList.add(aclRow);
+                }
             }
             usergroup.setName(name);
             usergroup.setAcl(aclList);    
@@ -116,9 +119,8 @@ System.out.println(permission+"_can_view :"+request.getParameter(permission+"_ca
                 
         request.setAttribute("userGroup", usergroup);
        
-        request.setAttribute("allUserGroups", usrGrpDao.getAllUserGroups());
+        request.setAttribute("allUserGroups", usrGrpDao.getAllUserGroups(this.userSess));
         
-        System.out.println("action--: "+action+", id: "+usrGrpDao.getAllUserGroups().size()+" request: "+this.requestMethod);
         if("Details".equalsIgnoreCase(action)){
             if(usergroup.getId() > 0){
                 request.setAttribute("allAcl", aclDao.getAclByUserGroup(usergroupId));

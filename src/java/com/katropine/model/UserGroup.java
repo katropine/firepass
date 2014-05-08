@@ -22,7 +22,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user_group")
 @NamedQueries({
-    @NamedQuery(name="UserGroup.getAll", query="SELECT e FROM UserGroup e")
+    @NamedQuery(name="UserGroup.getAllForAdmin", query="SELECT e FROM UserGroup e"),
+    @NamedQuery(name="UserGroup.getAll", query="SELECT e FROM UserGroup e WHERE e.id != 1")
 })
 public class UserGroup implements Serializable{
     

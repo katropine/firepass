@@ -8,6 +8,7 @@ package com.katropine.controller;
 
 import com.katropine.dao.UserDaoLocal;
 import com.katropine.model.User;
+import com.katropine.model.UserSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -51,12 +52,14 @@ public class LoginServlet extends HttpServlet {
                 User user = new User();
                 user.setEmail(email);
                 user.setCandidatePassword(password);
-                System.out.println("pass: "+user.getCandidatePassword());
+                
                 User member = userDao.authenticate(user);
                 if(member!=null && member.getId() > 0){
-
-                    session.setAttribute("username", member.toString());
-                    session.setAttribute("user_id", member.getId());
+                    
+                    UserSession userSess = new UserSession();
+                    userSess.setUser(member);
+                                        
+                    session.setAttribute("userSession", userSess);
                     response.sendRedirect("./secure/user");
                 }else{
                     message = "Wrong Email or/and password";

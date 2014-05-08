@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -80,7 +81,7 @@ public class AccessControlList implements Serializable{
     public boolean isCanView() {
         return canView;
     }
- 
+    
     public void setCanView(boolean canView) {
         this.canView = canView;
     }

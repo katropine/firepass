@@ -24,19 +24,23 @@
                             <td>${grp.id}</td>
                             <td>${grp.name}</td>
                             <td>
-                                <c:choose>
-                                    <c:when test="${grp.locked eq 'false'}">
-                                        <c:if test="${acl.allowUpdate('USER_GROUP')}">
-                                        <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=details" class="btn btn-success btn-xs">edit</a>
-                                        </c:if>
-                                        <c:if test="${acl.allowDelete('USER_GROUP')}">
-                                        <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=delete" class="btn btn-danger btn-xs">delete</a>
-                                        </c:if>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=details" class="btn btn-primary btn-xs">details</a>
-                                    </c:otherwise>    
-                                </c:choose>
+                                <c:if test="${acl.allowUpdate('USER_GROUP') || acl.allowDelete('USER_GROUP')}">
+                                    <c:choose>
+                                        <c:when test="${grp.locked eq 'false'}">
+                                            <c:if test="${acl.allowUpdate('USER_GROUP')}">
+                                            <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=details" class="btn btn-success btn-xs">edit</a>
+                                            </c:if>
+                                            <c:if test="${acl.allowDelete('USER_GROUP')}">
+                                            <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=delete" class="btn btn-danger btn-xs">delete</a>
+                                            </c:if>
+                                        </c:when>
+                                        <c:otherwise>
+
+                                            <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=details" class="btn btn-primary btn-xs">details</a>
+
+                                        </c:otherwise>    
+                                    </c:choose>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>

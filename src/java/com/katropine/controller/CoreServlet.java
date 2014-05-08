@@ -11,6 +11,7 @@ import com.katropine.dao.UserDaoLocal;
 import com.katropine.helper.Acl;
 import com.katropine.helper.Permission;
 import com.katropine.model.User;
+import com.katropine.model.UserSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -34,7 +35,7 @@ public class CoreServlet extends HttpServlet {
     @EJB
     private UserDaoLocal userDao;
     
-    
+    protected UserSession userSess;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -48,16 +49,19 @@ public class CoreServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         HttpSession session = request.getSession();
-        request.setAttribute("sessionUserName", session.getAttribute("username"));
-        int user_id = Integer.parseInt(session.getAttribute("user_id").toString());
+        userSess = (UserSession) session.getAttribute("userSession");
+        
+        request.setAttribute("sessionUserName", userSess.getUser().toString());
+        int user_id = userSess.getUser().getId();
         System.out.println("user_id: "+user_id);
         
        
         User user = userDao.getUser(user_id);
         
         Acl acl = new Acl(user, aclDao);
-        System.out.println("acl-allow: "+acl.allowView(Permission.USER));
+        
         request.setAttribute("acl", acl);
+        request.setAttribute("loggedin", userSess.getUser().getId());
        
         
     }

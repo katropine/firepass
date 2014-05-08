@@ -14,7 +14,7 @@
         <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js" type="text/javascript"></script>
     </head>
     <body>
-        <% if (session.getAttribute("user_id") != null) { %>
+        <c:if test="${loggedin > 0}">
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -52,7 +52,7 @@
                 </div><!--/.nav-collapse -->
             </div>
         </div>
-        <%}%>
+        </c:if>
         
         <div class="container">
         <jsp:doBody/>

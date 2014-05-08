@@ -7,10 +7,12 @@
 package com.katropine.dao;
 
 import com.katropine.model.UserGroup;
+import com.katropine.model.UserSession;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 
 /**
  *
@@ -48,7 +50,10 @@ public class UserGroupDao implements UserGroupDaoLocal {
     }
 
     @Override
-    public List<UserGroup> getAllUserGroups() {
+    public List<UserGroup> getAllUserGroups(UserSession us) {
+        if(us.getUser().getUserGroup().getId() == 1){
+            return this.em.createNamedQuery("UserGroup.getAllForAdmin").getResultList();
+        }
         return this.em.createNamedQuery("UserGroup.getAll").getResultList();
     }
     
