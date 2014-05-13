@@ -50,6 +50,10 @@ public class UserServlet extends CoreServlet {
         String action = request.getParameter("action");
         String userIdStr = request.getParameter("id");
         String usergroupIdStr = request.getParameter("usergroup_id");
+        String q = ""; 
+        q = request.getParameter("q");
+        
+     
         
         int userId = 0;
         if(userIdStr != null && !userIdStr.equals("")){
@@ -90,7 +94,7 @@ public class UserServlet extends CoreServlet {
         
         
         request.setAttribute("user", user);
-        request.setAttribute("allUsers", userDao.getAllUsers());
+        request.setAttribute("allUsers", userDao.getAllUsers(q));
         
         if("Details".equalsIgnoreCase(action)){
             

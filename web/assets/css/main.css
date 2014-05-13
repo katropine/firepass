@@ -37,19 +37,19 @@ body{
 }
 
 .user-groups{
-    background-image: url(/firepass-master/assets/icons/groups48.png);
+    background-image: url(../../assets/icons/groups48.png);
     background-repeat: no-repeat;
 }
 .user{
-    background-image: url(/firepass-master/assets/icons/user48.png);
+    background-image: url(../../assets/icons/user48.png);
     background-repeat: no-repeat;
 }
 .resource-groups{
-    background-image: url(/firepass-master/assets/icons/folder48.png);
+    background-image: url(../../assets/icons/folder48.png);
     background-repeat: no-repeat;
 }
 .resource{
-    background-image: url(/firepass-master/assets/icons/protected-t48.png);
+    background-image: url(../../assets/icons/protected-t48.png);
     background-repeat: no-repeat;
 }
 .icon-row{   
@@ -62,18 +62,18 @@ body{
     display: block;
 }
 .resource-row-icon{
-    background-image: url(/firepass-master/assets/icons/protected22.png);
+    background-image: url(../../assets/icons/protected22.png);
     background-repeat: no-repeat;
 }
 .resource-groups-row-icon{
-    background-image: url(/firepass-master/assets/icons/folder22.png);
+    background-image: url(../../assets/icons/folder22.png);
     background-repeat: no-repeat;
 }
 .user-row-icon{
-    background-image: url(/firepass-master/assets/icons/user22.png);
+    background-image: url(../../assets/icons/user22.png);
     background-repeat: no-repeat;
 }
 .user-groups-row-icon{
-    background-image: url(/firepass-master/assets/icons/usergroups22.png);
+    background-image: url(../../assets/icons/usergroups22.png);
     background-repeat: no-repeat;
 }

@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `user_group` (
 
 CREATE TABLE IF NOT EXISTS `access_control_list` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `permission` enum('USER','ACL','USER_GROUP','RESOURCE','RESOURCE_GROUP') NOT NULL,
+  `permission` enum('USER','USER_GROUP','RESOURCE','RESOURCE_GROUP') NOT NULL,
   `usergroup_id` int(11) NOT NULL,
   `can_view` tinyint(1) NOT NULL,
   `can_insert` tinyint(1) NOT NULL,

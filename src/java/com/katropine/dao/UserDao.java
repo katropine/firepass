@@ -47,8 +47,16 @@ public class UserDao implements UserDaoLocal {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return this.em.createNamedQuery("User.getAll").getResultList();
+    public List<User> getAllUsers(String search) {
+        if(search == null){
+            return this.em.createNamedQuery("User.getAll").getResultList();
+            
+        }
+        return this.em.createNamedQuery("User.searchAll")
+                    .setParameter("fname", "%"+search+"%")
+                    .setParameter("lname", "%"+search+"%")
+                    .setParameter("email", "%"+search+"%")
+                    .getResultList();
     }
 
     @Override

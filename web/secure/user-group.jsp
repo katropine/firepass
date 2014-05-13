@@ -5,12 +5,12 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('USER_GROUP')}">        
-            <h1 class="page-heading user-groups sub-header">User Groups</h1>
+            <h2 class="page-heading user-groups sub-header">User Groups</h2>
             
             <div class="container-fluid">
             <nav class="navbar navbar-default" role="navigation">
                 
-
+                <div class="container-fluid">
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Search">
@@ -23,7 +23,7 @@
                             <a href="${pageContext.request.contextPath}/secure/usergroup?id=0&action=details" class="btn btn-primary right">Add new</a>
                         </c:if>
                     </div>
-                
+                </div>
             </nav>
             </div>
 

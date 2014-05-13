@@ -5,13 +5,29 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('USER')}">
-        <h1 class="page-heading user">Users</h1>
-        <div class="section">
-            <c:if test="${acl.allowInsert('USER')}">
-            <a href="${pageContext.request.contextPath}/secure/user?id=0&action=details" class="btn btn-primary">Add new</a>
-            </c:if>
+        <h2 class="page-heading user">Users</h2>
+        <div class="container-fluid">
+            <nav class="navbar navbar-default" role="navigation">
+                
+                <div class="container-fluid">
+                    <form class="navbar-form navbar-left" role="search" method="GET">
+                        <div class="form-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-default">Submit</button>
+                        
+                    </form>
+                    <div class="navbar-form navbar-right">
+                        <c:if test="${acl.allowInsert('USER')}">
+                        <a href="${pageContext.request.contextPath}/secure/user?id=0&action=details" class="btn btn-primary">Add new</a>
+                        </c:if>
+                    </div>
+                </div>
+            </nav>
         </div>
-        <div class="section">
+        
+        <div class="container-fluid">
             <table class="table table-hover table-striped">
                 <tr>
                     <th></th>

@@ -37,7 +37,8 @@ import javax.persistence.Transient;
 @Table(name="user")
 @NamedQueries({
     @NamedQuery(name="User.getAll", query="SELECT e FROM User e"), 
-    @NamedQuery(name="User.authenticate", query="SELECT e FROM User e WHERE e.email=:email")
+    @NamedQuery(name="User.authenticate", query="SELECT e FROM User e WHERE e.email=:email"),
+    @NamedQuery(name="User.searchAll", query="SELECT e FROM User e WHERE e.firstname LIKE :fname OR e.lastname LIKE :lname OR e.email LIKE :email")
 })
 public class User implements Serializable{
     
