@@ -5,7 +5,7 @@
 <t:layout>
     <jsp:body>
         <c:if test="${(acl.allowUpdate('USER_GROUP') and userGroup.id gt 0) or (acl.allowInsert('USER_GROUP'))}">
-        <h1>User Group: ${userGroup.locked} </h1>
+        <h1 class="page-heading user-groups">User Group: ${userGroup.locked} </h1>
         <div>
             <form method="post" action="${pageContext.request.contextPath}/secure/usergroup">
                 <div class="form-group">

@@ -5,7 +5,7 @@
 <t:layout>
     <jsp:body>
         <c:if test="${(acl.allowUpdate('RESOURCE') and resource.id gt 0) or (acl.allowInsert('RESOURCE'))}">
-        <h1>Resource: ${resource.id} </h1>
+        <h1 class="page-heading resource">Resource: ${resource.id} </h1>
         <div>
             <form method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/resource">
                 <div class="form-group">

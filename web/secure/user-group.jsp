@@ -5,25 +5,42 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('USER_GROUP')}">        
-        
-            <h1>User Groups</h1>
-            <div class="section">
-                <c:if test="${acl.allowInsert('USER_GROUP')}">
-                <a href="${pageContext.request.contextPath}/secure/usergroup?id=0&action=details" class="btn btn-primary">Add new</a>
-                </c:if>
+            <h1 class="page-heading user-groups sub-header">User Groups</h1>
+            
+            <div class="container-fluid">
+            <nav class="navbar navbar-default" role="navigation">
+                
+
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                        
+                    </form>
+                    <div class="navbar-form navbar-right">
+                        <c:if test="${acl.allowInsert('USER_GROUP')}">
+                            <a href="${pageContext.request.contextPath}/secure/usergroup?id=0&action=details" class="btn btn-primary right">Add new</a>
+                        </c:if>
+                    </div>
+                
+            </nav>
             </div>
-            <div class="section">
+
+             <div class="container-fluid">
                 <table class="table table-hover table-striped">
                     <tr>
+                        <th></th>
                         <th>Id</th>
                         <th>Title</th>
                         <th></th>
                     </tr>
                     <c:forEach items="${allUserGroups}" var="grp">
                         <tr>
+                            <td class="icon-row"><span class="row-icon user-groups-row-icon"></span></td>
                             <td>${grp.id}</td>
                             <td>${grp.name}</td>
-                            <td>
+                            <td align="right">
                                 <c:if test="${acl.allowUpdate('USER_GROUP') || acl.allowDelete('USER_GROUP')}">
                                     <c:choose>
                                         <c:when test="${grp.locked eq 'false'}">

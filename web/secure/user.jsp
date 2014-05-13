@@ -5,7 +5,7 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('USER')}">
-        <h1>Users</h1>
+        <h1 class="page-heading user">Users</h1>
         <div class="section">
             <c:if test="${acl.allowInsert('USER')}">
             <a href="${pageContext.request.contextPath}/secure/user?id=0&action=details" class="btn btn-primary">Add new</a>
@@ -14,6 +14,7 @@
         <div class="section">
             <table class="table table-hover table-striped">
                 <tr>
+                    <th></th>
                     <th>Id</th>
                     <th>First name</th>
                     <th>Last name</th>
@@ -23,12 +24,13 @@
                 </tr>
                 <c:forEach items="${allUsers}" var="usr">
                     <tr>
+                        <td class="icon-row"><span class="row-icon user-row-icon"></span></td>
                         <td>${usr.id}</td>
                         <td>${usr.firstname}</td>
                         <td>${usr.lastname}</td>
                         <td>${usr.email}</td>
                         <td>${usr.created}</td>
-                        <td>
+                        <td align="right">
                             <c:if test="${acl.allowUpdate('USER')}">
                             <a href="${pageContext.request.contextPath}/secure/user?id=${usr.id}&action=details" class="btn btn-success btn-xs">edit</a>
                             </c:if>

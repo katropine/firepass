@@ -5,7 +5,7 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('RESOURCE')}">
-        <h1>Resources:</h1>
+        <h1 class="page-heading resource">Resources:</h1>
         <div class="row">
             <div class="col-sm-2">
                 <c:forEach items="${allResourceGroups}" var="resGrp">
@@ -19,6 +19,7 @@
                 <div class="section">
                     <table class="table table-hover table-striped">
                         <tr>
+                            <th></th>
                             <th>Id</th>
                             <th>Title</th>
                             <th>Created</th>
@@ -26,10 +27,11 @@
                         </tr>
                         <c:forEach items="${allResources}" var="res">
                             <tr>
+                                <td class="icon-row"><span class="row-icon resource-row-icon"></span></td>
                                 <td>${res.id}</td>
                                 <td>${res.title}</td>
                                 <td>${res.created}</td>
-                                <td>
+                                <td align="right">
                                     <c:if test="${acl.allowUpdate('RESOURCE')}">
                                     <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&action=details" class="btn btn-success btn-xs">edit</a>
                                     </c:if>
