@@ -8,6 +8,8 @@ package com.katropine.controller;
 
 import com.katropine.dao.UserDaoLocal;
 import com.katropine.dao.UserGroupDaoLocal;
+import com.katropine.helper.Pagging;
+import com.katropine.helper.Pagination;
 import com.katropine.model.User;
 import com.katropine.model.UserGroup;
 import java.io.IOException;
@@ -53,8 +55,11 @@ public class UserServlet extends CoreServlet {
         String q = ""; 
         q = request.getParameter("q");
         
-     
-        
+        String pageStr = request.getParameter("page");
+        int page = 0;
+        if(pageStr != null && !pageStr.equals("")){
+            page = Integer.parseInt(pageStr);
+        }
         int userId = 0;
         if(userIdStr != null && !userIdStr.equals("")){
             userId = Integer.parseInt(userIdStr);
@@ -92,15 +97,26 @@ public class UserServlet extends CoreServlet {
             userDao.deleteUser(userId);
         }
         
+        Pagination pagination = new Pagination(10, 10);
         
+        int total = userDao.countAllUsers(q);
+        Pagging pag = pagination.calc(page, total);
+        if(q==null){
+            q = "";
+        }
+        pag.setParam("q", q);
+        pag.setUrl(request.getContextPath()+"/secure/user");
         request.setAttribute("user", user);
-        request.setAttribute("allUsers", userDao.getAllUsers(q));
         
+        
+        System.out.println(pag.toString());
         if("Details".equalsIgnoreCase(action)){
             
             request.setAttribute("allUserGroups", groupDao.getAllUserGroups(this.userSess));
             request.getRequestDispatcher("user-edit.jsp").forward(request, response);
         }else{
+            request.setAttribute("allUsers", userDao.getAllUsers(q, pagination.getOffset(), pagination.getLimit()));
+            request.setAttribute("paginationHtml", pag.getUi());
             request.getRequestDispatcher("user.jsp").forward(request, response);
         }
     }

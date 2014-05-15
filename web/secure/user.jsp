@@ -28,35 +28,46 @@
         </div>
         
         <div class="container-fluid">
-            <table class="table table-hover table-striped">
-                <tr>
-                    <th></th>
-                    <th>Id</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Email</th>
-                    <th>Created</th>
-                    <th></th>
-                </tr>
-                <c:forEach items="${allUsers}" var="usr">
+            <div class="panel panel-default">
+                <ul class="list-group text-right">
+                    <li class="list-group-item">${paginationHtml}</li>
+                </ul>
+                <table class="table table-hover table-striped">
                     <tr>
-                        <td class="icon-row"><span class="row-icon user-row-icon"></span></td>
-                        <td>${usr.id}</td>
-                        <td>${usr.firstname}</td>
-                        <td>${usr.lastname}</td>
-                        <td>${usr.email}</td>
-                        <td>${usr.created}</td>
-                        <td align="right">
-                            <c:if test="${acl.allowUpdate('USER')}">
-                            <a href="${pageContext.request.contextPath}/secure/user?id=${usr.id}&action=details" class="btn btn-success btn-xs">edit</a>
-                            </c:if>
-                            <c:if test="${acl.allowDelete('USER')}">
-                            <a href="${pageContext.request.contextPath}/secure/user?id=${usr.id}&action=delete" class="btn btn-danger btn-xs">delete</a>
-                            </c:if>
-                        </td>
+                        <th></th>
+                        <th>Id</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Email</th>
+                        <th>Created</th>
+                        <th></th>
                     </tr>
-                </c:forEach>
-            </table>
+                    <c:forEach items="${allUsers}" var="usr">
+                        <tr>
+                            <td class="icon-row"><span class="row-icon user-row-icon"></span></td>
+                            <td>${usr.id}</td>
+                            <td>${usr.firstname}</td>
+                            <td>${usr.lastname}</td>
+                            <td>${usr.email}</td>
+                            <td>${usr.created}</td>
+                            <td align="right">
+                                <c:if test="${acl.allowUpdate('USER')}">
+                                <a href="${pageContext.request.contextPath}/secure/user?id=${usr.id}&action=details" class="btn btn-success btn-xs">edit</a>
+                                </c:if>
+                                <c:if test="${acl.allowDelete('USER')}">
+                                <a href="${pageContext.request.contextPath}/secure/user?id=${usr.id}&action=delete" class="btn btn-danger btn-xs">delete</a>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <ul class="list-group text-right">
+                    <li class="list-group-item">${paginationHtml}</li>
+                </ul>
+            </div>    
+            
+
+            
         </div>
         </c:if>           
     </jsp:body>                    

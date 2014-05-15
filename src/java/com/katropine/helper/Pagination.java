@@ -27,19 +27,12 @@ public class Pagination {
         this.numberOfLinks = numberOfLinks;
     }
     /**
-     *
-     * @param int page $_POST['curent_page'] or $_GET['curent_page']
-     * @param int rp how meni resoults displayd per page
-     * @param int total count with saime criteria [sql] as you pull data
-     * @return array $pg_data['pg'] ----------------------
-     *               $paging[‘start’] = starting page value
-     *               $paging[‘end’] = ending page value
-     *               $paging[‘last’] = last page
-     *               $paging[‘total’] = number of results
-     *               $paging[‘istart’] = starting result number for current page
-     *               $paging[‘iend’] = ending result number for current page
+     * 
+     * @param page
+     * @param total
+     * @return 
      */
-    public Object calc(int page, int total){
+    public Pagging calc(int page, int total){
 
         page = (page == 0)? 1 : page;
 
@@ -51,7 +44,7 @@ public class Pagination {
         
         int numpages = 1;
         if (total>this.numberOfResoults){
-            numpages = (int) Math.ceil(total/this.numberOfResoults);
+            numpages = (int) Math.ceil(total/(double)this.numberOfResoults);
         }
         if (page>numpages){ 
             page = numpages;
@@ -74,23 +67,7 @@ public class Pagination {
         while ((lastpage-npage)<this.numberOfLinks) npage -= 1;
 
         if (npage<1) npage = 1;
-        
-        class Pagging{
-            public int first = 1;
-            public int prev = 0;
-            public int start = 1;
-            public int end = 1;
-            public int page = 1;
-            public int last = 1;
-            public int total = 0;
-            public int iend = 1;
-            public int istart = 1;
-            public int next = 0;
-            
-            
-            public Pagging(){}
-        }
-        
+
         Pagging paging = new Pagging();
         
         paging.first = 1;
@@ -105,8 +82,9 @@ public class Pagination {
         paging.istart = (page * this.numberOfResoults) - this.numberOfResoults + 1;
 
         if ((page * this.numberOfResoults)>total) paging.iend = total;
-
-        return (Object) paging;
+        
+        paging.numberOfRowsPerPage = this.numberOfResoults;
+        return paging;
     }
     /**
      *

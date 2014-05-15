@@ -58,7 +58,34 @@ public class UserDao implements UserDaoLocal {
                     .setParameter("email", "%"+search+"%")
                     .getResultList();
     }
-
+    @Override
+    public List<User> getAllUsers(String search, int offset, int limit) {
+        if(search == null){
+            return this.em.createNamedQuery("User.getAll").getResultList();
+            
+        }
+        return this.em.createNamedQuery("User.searchAll")
+                    .setParameter("fname", "%"+search+"%")
+                    .setParameter("lname", "%"+search+"%")
+                    .setParameter("email", "%"+search+"%")
+                    .setFirstResult(offset)
+                    .setMaxResults(limit)
+                    .getResultList();
+    }
+    
+    @Override 
+    public int countAllUsers(String search){
+        if(search == null){
+            return this.em.createNamedQuery("User.getAll").getResultList().size();
+            
+        }
+        return ((Number) this.em.createNamedQuery("User.countAll")
+                    .setParameter("fname", "%"+search+"%")
+                    .setParameter("lname", "%"+search+"%")
+                    .setParameter("email", "%"+search+"%")
+                    .getSingleResult()).intValue();
+    }
+    
     @Override
     public void getUser() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

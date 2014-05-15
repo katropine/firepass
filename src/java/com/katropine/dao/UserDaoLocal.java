@@ -28,7 +28,11 @@ public interface UserDaoLocal {
     User getUser(int id);    
 
     List<User> getAllUsers(String search);
-
+    
+    List<User> getAllUsers(String search, int offset, int limit);
+    
+    int countAllUsers(String search);
+    
     User authenticate(User user);
 
     
