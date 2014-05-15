@@ -77,3 +77,6 @@ body{
     background-image: url(../../assets/icons/usergroups22.png);
     background-repeat: no-repeat;
 }
+.pagination li.disabled > a:hover{
+    cursor: default;
+}

@@ -43,6 +43,8 @@ public class Pagging {
         paramsStr.append("last: "+last);
         paramsStr.append("total: "+total);
         paramsStr.append("next: "+next);
+        paramsStr.append("istart: "+next);
+        paramsStr.append("iend: "+next);
         return paramsStr.toString();
     }
     /**
@@ -70,6 +72,7 @@ public class Pagging {
         
         if(this.total > this.numberOfRowsPerPage){
             html+="<ul class=\"pagination\">";
+            html+= "<li class=\"disabled\"><a href=\"#\">"+this.iend+"/"+this.total+"</a></li>";
             html+="<li><a href=\""+this.url+"?page="+this.first+this.getParams().toString()+"\" title=\"Go to Page "+this.first+"\">&laquo;</a></li>";
             html+="<li><a href=\""+this.url+"?page="+this.prev+this.getParams().toString()+"\" title=\"Go to Page "+this.prev+"\">&lsaquo;</a></li>";
             for (int i=this.start;i<=this.end;i++) {
@@ -87,6 +90,26 @@ public class Pagging {
         
         return html;
     }
+    public String getUiNumberOfRecords(){
+        return this.iend+"/"+this.total;
+    }
+    
+    public String getUiRowsPerPage(){
+        
+        String html = "<select name=\"rows\">";
+        
+        html += "<option value=\"10\">10</option>";
+        html += "<option value=\"20\">20</option>";
+        html += "<option value=\"50\">50</option>";
+        html += "<option value=\"100\">100</option>";
+        html += "<option value=\"500\">500</option>";
+        
+        html += "</select>";
+        
+        return html;
+    }
+    
+    
     /**
      * 
      * @return StringBuilder

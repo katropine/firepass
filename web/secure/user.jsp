@@ -62,7 +62,9 @@
                     </c:forEach>
                 </table>
                 <ul class="list-group text-right">
-                    <li class="list-group-item">${paginationHtml}</li>
+                    <li class="list-group-item">
+                        ${paginationHtml}
+                    </li>
                 </ul>
             </div>    
             
