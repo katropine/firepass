@@ -87,3 +87,18 @@ body{
 .list-group{
     margin-bottom: 0;
 }
+
+.footer {
+  
+  background-color: #444;  
+  height: 15px;
+ font-family: tahoma;
+    font-size: 11px;
+    color: #ffffff;
+
+}
+.footer a{
+    font-family: tahoma;
+    font-size: 11px;
+    color: #ffffff;
+}

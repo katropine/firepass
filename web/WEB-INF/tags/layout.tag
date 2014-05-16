@@ -68,5 +68,10 @@
         <div class="container">
         <jsp:doBody/>
         </div>
-    </body>
+
+        <div class="footer navbar-fixed-bottom" >
+            <div class="container credit">
+                <p class="text-muted credit text-center">© Katropine, <a href="http://www.katropine.com">www.katropine.com</a></p>
+            </div>
+        </div>
 </html>
