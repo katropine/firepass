@@ -10,7 +10,6 @@ import com.katropine.dao.UserDaoLocal;
 import com.katropine.model.User;
 import com.katropine.model.UserSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,7 +59,7 @@ public class LoginServlet extends HttpServlet {
                     userSess.setUser(member);
                                         
                     session.setAttribute("userSession", userSess);
-                    response.sendRedirect("./secure/user");
+                    response.sendRedirect("./secure/resource");
                 }else{
                     message = "Wrong Email or/and password";
                     request.setAttribute("message", message);

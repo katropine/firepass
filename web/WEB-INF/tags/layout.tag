@@ -23,7 +23,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/timetracker2/public/">Time Tracker</a>
+                    <a class="navbar-brand" href="#">FirePass</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
@@ -40,15 +40,27 @@
                         <li><a href="${pageContext.request.contextPath}/secure/usergroup">User Groups</a></li>
                         </c:if>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="">Logdin as ${sessionUserName}</a> </li>
+                    <ul class="nav nav-pills pull-right">
                         <li>
-                            <a href="#">Settings</a>
-                        </li>
-                        <li>
-                           <a href="../logout">Logg out</a>
+                            <form class="navbar-form form-inline">
+                            <div class="btn-group">
+                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Logdin as ${sessionUserName} &nbsp;<span class="caret"></span></button>
+                            
+                            <ul class="dropdown-menu">
+                              
+                              <li><a href="#">Settings</a></li>
+                              <li><a href="#">Change Password</a></li>
+                              <li class="divider"></li>
+                              <li><a href="../logout">Sign out</a></li>
+                            </ul>
+                          </div>
+                          </form>  
                         </li>
                     </ul>
+                            
+                                  
+
+
                 </div><!--/.nav-collapse -->
             </div>
         </div>
