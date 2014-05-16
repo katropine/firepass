@@ -8,6 +8,8 @@ package com.katropine.controller;
 
 import com.katropine.dao.ResourceDaoLocal;
 import com.katropine.dao.ResourceGroupDaoLocal;
+import com.katropine.helper.Pagging;
+import com.katropine.helper.Pagination;
 import com.katropine.model.Resource;
 import com.katropine.model.ResourceGroup;
 import java.io.IOException;
@@ -47,6 +49,13 @@ public class ResourceServlet extends CoreServlet {
         
         String action = request.getParameter("action");
         String resIdStr = request.getParameter("id");
+        String q = request.getParameter("q");
+        String pageStr = request.getParameter("page");
+        int page = 0;
+        if(pageStr != null && !pageStr.equals("")){
+            page = Integer.parseInt(pageStr);
+        }
+        
         int resId = 0;
         if(resIdStr != null && !resIdStr.equals("")){
             resId = Integer.parseInt(resIdStr);
@@ -98,13 +107,36 @@ public class ResourceServlet extends CoreServlet {
             resDao.deleteResource(resId);
         }
         
+        Pagination pagination = new Pagination(10, 10);
+        
+        int total;
+        if(groupId == 0){
+            total = resDao.countAllResources(q);
+        }else{
+            total = resDao.countAllResourcesByGroup(groupId);
+        }
+        Pagging pag = pagination.calc(page, total);
+        
+        
+        pag.setParam("group", Integer.toString(groupId));
+        pag.setUrl(request.getContextPath()+"/secure/resource");
+        
         request.setAttribute("resource", resource);
+        request.setAttribute("groupId", groupId);
         request.setAttribute("allResourceGroups", resGrpDao.getAllResourceGroup());
         if("Details".equalsIgnoreCase(action)){
             
             request.getRequestDispatcher("resource-edit.jsp").forward(request, response);
         }else{
-            request.setAttribute("allResources", resDao.getAllResourcesByGroup(groupId));
+            if(groupId == 0){
+                if(q!=null && !q.isEmpty()){
+                    pag.setParam("q", q);
+                }
+                request.setAttribute("allResources", resDao.getAllResources(q, pagination.getOffset(), pagination.getLimit()));
+            }else{
+                request.setAttribute("allResources", resDao.getAllResourcesByGroup(groupId, pagination.getOffset(), pagination.getLimit()));
+            }
+            request.setAttribute("paginationHtml", pag.getUi());
             request.getRequestDispatcher("resource.jsp").forward(request, response);
         }
     }

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -45,8 +46,27 @@ public class ResourceDao implements ResourceDaoLocal {
     
     
     @Override
-    public List<Resource> getAllResources() {
-        return this.em.createNamedQuery("Resource.getAll").getResultList();
+    public List<Resource> getAllResources(String search, int offset, int limit) {
+        Query query = this.em.createNamedQuery("Resource.getAll");
+        if(search!=null && !search.isEmpty()){
+            query.setParameter("title", "%" + search + "%");
+        }else{
+            query.setParameter("title", "%%");
+        }
+        
+        return query.setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+    @Override
+    public int countAllResources(String search) {
+        Query query = this.em.createNamedQuery("Resource.countAll");
+        if(search!=null && !search.isEmpty()){
+            query.setParameter("title", "%" + search + "%");
+        }else{
+            query.setParameter("title", "%%");
+        }
+        return ((Number) query.getSingleResult()).intValue();
     }
 
     @Override
@@ -55,14 +75,22 @@ public class ResourceDao implements ResourceDaoLocal {
     }
 
     @Override
-    public List<Resource> getAllResourcesByGroup(int groupId) {
+    public List<Resource> getAllResourcesByGroup(int groupId, int offset, int limit) {
         List<Resource> res =this.em.createNamedQuery("Resource.getAllByGroup")
-                    .setParameter("groupid", groupId)
-                    .getResultList();
+                .setParameter("groupid", groupId)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
         return res;
     }
-    
-    
+    @Override
+    public int countAllResourcesByGroup(int groupId){
+        
+        Query query = this.em.createNamedQuery("Resource.countAllByGroup");
+        query.setParameter("groupid", groupId);
+       
+        return ((Number) query.getSingleResult()).intValue();
+    }
     
     
     

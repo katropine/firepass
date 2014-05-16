@@ -25,10 +25,14 @@ public interface ResourceDaoLocal {
 
     Resource getResource(int id);
     
-    List<Resource> getAllResources();
+    List<Resource> getAllResources(String search, int offset, int limit);
+    
+    int countAllResources(String search);
     
     void getResource();
 
-    List<Resource> getAllResourcesByGroup(int groupId);
+    List<Resource> getAllResourcesByGroup(int groupId, int offset, int limit);
+    
+    int countAllResourcesByGroup(int groupId);
     
 }

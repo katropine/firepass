@@ -27,8 +27,12 @@ public interface UserGroupDaoLocal {
     UserGroup getUserGroup(int id);
     
     UserGroup getUserGroup();
-
-    List<UserGroup> getAllUserGroups(UserSession us);
+    
+    List<UserGroup> getAllUserGroups(UserSession us, String search);
+    
+    List<UserGroup> getAllUserGroups(UserSession us, String search, int offset, int limit);
+    
+    int countAllUserGroups(UserSession us, String search);
     
     
 }

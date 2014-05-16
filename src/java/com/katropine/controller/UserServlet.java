@@ -109,10 +109,10 @@ public class UserServlet extends CoreServlet {
         request.setAttribute("user", user);
         
         
-        System.out.println(pag.toString());
+        
         if("Details".equalsIgnoreCase(action)){
             
-            request.setAttribute("allUserGroups", groupDao.getAllUserGroups(this.userSess));
+            request.setAttribute("allUserGroups", groupDao.getAllUserGroups(this.userSess, ""));
             request.getRequestDispatcher("user-edit.jsp").forward(request, response);
         }else{
             request.setAttribute("allUsers", userDao.getAllUsers(q, pagination.getOffset(), pagination.getLimit()));

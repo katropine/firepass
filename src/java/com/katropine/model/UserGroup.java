@@ -22,8 +22,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user_group")
 @NamedQueries({
-    @NamedQuery(name="UserGroup.getAllForAdmin", query="SELECT e FROM UserGroup e"),
-    @NamedQuery(name="UserGroup.getAll", query="SELECT e FROM UserGroup e WHERE e.id != 1")
+    @NamedQuery(name="UserGroup.getAllForAdmin", query="SELECT e FROM UserGroup e WHERE e.name LIKE :name"),
+    @NamedQuery(name="UserGroup.countAllForAdmin", query="SELECT COUNT(e) FROM UserGroup e WHERE e.name LIKE :name"),
+    @NamedQuery(name="UserGroup.getAll", query="SELECT e FROM UserGroup e WHERE e.id != 1 AND e.name LIKE :name"),
+    @NamedQuery(name="UserGroup.countAll", query="SELECT COUNT(e) FROM UserGroup e WHERE e.id != 1 AND e.name LIKE :name")
 })
 public class UserGroup implements Serializable{
     

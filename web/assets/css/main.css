@@ -80,3 +80,10 @@ body{
 .pagination li.disabled > a:hover{
     cursor: default;
 }
+.list-group-item{
+    background-color: transparent;
+    border: none;
+}
+.list-group{
+    margin-bottom: 0;
+}

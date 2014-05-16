@@ -69,10 +69,9 @@ public class Pagging {
      */
     public String getUi(){
         String html = "";
+        html+="<ul class=\"pagination\">";
         
         if(this.total > this.numberOfRowsPerPage){
-            html+="<ul class=\"pagination\">";
-            html+= "<li class=\"disabled\"><a href=\"#\">"+this.iend+"/"+this.total+"</a></li>";
             html+="<li><a href=\""+this.url+"?page="+this.first+this.getParams().toString()+"\" title=\"Go to Page "+this.first+"\">&laquo;</a></li>";
             html+="<li><a href=\""+this.url+"?page="+this.prev+this.getParams().toString()+"\" title=\"Go to Page "+this.prev+"\">&lsaquo;</a></li>";
             for (int i=this.start;i<=this.end;i++) {
@@ -85,9 +84,10 @@ public class Pagging {
             }
             html+="<li><a href=\""+this.url+"?page="+this.next+this.getParams().toString()+"\" title=\"Go to Page "+this.next+"\">&rsaquo;</a></li>";
             html+="<li><a href=\""+this.url+"?page="+this.last+this.getParams().toString()+"\" title=\"Go to Page "+this.last+"\">&raquo;</a></li>";
-            html+="</ul>";
         }
-        
+        html+= "<li class=\"disabled\"><a href=\"#\">"+this.page+"/"+this.end+"</a></li>";
+        html+= "<li class=\"disabled\"><a href=\"#\">records: "+this.total+"</a></li>";
+        html+="</ul>";
         return html;
     }
     public String getUiNumberOfRecords(){

@@ -8,6 +8,8 @@ package com.katropine.controller;
 
 import com.katropine.dao.AccessControlListDaoLocal;
 import com.katropine.dao.UserGroupDaoLocal;
+import com.katropine.helper.Pagging;
+import com.katropine.helper.Pagination;
 import com.katropine.helper.Permission;
 import com.katropine.model.AccessControlList;
 import com.katropine.model.UserGroup;
@@ -49,6 +51,12 @@ public class UserGroupServlet extends CoreServlet {
         
         String action = request.getParameter("action");
         String usergroupIdStr = request.getParameter("id");
+        String q = request.getParameter("q");
+        String pageStr = request.getParameter("page");
+        int page = 0;
+        if(pageStr != null && !pageStr.equals("")){
+            page = Integer.parseInt(pageStr);
+        }
         
         int usergroupId = 0;
         if(usergroupIdStr != null && !usergroupIdStr.equals("")){
@@ -116,10 +124,21 @@ public class UserGroupServlet extends CoreServlet {
         }else if("Delete".equalsIgnoreCase(action)){
             usrGrpDao.deleteUserGroup(usergroupId);
         }
-                
+        
+        
+        Pagination pagination = new Pagination(10, 10);
+        
+        int total = usrGrpDao.countAllUserGroups(this.userSess, q);
+        Pagging pag = pagination.calc(page, total);
+        if(q==null){
+            q = new String();
+        }
+        System.out.println("total: "+total);
+        pag.setParam("q", q);
+        pag.setUrl(request.getContextPath()+"/secure/usergroup");
         request.setAttribute("userGroup", usergroup);
        
-        request.setAttribute("allUserGroups", usrGrpDao.getAllUserGroups(this.userSess));
+        
         
         if("Details".equalsIgnoreCase(action)){
             if(usergroup.getId() > 0){
@@ -139,6 +158,8 @@ public class UserGroupServlet extends CoreServlet {
             }
             request.getRequestDispatcher("user-group-edit.jsp").forward(request, response);
         }else{
+            request.setAttribute("allUserGroups", usrGrpDao.getAllUserGroups(this.userSess, q, pagination.getOffset(), pagination.getLimit()));
+            request.setAttribute("paginationHtml", pag.getUi());
             request.getRequestDispatcher("user-group.jsp").forward(request, response);
         }
     }

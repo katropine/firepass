@@ -5,17 +5,16 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('USER_GROUP')}">        
-            <h2 class="page-heading user-groups sub-header">User Groups</h2>
-            
             <div class="container-fluid">
             <nav class="navbar navbar-default" role="navigation">
                 
                 <div class="container-fluid">
-                    <form class="navbar-form navbar-left" role="search">
+                    <form action="" class="navbar-form navbar-left" role="search" method="GET">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
+                            <input type="text" name="q" class="form-control" placeholder="Search">
                         </div>
                         <button type="submit" class="btn btn-default">Submit</button>
+                        
                         
                     </form>
                     <div class="navbar-form navbar-right">
@@ -26,42 +25,56 @@
                 </div>
             </nav>
             </div>
+            
+            <div class="container-fluid">
+                <div class="panel panel-default">
+                    <div class="row">
+                        <div class="col-md-6"><div class="container-fluid"><h2 class="page-heading user-groups sub-header">User Groups</h2></div></div>
+                        <div class="col-md-6"><ul class="list-group text-right">
+                        <li class="list-group-item">${paginationHtml}</li>
+                    </ul></div>
+                    </div>
 
-             <div class="container-fluid">
-                <table class="table table-hover table-striped">
-                    <tr>
-                        <th></th>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th></th>
-                    </tr>
-                    <c:forEach items="${allUserGroups}" var="grp">
+                    <table class="table table-hover table-striped">
                         <tr>
-                            <td class="icon-row"><span class="row-icon user-groups-row-icon"></span></td>
-                            <td>${grp.id}</td>
-                            <td>${grp.name}</td>
-                            <td align="right">
-                                <c:if test="${acl.allowUpdate('USER_GROUP') || acl.allowDelete('USER_GROUP')}">
-                                    <c:choose>
-                                        <c:when test="${grp.locked eq 'false'}">
-                                            <c:if test="${acl.allowUpdate('USER_GROUP')}">
-                                            <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=details" class="btn btn-success btn-xs">edit</a>
-                                            </c:if>
-                                            <c:if test="${acl.allowDelete('USER_GROUP')}">
-                                            <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=delete" class="btn btn-danger btn-xs">delete</a>
-                                            </c:if>
-                                        </c:when>
-                                        <c:otherwise>
-
-                                            <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=details" class="btn btn-primary btn-xs">details</a>
-
-                                        </c:otherwise>    
-                                    </c:choose>
-                                </c:if>
-                            </td>
+                            <th></th>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th></th>
                         </tr>
-                    </c:forEach>
-                </table>
+                        <c:forEach items="${allUserGroups}" var="grp">
+                            <tr>
+                                <td class="icon-row"><span class="row-icon user-groups-row-icon"></span></td>
+                                <td>${grp.id}</td>
+                                <td>${grp.name}</td>
+                                <td align="right">
+                                    <c:if test="${acl.allowUpdate('USER_GROUP') || acl.allowDelete('USER_GROUP')}">
+                                        <c:choose>
+                                            <c:when test="${grp.locked eq 'false'}">
+                                                <c:if test="${acl.allowUpdate('USER_GROUP')}">
+                                                <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=details" class="btn btn-success btn-xs">edit</a>
+                                                </c:if>
+                                                <c:if test="${acl.allowDelete('USER_GROUP')}">
+                                                <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=delete" class="btn btn-danger btn-xs">delete</a>
+                                                </c:if>
+                                            </c:when>
+                                            <c:otherwise>
+
+                                                <a href="${pageContext.request.contextPath}/secure/usergroup?id=${grp.id}&action=details" class="btn btn-primary btn-xs">details</a>
+
+                                            </c:otherwise>    
+                                        </c:choose>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                    <ul class="list-group text-right">
+                        <li class="list-group-item">
+                            ${paginationHtml}
+                        </li>
+                    </ul>
+                </div>
             </div>
         
         </c:if>           

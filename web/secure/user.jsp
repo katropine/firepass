@@ -5,7 +5,7 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('USER')}">
-        <h2 class="page-heading user">Users</h2>
+        
         <div class="container-fluid">
             <nav class="navbar navbar-default" role="navigation">
                 
@@ -29,9 +29,14 @@
         
         <div class="container-fluid">
             <div class="panel panel-default">
-                <ul class="list-group text-right">
+                <div class="row">
+                    <div class="col-md-6"><div class="container-fluid"><h2 class="page-heading user">Users</h2></div></div>
+                    <div class="col-md-6"><ul class="list-group text-right">
                     <li class="list-group-item">${paginationHtml}</li>
-                </ul>
+                </ul></div>
+                </div>
+                
+                
                 <table class="table table-hover table-striped">
                     <tr>
                         <th></th>

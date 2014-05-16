@@ -5,18 +5,43 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('RESOURCE')}">
-        <h1 class="page-heading resource">Resources:</h1>
         <div class="row">
             <div class="col-sm-2">
                 <c:forEach items="${allResourceGroups}" var="resGrp">
                     <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-default btn-block">${resGrp.name}</a>
                 </c:forEach>
             </div>
-            <div class="col-md-8">
-                <div class="section">
-                    <a href="${pageContext.request.contextPath}/secure/resource?id=0&action=details" class="btn btn-primary">Add new</a>
+            <div class="col-md-10">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-default" role="navigation">
+
+                        <div class="container-fluid">
+                            <form class="navbar-form navbar-left" role="search" method="GET">
+                                <div class="form-group">
+                                    <input type="text" name="q" class="form-control" placeholder="Search">
+                                </div>
+
+                                <button type="submit" class="btn btn-default">Submit</button>
+
+                            </form>
+                            <div class="navbar-form navbar-right">
+                                <c:if test="${acl.allowInsert('RESOURCE')}">
+                                <a href="${pageContext.request.contextPath}/secure/resource?id=0&group=${groupId}&action=details" class="btn btn-primary">Add new</a>
+                                </c:if>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
-                <div class="section">
+                
+                
+                <div class="container-fluid">
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-md-6"><div class="container-fluid"><h2 class="page-heading resource">Resources</h2></div></div>
+                            <div class="col-md-6"><ul class="list-group text-right">
+                            <li class="list-group-item">${paginationHtml}</li>
+                        </ul></div>
+                    </div>
                     <table class="table table-hover table-striped">
                         <tr>
                             <th></th>
@@ -33,7 +58,7 @@
                                 <td>${res.created}</td>
                                 <td align="right">
                                     <c:if test="${acl.allowUpdate('RESOURCE')}">
-                                    <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&action=details" class="btn btn-success btn-xs">edit</a>
+                                    <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&group=${res.group.id}&action=details" class="btn btn-success btn-xs">edit</a>
                                     </c:if>
                                     <c:if test="${acl.allowDelete('RESOURCE')}">
                                     <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&action=delete" class="btn btn-danger btn-xs">delete</a>
@@ -42,9 +67,16 @@
                             </tr>
                         </c:forEach>
                     </table>
-                </div>
+                        <ul class="list-group text-right">
+                    <li class="list-group-item">
+                        ${paginationHtml}
+                    </li>
+                </ul>
+            </div>   
+                
             </div>
         </div>
+                    </div>
         </c:if>
     </jsp:body>
 </t:layout>

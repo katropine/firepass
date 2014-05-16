@@ -19,7 +19,7 @@
                         <option value="">Select...</option>
                         <c:forEach items="${allResourceGroups}" var="grp">
                             <c:choose>
-                                <c:when test="${grp.id==resource.group.id}">
+                                <c:when test="${grp.id==resource.group.id || grp.id==groupId}">
                                     <option value="${grp.id}" selected="selected">${grp.name}</option>
                                 </c:when>    
                                 <c:otherwise>

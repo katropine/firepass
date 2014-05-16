@@ -40,8 +40,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="resource")
 @NamedQueries({
-    @NamedQuery(name="Resource.getAll", query="SELECT e FROM Resource e"),
-    @NamedQuery(name="Resource.getAllByGroup", query="SELECT e FROM Resource e WHERE e.group.id=:groupid")
+    @NamedQuery(name="Resource.getAll", query="SELECT e FROM Resource e WHERE e.title LIKE :title"),
+    @NamedQuery(name="Resource.countAll", query="SELECT COUNT(e) FROM Resource e WHERE e.title LIKE :title"),
+    @NamedQuery(name="Resource.getAllByGroup", query="SELECT e FROM Resource e WHERE e.group.id=:groupid"),
+    @NamedQuery(name="Resource.countAllByGroup", query="SELECT COUNT(e) FROM Resource e WHERE e.group.id=:groupid")
 })
 public class Resource implements Serializable{
     

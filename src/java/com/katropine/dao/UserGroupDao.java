@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 
 /**
@@ -48,14 +49,48 @@ public class UserGroupDao implements UserGroupDaoLocal {
     public UserGroup getUserGroup() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
-    public List<UserGroup> getAllUserGroups(UserSession us) {
-        if(us.getUser().getUserGroup().getId() == 1){
-            return this.em.createNamedQuery("UserGroup.getAllForAdmin").getResultList();
-        }
-        return this.em.createNamedQuery("UserGroup.getAll").getResultList();
+    public List<UserGroup> getAllUserGroups(UserSession us, String search) {
+        return this.getAllUserGroups(us, search, 0, 9999999);
     }
     
+    @Override
+    public List<UserGroup> getAllUserGroups(UserSession us, String search, int offset, int limit) {
+        if(us.getUser().getUserGroup().getId() == 1){
+            return this.em.createNamedQuery("UserGroup.getAllForAdmin")
+                    .setParameter("name", "%"+search+"%")
+                    .setFirstResult(offset)
+                    .setMaxResults(limit)
+                    .getResultList();
+        }
+        return this.em.createNamedQuery("UserGroup.getAll")
+                .setParameter("name", "%"+search+"%")
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+    @Override 
+    public int countAllUserGroups(UserSession us, String search){
+        if(us.getUser().getUserGroup().getId() == 1){
+            
+            Query query = this.em.createNamedQuery("UserGroup.countAllForAdmin");
+            if(search!=null && !search.isEmpty()){
+                query.setParameter("name", "%"+search+"%");
+            }else{
+                query.setParameter("name", "%%");
+            }
+            return ((Number)query.getSingleResult()).intValue();
+            
+        }
+        
+        Query query = this.em.createNamedQuery("UserGroup.countAll");
+        if(search!=null && !search.isEmpty()){
+            query.setParameter("name", "%" + search + "%");
+        }else{
+            query.setParameter("name", "%%");
+        }
+        return ((Number) query.getSingleResult()).intValue();
+    }
 
 }
