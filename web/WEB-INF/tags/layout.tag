@@ -25,6 +25,7 @@
                     </button>
                     <a class="navbar-brand" href="#">FirePass</a>
                 </div>
+                
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <c:if test="${acl.allowView('RESOURCE')}">
@@ -40,21 +41,19 @@
                         <li><a href="${pageContext.request.contextPath}/secure/usergroup">User Groups</a></li>
                         </c:if>
                     </ul>
-                    <ul class="nav nav-pills pull-right">
-                        <li>
-                            <form class="navbar-form form-inline">
-                            <div class="btn-group">
-                                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Logdin as ${sessionUserName} &nbsp;<span class="caret"></span></button>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
                             
-                            <ul class="dropdown-menu">
+                                <a data-toggle="dropdown" href="#">Logdin as ${sessionUserName} &nbsp;<span class="caret"></span></a>
+                            
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                               
                               <li><a href="#">Settings</a></li>
                               <li><a href="#">Change Password</a></li>
                               <li class="divider"></li>
                               <li><a href="../logout">Sign out</a></li>
                             </ul>
-                          </div>
-                          </form>  
+                           
                         </li>
                     </ul>
                             
