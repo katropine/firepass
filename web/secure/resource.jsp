@@ -8,7 +8,14 @@
         <div class="row">
             <div class="col-sm-2">
                 <c:forEach items="${allResourceGroups}" var="resGrp">
-                    <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-default btn-block">${resGrp.name}</a>
+                    <c:choose>
+                    <c:when test="${groupId == resGrp.id}">
+                    <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-default btn-block active">${resGrp.name}</a>
+                    </c:when>    
+                    <c:otherwise>
+                     <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-default btn-block">${resGrp.name}</a>   
+                    </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </div>
             <div class="col-md-10">
