@@ -8,7 +8,7 @@ package com.katropine.controller;
 
 import com.katropine.dao.UserDaoLocal;
 import com.katropine.dao.UserGroupDaoLocal;
-import com.katropine.helper.Pagging;
+import com.katropine.helper.PaginationResource;
 import com.katropine.helper.Pagination;
 import com.katropine.model.User;
 import com.katropine.model.UserGroup;
@@ -69,7 +69,7 @@ public class UserServlet extends CoreServlet {
             usergroupId = Integer.parseInt(usergroupIdStr);
         }
         
-        System.out.println("action: "+action+", id: "+userId+" request: "+this.requestMethod);
+        
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String email = request.getParameter("email");
@@ -100,7 +100,7 @@ public class UserServlet extends CoreServlet {
         Pagination pagination = new Pagination(10, 10);
         
         int total = userDao.countAllUsers(q);
-        Pagging pag = pagination.calc(page, total);
+        PaginationResource pag = pagination.calc(page, total);
         if(q==null){
             q = "";
         }

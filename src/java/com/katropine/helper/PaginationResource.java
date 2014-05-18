@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @author kriss
  */
-public class Pagging {
+public class PaginationResource {
     public int first = 1;
     public int prev = 0;
     public int start = 1;
@@ -30,7 +30,7 @@ public class Pagging {
     protected String url;
     protected HashMap<String, String> params = new HashMap<>();
     
-    public Pagging(){}
+    public PaginationResource(){}
     
     @Override
     public String toString(){

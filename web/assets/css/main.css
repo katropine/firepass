@@ -102,3 +102,9 @@ body{
     font-size: 11px;
     color: #ffffff;
 }
+.no-form{
+    overflow: auto;
+}
+.label-no-form{
+    padding-left: 0;
+}

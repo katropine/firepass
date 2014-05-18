@@ -8,7 +8,7 @@ package com.katropine.controller;
 
 import com.katropine.dao.AccessControlListDaoLocal;
 import com.katropine.dao.UserGroupDaoLocal;
-import com.katropine.helper.Pagging;
+import com.katropine.helper.PaginationResource;
 import com.katropine.helper.Pagination;
 import com.katropine.helper.Permission;
 import com.katropine.model.AccessControlList;
@@ -129,7 +129,7 @@ public class UserGroupServlet extends CoreServlet {
         Pagination pagination = new Pagination(10, 10);
         
         int total = usrGrpDao.countAllUserGroups(this.userSess, q);
-        Pagging pag = pagination.calc(page, total);
+        PaginationResource pag = pagination.calc(page, total);
         if(q==null){
             q = new String();
         }

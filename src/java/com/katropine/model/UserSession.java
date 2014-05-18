@@ -15,7 +15,8 @@ import java.util.Date;
 public class UserSession {
     private User user;
     private Date loginTime;
- 
+    private String timeZone;
+    
     public User getUser() {
         return user;
     }
@@ -31,4 +32,13 @@ public class UserSession {
     public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
     }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+    
 }

@@ -6,27 +6,22 @@
 
 package com.katropine.controller;
 
-import com.katropine.dao.UserDaoLocal;
-import com.katropine.model.User;
-import com.katropine.model.UserSession;
 import java.io.IOException;
-import javax.ejb.EJB;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.TimeZone;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author kriss
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
-    
-    @EJB
-    private UserDaoLocal userDao;
+@WebServlet(name = "SettingsServlet", urlPatterns = {"/secure/settings"})
+public class SettingsServlet extends CoreServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -35,43 +30,19 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            super.processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
         
-        String action = request.getParameter("login");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        HttpSession session = request.getSession();
-        System.out.println("LNG: "+request.getLocale());
         
-        String message = "";
-        if(session.getAttribute("user") == null){
-            if(email!=null && password!=null && !email.equals("") && !password.equals("")){
+        String[] allTimeZones = TimeZone.getAvailableIDs();
 
-                User user = new User();
-                user.setEmail(email);
-                user.setCandidatePassword(password);
-                
-                User member = userDao.authenticate(user);
-                if(member!=null && member.getId() > 0){
-                    
-                    UserSession userSess = new UserSession();
-                    userSess.setUser(member);
-                                        
-                    session.setAttribute("userSession", userSess);
-                    response.sendRedirect("./secure/resource");
-                }else{
-                    message = "Wrong Email or/and password";
-                    request.setAttribute("message", message);
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                }
-            }else{
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-        }else{
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+        Arrays.sort(allTimeZones);
+        
+        request.setAttribute("allTimeZones", allTimeZones);
+        request.getRequestDispatcher("settings.jsp").forward(request, response);
         
     }
 

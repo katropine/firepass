@@ -55,6 +55,8 @@ public class User implements Serializable{
     private String email;
     @Column
     private String password;
+    @Column(name="time_zone")
+    private String timeZone;
     
     @Transient
     private String candidatePassword;
@@ -148,6 +150,14 @@ public class User implements Serializable{
 
     public void setUserGroups(UserGroup userGroup) {
         this.userGroup = userGroup;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
     
     

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -41,12 +42,34 @@ public class ResourceGroupDao implements ResourceGroupDaoLocal {
     public ResourceGroup getResourceGroup(int id) {
         return this.em.find(ResourceGroup.class, id);
     }
-  
+    
     @Override
-    public List<ResourceGroup> getAllResourceGroup() {
-        return this.em.createNamedQuery("ResourceGroup.getAll").getResultList();
+    public List<ResourceGroup> getAllResourceGroup(){
+        return this.em.createNamedQuery("ResourceGroup.getAll").setParameter("name", "%%").getResultList();
     }
-
+    
+    @Override
+    public List<ResourceGroup> getAllResourceGroup(String search, int offset, int limit) {
+        Query query = this.em.createNamedQuery("ResourceGroup.getAll");
+        if(search != null && search instanceof String){
+            query.setParameter("name", "%"+search+"%");
+        }else{
+            query.setParameter("name", "%%");
+        }
+        return query.setFirstResult(offset).setMaxResults(limit).getResultList(); 
+    }
+    
+    @Override
+    public int countAllResourceGroup(String search){
+        Query query = this.em.createNamedQuery("ResourceGroup.countAll");
+        if(search != null && search instanceof String){
+            query.setParameter("name", "%"+search+"%");
+        }else{
+            query.setParameter("name", "%%");
+        }
+        return ((Number)query.getSingleResult()).intValue();
+    }        
+    
     @Override
     public void getResourceGroup() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

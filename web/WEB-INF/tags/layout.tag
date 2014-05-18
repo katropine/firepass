@@ -2,6 +2,7 @@
 <%@attribute name="header" fragment="true" %>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@tag import="com.katropine.helper.Permission" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@tag trimDirectiveWhitespaces="true"%><!DOCTYPE html>
 <html>
     <head>
@@ -29,16 +30,16 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <c:if test="${acl.allowView('RESOURCE')}">
-                        <li><a href="${pageContext.request.contextPath}/secure/resource">Resource</a></li>
+                        <li><a href="${pageContext.request.contextPath}/secure/resource"><fmt:message key="resource"/></a></li>
                         </c:if>
                         <c:if test="${acl.allowView('RESOURCE_GROUP')}">    
-                        <li><a href="${pageContext.request.contextPath}/secure/resourcegroup">Resource Groups</a></li>
+                        <li><a href="${pageContext.request.contextPath}/secure/resourcegroup"><fmt:message key="resource_groups"/></a></li>
                         </c:if>
                         <c:if test="${acl.allowView('USER')}">
-                        <li><a href="${pageContext.request.contextPath}/secure/user">User</a></li>
+                        <li><a href="${pageContext.request.contextPath}/secure/user"><fmt:message key="user"/></a></li>
                         </c:if>
                         <c:if test="${acl.allowView('USER_GROUP')}">
-                        <li><a href="${pageContext.request.contextPath}/secure/usergroup">User Groups</a></li>
+                        <li><a href="${pageContext.request.contextPath}/secure/usergroup"><fmt:message key="user_groups"/></a></li>
                         </c:if>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -48,7 +49,7 @@
                             
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                               
-                              <li><a href="#">Settings</a></li>
+                              <li><a href="${pageContext.request.contextPath}/secure/settings">Settings</a></li>
                               <li><a href="#">Change Password</a></li>
                               <li class="divider"></li>
                               <li><a href="../logout">Sign out</a></li>

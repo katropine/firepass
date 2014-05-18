@@ -7,13 +7,13 @@
 package com.katropine.controller;
 
 import com.katropine.dao.ResourceGroupDaoLocal;
+import com.katropine.helper.PaginationResource;
+import com.katropine.helper.Pagination;
 import com.katropine.model.ResourceGroup;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,32 +42,54 @@ public class ResourceGroupsServlet extends CoreServlet {
         
         String action = request.getParameter("action");
         String grpIdStr = request.getParameter("id");
+        String q = ""; 
+        q = request.getParameter("q");
+        
+        String pageStr = request.getParameter("page");
+        int page = 0;
+        if(pageStr != null && !pageStr.equals("")){
+            page = Integer.parseInt(pageStr);
+        }
         int grpId = 0;
         if(grpIdStr != null && !grpIdStr.equals("")){
             grpId = Integer.parseInt(grpIdStr);
         }
-        System.out.println("action: "+action+", id: "+grpId);
         
         String title = request.getParameter("title");
         
         ResourceGroup group = new ResourceGroup(title);
         
-        if("Add".equalsIgnoreCase(action) && grpId==0){
-            groupDao.addResourceGroup(group);
-        }else if("Details".equalsIgnoreCase(action)){
+        if("Details".equalsIgnoreCase(action)){
             group = groupDao.getResourceGroup(grpId);
-        }else if("Edit".equalsIgnoreCase(action)){
-            group.setId(grpId);
-            groupDao.editResourceGroup(group);
+        }else if("save".equalsIgnoreCase(action)){
+            
+            if(grpId==0){
+                groupDao.addResourceGroup(group);
+            }else{
+                group.setId(grpId);
+                groupDao.editResourceGroup(group);
+            }
+        
         }else if("Delete".equalsIgnoreCase(action)){
             groupDao.deleteResourceGroup(grpId);
         }
         
+        Pagination pagination = new Pagination(10, 10);
+        
+        int total = groupDao.countAllResourceGroup(q);
+        PaginationResource pag = pagination.calc(page, total);
+        if(q==null){
+            q = "";
+        }
+        pag.setParam("q", q);
+        pag.setUrl(request.getContextPath()+"/secure/resourcegroup");
+        System.out.println(total);
         if("Details".equalsIgnoreCase(action)){
             request.setAttribute("group", group);
             request.getRequestDispatcher("resource-group-edit.jsp").forward(request, response);
         }else{
-            request.setAttribute("allGroups", groupDao.getAllResourceGroup());
+            request.setAttribute("allGroups", groupDao.getAllResourceGroup(q, pagination.getOffset(), pagination.getLimit()));
+            request.setAttribute("paginationHtml", pag.getUi());
             request.getRequestDispatcher("resource-group.jsp").forward(request, response);
         }
     }

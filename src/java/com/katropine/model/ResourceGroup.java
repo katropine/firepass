@@ -23,7 +23,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="resource_group")
 @NamedQueries({
-    @NamedQuery(name="ResourceGroup.getAll", query="SELECT e FROM ResourceGroup e")
+    @NamedQuery(name="ResourceGroup.getAll", query="SELECT e FROM ResourceGroup e WHERE e.name LIKE :name"),
+    @NamedQuery(name="ResourceGroup.countAll", query="SELECT COUNT(e) FROM ResourceGroup e WHERE e.name LIKE :name")
 })
 public class ResourceGroup  implements Serializable{
     

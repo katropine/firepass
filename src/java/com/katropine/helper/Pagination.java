@@ -32,7 +32,7 @@ public class Pagination {
      * @param total
      * @return 
      */
-    public Pagging calc(int page, int total){
+    public PaginationResource calc(int page, int total){
 
         page = (page == 0)? 1 : page;
 
@@ -68,7 +68,7 @@ public class Pagination {
 
         if (npage<1) npage = 1;
 
-        Pagging paging = new Pagging();
+        PaginationResource paging = new PaginationResource();
         
         paging.first = 1;
         if (page>1) paging.prev = page - 1; else paging.prev = 1;

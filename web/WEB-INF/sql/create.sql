@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(128) NOT NULL,
   `password` text NOT NULL,
   `created` datetime NOT NULL,
+  `time_zone` varchar(64) NOT NULL,
   `usergroup_id` int(11),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;

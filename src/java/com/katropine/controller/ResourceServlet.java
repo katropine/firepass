@@ -8,7 +8,7 @@ package com.katropine.controller;
 
 import com.katropine.dao.ResourceDaoLocal;
 import com.katropine.dao.ResourceGroupDaoLocal;
-import com.katropine.helper.Pagging;
+import com.katropine.helper.PaginationResource;
 import com.katropine.helper.Pagination;
 import com.katropine.model.Resource;
 import com.katropine.model.ResourceGroup;
@@ -115,7 +115,7 @@ public class ResourceServlet extends CoreServlet {
         }else{
             total = resDao.countAllResourcesByGroup(groupId);
         }
-        Pagging pag = pagination.calc(page, total);
+        PaginationResource pag = pagination.calc(page, total);
         
         
         pag.setParam("group", Integer.toString(groupId));

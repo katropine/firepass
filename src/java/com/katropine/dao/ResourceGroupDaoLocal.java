@@ -25,6 +25,10 @@ public interface ResourceGroupDaoLocal {
     
     ResourceGroup getResourceGroup(int id);
     
+    List<ResourceGroup> getAllResourceGroup(String search, int offset, int limit);
+    
+    int countAllResourceGroup(String search);
+    
     List<ResourceGroup> getAllResourceGroup();
     
     void getResourceGroup();
