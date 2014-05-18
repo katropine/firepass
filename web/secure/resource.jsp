@@ -7,10 +7,16 @@
         <c:if test="${acl.allowView('RESOURCE')}">
         <div class="row">
             <div class="col-sm-2">
+                <c:if test="${groupId==0}">
+                <a href="${pageContext.request.contextPath}/secure/resource?group=0" class="btn btn-primary btn-block active">- All -</a>
+                </c:if>
+                <c:if test="${groupId!=0}">
+                <a href="${pageContext.request.contextPath}/secure/resource?group=0" class="btn btn-default btn-block">All</a>
+                </c:if>
                 <c:forEach items="${allResourceGroups}" var="resGrp">
                     <c:choose>
                     <c:when test="${groupId == resGrp.id}">
-                    <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-default btn-block active">${resGrp.name}</a>
+                    <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-primary btn-block active">${resGrp.name}</a>
                     </c:when>    
                     <c:otherwise>
                      <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-default btn-block">${resGrp.name}</a>   

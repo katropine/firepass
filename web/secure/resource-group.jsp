@@ -5,25 +5,38 @@
 <t:layout>
     <jsp:body>
         <c:if test="${acl.allowView('RESOURCE_GROUP')}"></c:if>
-        <h1 class="page-heading resource-groups">Resource Groups</h1>
-        <div class="section">
-            <form method="post" action="${pageContext.request.contextPath}/secure/resourcegroup">
-            <table class="table ">
-                <tr>
-                    <td>Title</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="title" class="form-control" value="${resourceGroup.title}"></td>
-                    <td>
-                        <input type="submit" name="action" class="btn btn-primary" value="Add">
-                    </td>
-                </tr>
-            </table>
-            </form>
+        
+        <div class="container-fluid">
+            <nav class="navbar navbar-default" role="navigation">
+                
+                <div class="container-fluid">
+                    <form class="navbar-form navbar-left" role="search" method="GET">
+                        <div class="form-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-default">Submit</button>
+                        
+                    </form>
+                    <div class="navbar-form navbar-right">
+                        <c:if test="${acl.allowInsert('RESOURCE_GROUP')}">
+                        <a href="${pageContext.request.contextPath}/secure/resourcegroup?id=0&action=details" class="btn btn-primary">Add new</a>
+                        </c:if>
+                    </div>
+                </div>
+            </nav>
         </div>
-        <div class="section">
-            <table class="table table-hover table-striped">
+
+                    
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="row">
+                    <div class="col-md-6"><div class="container-fluid"><h2 class="page-heading resource-groups">Resource Groups</h2></div></div>
+                    <div class="col-md-6"><ul class="list-group text-right">
+                    <li class="list-group-item">${paginationHtml}</li>
+                </ul></div>
+                </div>
+                <table class="table table-hover table-striped">
                 <tr>
                     <th></th>
                     <th>Id</th>
@@ -47,7 +60,12 @@
                         </td>
                     </tr>
                 </c:forEach>
-            </table>
+                </table>
+                <ul class="list-group text-right">
+                    <li class="list-group-item">
+                        ${paginationHtml}
+                    </li>
+                </ul>
         </div>
     </jsp:body>                    
 </t:layout>

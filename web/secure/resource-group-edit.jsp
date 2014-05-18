@@ -17,7 +17,8 @@
                         <c:if test="${acl.allowUpdate('RESOURCE_GROUP')}">
                         <input type="hidden" name="id" value="${group.id}">
                         </c:if>
-                        <input type="submit" name="action" value="Edit" class="btn btn-primary">
+                        <input type="hidden" name="action" value="save">
+                        <input type="submit" name="action" value="Save" class="btn btn-primary">
                         <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default">Back</button>
                     
             </form>
