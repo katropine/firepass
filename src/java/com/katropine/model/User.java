@@ -57,6 +57,9 @@ public class User implements Serializable{
     private String password;
     @Column(name="time_zone")
     private String timeZone;
+    @Column
+    private String language;
+    
     
     @Transient
     private String candidatePassword;
@@ -159,8 +162,14 @@ public class User implements Serializable{
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
     }
-    
-    
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }    
     
     @Override
     public String toString(){

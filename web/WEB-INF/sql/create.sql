@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` text NOT NULL,
   `created` datetime NOT NULL,
   `time_zone` varchar(64) NOT NULL,
+  `language` varchar(6) NOT NULL,
   `usergroup_id` int(11),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;

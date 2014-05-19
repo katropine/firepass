@@ -6,7 +6,8 @@
 <%@tag trimDirectiveWhitespaces="true"%><!DOCTYPE html>
 <html>
     <head>
-        <title>Users - FirePass</title>
+        <fmt:setLocale value="sr_RS"/>
+        <title>FirePass</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="${pageContext.request.contextPath}/assets/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
@@ -45,14 +46,14 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             
-                                <a data-toggle="dropdown" href="#">Logdin as ${sessionUserName} &nbsp;<span class="caret"></span></a>
+                            <a data-toggle="dropdown" href="#"><fmt:message key="signed_in_as"/> ${sessionUserName} &nbsp;<span class="caret"></span></a>
                             
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                               
-                              <li><a href="${pageContext.request.contextPath}/secure/settings">Settings</a></li>
-                              <li><a href="#">Change Password</a></li>
+                              <li><a href="${pageContext.request.contextPath}/secure/settings"><fmt:message key="settings"/></a></li>
+                              <li><a href="#"><fmt:message key="change_password"/></a></li>
                               <li class="divider"></li>
-                              <li><a href="../logout">Sign out</a></li>
+                              <li><a href="../logout"><fmt:message key="sign_out"/></a></li>
                             </ul>
                            
                         </li>
