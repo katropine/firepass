@@ -1,32 +1,34 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <t:layout>
     <jsp:body>
+        <fmt:setLocale value="${language}"/>
         <c:if test="${(acl.allowUpdate('USER') and user.id gt 0) or (acl.allowInsert('USER'))}">
-        <h1 class="page-heading user">User: ${user.id} </h1>
+        <h1 class="page-heading user"><fmt:message key="user"/></h1>
         <div>
             <form method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/user">
                 <div class="form-group">
                 
-                    <label>First Name</label>
+                    <label><fmt:message key="first_name"/></label>
                     <input type="text" name="firstname" class="form-control" value="${user.firstname}">
                 </div>    
                 <div class="form-group">
-                    <label>Last Name</label>
+                    <label><fmt:message key="last_name"/></label>
                     <input type="text" name="lastname" class="form-control" value="${user.lastname}">
                 </div>    
                 <div class="form-group">
-                    <label>Email Name</label>
+                    <label><fmt:message key="email"/></label>
                     <input type="text" name="email" class="form-control" value="${user.email}">
                 </div>    
                 <div class="form-group">
-                    <label>Password Name</label>
+                    <label><fmt:message key="password"/></label>
                     <input type="password" name="password" class="form-control" value="${user.password}">
                 </div>
                 <div class="form-group">
-                    <lable>Group</lable>
+                    <lable><fmt:message key="group"/></lable>
                     <select name="usergroup_id" class="form-control">
                         <option value="">Select...</option>
                         <c:forEach items="${allUserGroups}" var="grp">
@@ -45,8 +47,8 @@
                         <c:if test="${acl.allowUpdate('USER')}">
                         <input type="hidden" name="id" value="${user.id}">
                         </c:if>
-                        <input type="submit" name="action" value="Save" class="btn btn-primary">
-                        <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default">Back</button>
+                        <input type="submit" name="action" value="<fmt:message key="save"/>" class="btn btn-primary">
+                        <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default"><fmt:message key="back"/></button>
                     
             </form>
         </div>

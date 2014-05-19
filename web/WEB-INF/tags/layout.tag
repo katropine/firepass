@@ -6,7 +6,7 @@
 <%@tag trimDirectiveWhitespaces="true"%><!DOCTYPE html>
 <html>
     <head>
-        <fmt:setLocale value="sr_RS"/>
+        <fmt:setLocale value="${language}"/>
         <title>FirePass</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +46,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             
-                            <a data-toggle="dropdown" href="#"><fmt:message key="signed_in_as"/> ${sessionUserName} &nbsp;<span class="caret"></span></a>
+                            <a data-toggle="dropdown" href="#"><fmt:message key="signed_in_as"/> &nbsp;${sessionUserName} &nbsp;<span class="caret"></span></a>
                             
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                               

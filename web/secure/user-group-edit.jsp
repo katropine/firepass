@@ -1,16 +1,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <t:layout>
     <jsp:body>
+        <fmt:setLocale value="${language}"/>
         <c:if test="${(acl.allowUpdate('USER_GROUP') and userGroup.id gt 0) or (acl.allowInsert('USER_GROUP'))}">
-        <h1 class="page-heading user-groups">User Group: ${userGroup.locked} </h1>
+        <h2 class="page-heading user-groups"><fmt:message key="user_groups"/></h2>
         <div>
             <form method="post" action="${pageContext.request.contextPath}/secure/usergroup">
                 <div class="form-group">
                 
-                    <label>Title</label>
+                    <label><fmt:message key="title"/></label>
                     <c:choose>
                         <c:when test="${userGroup.locked == false}">
                             <input type="text" name="name" class="form-control" value="${userGroup.name}">
@@ -25,11 +27,11 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Permission</th>
-                                <th>Can view</th>
-                                <th>Can insert</th>
-                                <th>Can update</th>
-                                <th>Can delete</th>
+                                <th><fmt:message key="permission"/></th>
+                                <th><fmt:message key="can_view"/></th>
+                                <th><fmt:message key="can_insert"/></th>
+                                <th><fmt:message key="can_update"/></th>
+                                <th><fmt:message key="can_delete"/></th>
                             </tr>
                         </thead>
                         <c:forEach items="${allAcl}" var="acl">
@@ -138,10 +140,10 @@
                             <c:if test="${userGroup.locked == false}">
                             <input type="hidden" name="id" value="${userGroup.id}">
                             <input type="hidden" name="action" value="save">
-                            <input type="submit" name="action" value="Save" class="btn btn-primary">
+                            <input type="submit" name="action" value="<fmt:message key="save"/>" class="btn btn-primary">
                             </c:if>
                         </c:if>
-                        <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default">Back</button>
+                        <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default"><fmt:message key="back"/></button>
                     
             </form>
         </div>

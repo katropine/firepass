@@ -57,7 +57,7 @@ public class CoreServlet extends HttpServlet {
         
         request.setAttribute("sessionUserName", userSess.getUser().toString());
         int user_id = userSess.getUser().getId();
-        System.out.println("user_id: "+user_id);
+        
         
        
         User user = userDao.getUser(user_id);
@@ -65,6 +65,7 @@ public class CoreServlet extends HttpServlet {
         Acl acl = new Acl(user, aclDao);
         
         request.setAttribute("acl", acl);
+        request.setAttribute("language", "sr_RS");
         request.setAttribute("loggedin", userSess.getUser().getId());
        
         

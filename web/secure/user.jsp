@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <t:layout>
     <jsp:body>
-        <fmt:setLocale value="sr_RS"/>
+        <fmt:setLocale value="${language}"/>
         <c:if test="${acl.allowView('USER')}">
         
         <div class="container-fluid">
