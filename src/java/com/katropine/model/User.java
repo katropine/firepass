@@ -56,9 +56,9 @@ public class User implements Serializable{
     @Column
     private String password;
     @Column(name="time_zone")
-    private String timeZone;
-    @Column
-    private String language;
+    private String timeZone = "Etc/UTC";
+    @Column(name="language")
+    private String lng;
     
     
     @Transient
@@ -81,11 +81,13 @@ public class User implements Serializable{
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());   
         // user
         this.userGroup.setId(3);
+        this.lng = (new Language()).getCode();
     }
     
     public User(){
         // user
         this.userGroup.setId(3);
+        this.lng = (new Language()).getCode();
     }
 
     
@@ -164,11 +166,11 @@ public class User implements Serializable{
     }
 
     public String getLanguage() {
-        return language;
+        return lng;
     }
 
     public void setLanguage(String language) {
-        this.language = language;
+        this.lng = language;
     }    
     
     @Override
