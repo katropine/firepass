@@ -51,7 +51,7 @@
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                               
                               <li><a href="${pageContext.request.contextPath}/secure/settings"><fmt:message key="settings"/></a></li>
-                              <li><a href="#"><fmt:message key="change_password"/></a></li>
+                              <li><a href="${pageContext.request.contextPath}/secure/changepassword"><fmt:message key="change_password"/></a></li>
                               <li class="divider"></li>
                               <li><a href="../logout"><fmt:message key="sign_out"/></a></li>
                             </ul>
