@@ -6,6 +6,7 @@
 
 package com.katropine.controller;
 
+import com.katropine.dao.LanguageService;
 import com.katropine.dao.UserDaoLocal;
 import com.katropine.dao.UserGroupDaoLocal;
 import com.katropine.helper.PaginationResource;
@@ -13,13 +14,13 @@ import com.katropine.helper.Pagination;
 import com.katropine.model.User;
 import com.katropine.model.UserGroup;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.TimeZone;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -74,7 +75,9 @@ public class UserServlet extends CoreServlet {
         String lastname = request.getParameter("lastname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        
+        String language = request.getParameter("language");
+        String timeZone = request.getParameter("time_zone");
+            
         User user = new User(userId, firstname, lastname, email, password);
         
         UserGroup usergroup = new UserGroup();
@@ -84,15 +87,20 @@ public class UserServlet extends CoreServlet {
         user.setUserGroups(usergroup);
         
         if("Details".equalsIgnoreCase(action)){
-            user = userDao.getUser(userId);
+            if(userId>0){
+                user = userDao.getUser(userId);
+            }
         }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
+            
+            user.setLanguage(language);
+            user.setTimeZone(timeZone);
             
             if(userId > 0){
                 userDao.editUser(user);
             }else{
                 userDao.addUser(user);
             }
-            System.out.println("user: "+user.toString());
+            
         }else if("Delete".equalsIgnoreCase(action)){
             userDao.deleteUser(userId);
         }
@@ -111,7 +119,10 @@ public class UserServlet extends CoreServlet {
         
         
         if("Details".equalsIgnoreCase(action)){
-            
+            String[] allTimeZones = TimeZone.getAvailableIDs();
+            Arrays.sort(allTimeZones);
+            request.setAttribute("allTimeZones", allTimeZones);
+            request.setAttribute("allLanguages", (new LanguageService()).getAllLanguages());
             request.setAttribute("allUserGroups", groupDao.getAllUserGroups(this.userSess, ""));
             request.getRequestDispatcher("user-edit.jsp").forward(request, response);
         }else{

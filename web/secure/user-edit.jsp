@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <lable><fmt:message key="group"/></lable>
                     <select name="usergroup_id" class="form-control">
-                        <option value="">Select...</option>
+                        <option value=""><fmt:message key="select"/></option>
                         <c:forEach items="${allUserGroups}" var="grp">
                             <c:choose>
                                 <c:when test="${grp.id==user.userGroup.id}">
@@ -42,7 +42,39 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                </div>    
+                </div>  
+                <div class="form-group">
+                    <label for="lname"><fmt:message key="language"/></label>
+                    <select class="form-control" id="language" name="language">
+                        <c:forEach items="${allLanguages}" var="lng">
+                            <c:choose>
+                                <c:when test="${user.language == lng.code}">
+                                    <option value="${lng.code}" selected="selected">${lng.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${lng.code}">${lng.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lname"><fmt:message key="time_zone"/></label>
+                    <select class="form-control" id="time_zone" name="time_zone">
+                        <c:forEach items="${allTimeZones}" var="tz">
+                            <c:choose>
+                                <c:when test="${user.timeZone == tz}">
+                                    <option value="${tz}" selected="selected">${tz}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${tz}">${tz}</option>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </c:forEach>
+                    </select>
+                </div>
                         <input type="hidden" name="action" value="save">
                         <c:if test="${acl.allowUpdate('USER')}">
                         <input type="hidden" name="id" value="${user.id}">

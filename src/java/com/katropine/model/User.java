@@ -57,7 +57,7 @@ public class User implements Serializable{
     private String password;
     @Column(name="time_zone")
     private String timeZone = "Etc/UTC";
-    @Column(name="language")
+    @Column(name="language", columnDefinition="VARCHAR(64) NOT NULL DEFAULT 'Etc/UTC'")
     private String lng;
     
     
@@ -82,12 +82,14 @@ public class User implements Serializable{
         // user
         this.userGroup.setId(3);
         this.lng = (new Language()).getCode();
+        this.timeZone = "Etc/UTC";
     }
     
     public User(){
         // user
         this.userGroup.setId(3);
         this.lng = (new Language()).getCode();
+        this.timeZone = "Etc/UTC";
     }
 
     
