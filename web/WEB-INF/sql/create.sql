@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `resource` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `created` datetime NOT NULL,
+  `modified` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `title` varchar(255) NOT NULL,
   `body` blob NOT NULL,
   `body_iv` blob NOT NULL,

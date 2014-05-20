@@ -62,6 +62,7 @@
                             <th><fmt:message key="id"/></th>
                             <th><fmt:message key="title"/></th>
                             <th><fmt:message key="created"/></th>
+                            <th><fmt:message key="modified"/></th>
                             <th></th>
                         </tr>
                         <c:forEach items="${allResources}" var="res">
@@ -69,7 +70,8 @@
                                 <td class="icon-row"><span class="row-icon resource-row-icon"></span></td>
                                 <td>${res.id}</td>
                                 <td>${res.title}</td>
-                                <td>${res.created}</td>
+                                <td><fmt:formatDate value="${res.created}" pattern="d MMM yyyy, HH:mm" timeZone="${timezone}"/></td>
+                                <td><fmt:formatDate value="${res.modified}" pattern="d MMM yyyy, HH:mm" timeZone="${timezone}"/></td>
                                 <td align="right">
                                     <c:if test="${acl.allowUpdate('RESOURCE')}">
                                     <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&group=${res.group.id}&action=details" class="btn btn-success btn-xs"><fmt:message key="edit"/></a>

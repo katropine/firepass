@@ -41,7 +41,6 @@
                     <th></th>
                     <th><fmt:message key="id"/></th>
                     <th><fmt:message key="title"/></th>
-                    <th><fmt:message key="created"/></th>
                     <th></th>
                 </tr>
                 <c:forEach items="${allGroups}" var="gr">
@@ -49,7 +48,6 @@
                         <td class="icon-row"><span class="row-icon resource-groups-row-icon"></span></td>
                         <td>${gr.id}</td>
                         <td>${gr.name}</td>
-                        <td></td>
                         <td align="right">
                             <c:if test="${acl.allowUpdate('RESOURCE_GROUP')}">
                             <a href="${pageContext.request.contextPath}/secure/resourcegroup?id=${gr.id}&action=details" class="btn btn-success btn-xs"><fmt:message key="edit"/></a>

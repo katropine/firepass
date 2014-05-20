@@ -94,15 +94,15 @@ public class ResourceServlet extends CoreServlet {
                 resource.setId(resId);
                 resource.setBody(body);
                 resource.setGroup(group);
-                resDao.editResource(resource);  
-                
+                resDao.editResource(resource); 
             }else{
                 resource.setTitle(title);
                 resource.setBody(body);
                 resource.setGroup(group);
-                resDao.addResource(resource);
-             }
-            
+                resDao.addResource(resource);                
+            }
+            response.sendRedirect("../secure/resource");
+            return;
         }else if("Delete".equalsIgnoreCase(action)){
             resDao.deleteResource(resId);
         }

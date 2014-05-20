@@ -65,6 +65,10 @@ public class Resource implements Serializable{
     @Column
     private Date created = new Date();
     
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date modified = new Date();
+    
     @ManyToOne
     private ResourceGroup group = new ResourceGroup();
 
@@ -160,6 +164,14 @@ public class Resource implements Serializable{
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
     }
     
     @Override

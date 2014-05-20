@@ -55,7 +55,7 @@
                             <td>${usr.firstname}</td>
                             <td>${usr.lastname}</td>
                             <td>${usr.email}</td>
-                            <td>${usr.created}</td>
+                            <td><fmt:formatDate value="${usr.created}" pattern="d MMM yyyy, HH:mm" timeZone="${timezone}"/></td>
                             <td align="right">
                                 <c:if test="${acl.allowUpdate('USER')}">
                                 <a href="${pageContext.request.contextPath}/secure/user?id=${usr.id}&action=details" class="btn btn-success btn-xs"><fmt:message key="edit"/></a>
