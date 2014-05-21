@@ -118,7 +118,7 @@ public class PaginationResource {
     
     public String getUiRowsPerPage(){
         
-        String html = "<select name=\"rows\">";
+        String html = "<select name=\"rows\" class=\"form-control\">";
         
         html += "<option value=\"10\">10</option>";
         html += "<option value=\"20\">20</option>";
