@@ -85,7 +85,9 @@
                     </table>
                         <ul class="list-group text-right">
                     <li class="list-group-item">
-                        ${paginationHtml}
+                       <div class="btn-toolbar" role="toolbar">
+                                <div class="btn-group">${paginationHtmlRows}</div><div class="btn-group">${paginationHtml}</div>
+                            </div>
                     </li>
                 </ul>
             </div>   

@@ -159,6 +159,7 @@ public class ResourceServlet extends CoreServlet {
                 request.setAttribute("allResources", resDao.getAllResourcesByGroup(groupId, pagination.getOffset(), pagination.getLimit()));
             }
             request.setAttribute("paginationHtml", pag.getUi());
+            request.setAttribute("paginationHtmlRows", pag.getUiRowsPerPage());
             request.getRequestDispatcher("resource.jsp").forward(request, response);
         }
     }
