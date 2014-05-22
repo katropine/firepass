@@ -111,6 +111,12 @@ public class ResourceServlet extends CoreServlet {
             resource = resDao.getResource(resId);
         }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
             
+            if(resGrpId == 0){
+                // no group selected, a
+                request.getRequestDispatcher("resource-edit.jsp").forward(request, response);
+                return;
+            }
+            
             if(resId > 0){
                 resource.setTitle(title);
                 resource.setId(resId);
@@ -129,7 +135,7 @@ public class ResourceServlet extends CoreServlet {
             resDao.deleteResource(resId);
         }
         
-        Pagination pagination = new Pagination(this.rowsPerPage, 10);
+        Pagination pagination = new Pagination(ResourceServlet.rowsPerPage, 10);
         
         int total;
         if(groupId == 0){

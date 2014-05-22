@@ -118,6 +118,17 @@ public class UserServlet extends CoreServlet {
             user.setLanguage(language);
             user.setTimeZone(timeZone);
             
+            if(usergroupId == 0){
+                // optimise this !!!
+                String[] allTimeZones = TimeZone.getAvailableIDs();
+                Arrays.sort(allTimeZones);
+                request.setAttribute("allTimeZones", allTimeZones);
+                request.setAttribute("allLanguages", (new LanguageService()).getAllLanguages());
+                request.setAttribute("allUserGroups", groupDao.getAllUserGroups(this.userSess, ""));
+                request.getRequestDispatcher("user-edit.jsp").forward(request, response);
+                return;
+            }
+            
             if(userId > 0){
                 userDao.editUser(user);
             }else{
@@ -128,7 +139,7 @@ public class UserServlet extends CoreServlet {
             userDao.deleteUser(userId);
         }
         
-        Pagination pagination = new Pagination(this.rowsPerPage, 10);
+        Pagination pagination = new Pagination(UserServlet.rowsPerPage, 10);
         
         int total = userDao.countAllUsers(q);
         PaginationResource pag = pagination.calc(page, total);

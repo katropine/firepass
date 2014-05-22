@@ -149,7 +149,7 @@ public class UserGroupServlet extends CoreServlet {
         }
         
         
-        Pagination pagination = new Pagination(this.rowsPerPage, 10);
+        Pagination pagination = new Pagination(UserGroupServlet.rowsPerPage, 10);
         
         int total = usrGrpDao.countAllUserGroups(this.userSess, q);
         PaginationResource pag = pagination.calc(page, total);
