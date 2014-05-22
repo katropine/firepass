@@ -96,7 +96,7 @@ public class ResourceGroupsServlet extends CoreServlet {
             groupDao.deleteResourceGroup(grpId);
         }
         
-        Pagination pagination = new Pagination(10, 10);
+        Pagination pagination = new Pagination(this.rowsPerPage, 10);
         
         int total = groupDao.countAllResourceGroup(q);
         PaginationResource pag = pagination.calc(page, total);
@@ -112,6 +112,7 @@ public class ResourceGroupsServlet extends CoreServlet {
         }else{
             request.setAttribute("allGroups", groupDao.getAllResourceGroup(q, pagination.getOffset(), pagination.getLimit()));
             request.setAttribute("paginationHtml", pag.getUi());
+            request.setAttribute("paginationHtmlRows", pag.getUiRowsPerPage());
             request.getRequestDispatcher("resource-group.jsp").forward(request, response);
         }
     }

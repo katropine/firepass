@@ -128,7 +128,7 @@ public class UserServlet extends CoreServlet {
             userDao.deleteUser(userId);
         }
         
-        Pagination pagination = new Pagination(10, 10);
+        Pagination pagination = new Pagination(this.rowsPerPage, 10);
         
         int total = userDao.countAllUsers(q);
         PaginationResource pag = pagination.calc(page, total);
@@ -151,6 +151,7 @@ public class UserServlet extends CoreServlet {
         }else{
             request.setAttribute("allUsers", userDao.getAllUsers(q, pagination.getOffset(), pagination.getLimit()));
             request.setAttribute("paginationHtml", pag.getUi());
+            request.setAttribute("paginationHtmlRows", pag.getUiRowsPerPage());
             request.getRequestDispatcher("user.jsp").forward(request, response);
         }
     }

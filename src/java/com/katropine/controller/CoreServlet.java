@@ -58,6 +58,9 @@ public class CoreServlet extends HttpServlet {
     private UserDaoLocal userDao;
     
     protected UserSession userSess;
+    
+    protected static int rowsPerPage = 10;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -91,7 +94,12 @@ public class CoreServlet extends HttpServlet {
         request.setAttribute("timezone", userSess.getUser().getTimeZone());
         
         request.setAttribute("loggedin", userSess.getUser().getId());
-       
+        
+        String rowsPerPageStr = request.getParameter("rows");
+        if(rowsPerPageStr != null && !rowsPerPageStr.equals("")){
+            this.rowsPerPage = Integer.parseInt(rowsPerPageStr);
+        }
+        
         
     }
 

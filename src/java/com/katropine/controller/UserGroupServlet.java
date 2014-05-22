@@ -149,7 +149,7 @@ public class UserGroupServlet extends CoreServlet {
         }
         
         
-        Pagination pagination = new Pagination(10, 10);
+        Pagination pagination = new Pagination(this.rowsPerPage, 10);
         
         int total = usrGrpDao.countAllUserGroups(this.userSess, q);
         PaginationResource pag = pagination.calc(page, total);
@@ -183,6 +183,7 @@ public class UserGroupServlet extends CoreServlet {
         }else{
             request.setAttribute("allUserGroups", usrGrpDao.getAllUserGroups(this.userSess, q, pagination.getOffset(), pagination.getLimit()));
             request.setAttribute("paginationHtml", pag.getUi());
+            request.setAttribute("paginationHtmlRows", pag.getUiRowsPerPage());
             request.getRequestDispatcher("user-group.jsp").forward(request, response);
         }
     }

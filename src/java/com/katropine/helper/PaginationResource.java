@@ -118,14 +118,19 @@ public class PaginationResource {
     
     public String getUiRowsPerPage(){
         String html ="<ul class=\"pagination\">";
-        html += "<li><select name=\"rows\" class=\"form-control\" style=\"width:100px;\">";
+        html += "<li><select name=\"rows\" class=\"form-control\" style=\"width:100px;\" onchange=\"javascript:this.options[this.selectedIndex].value && (window.location = '"+this.url+"?page="+this.page+this.getParams().toString()+"&rows='+this.options[this.selectedIndex].value);\">";
         
-        html += "<option value=\"10\">10</option>";
-        html += "<option value=\"20\">20</option>";
-        html += "<option value=\"50\">50</option>";
-        html += "<option value=\"100\">100</option>";
-        html += "<option value=\"500\">500</option>";
+        int[] array = {
+            10, 20, 50, 100, 500
+        };
         
+        for(int i : array){
+            String current = "";
+            if (i==this.numberOfRowsPerPage){
+                current = "selected=\"selected\"";
+            }
+            html += "<option value=\""+i+"\" "+current+">"+i+"</option>";
+        }
         html += "</select>";
         html += "</li></ul>";
         

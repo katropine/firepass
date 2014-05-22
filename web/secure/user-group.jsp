@@ -31,10 +31,14 @@
             <div class="container-fluid">
                 <div class="panel panel-default">
                     <div class="row">
-                        <div class="col-md-6"><div class="container-fluid"><h2 class="page-heading user-groups sub-header"><fmt:message key="user_groups"/></h2></div></div>
-                        <div class="col-md-6"><ul class="list-group text-right">
-                        <li class="list-group-item">${paginationHtml}</li>
-                    </ul></div>
+                        <div class="col-md-4"><div class="container-fluid"><h2 class="page-heading user-groups sub-header"><fmt:message key="user_groups"/></h2></div></div>
+                        <div class="col-md-8">
+                            <div class="container-fluid">
+                                <div class="btn-toolbar" role="toolbar">
+                                    <div class="btn-group pull-right">${paginationHtmlRows}</div><div class="btn-group pull-right">${paginationHtml}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <table class="table table-hover table-striped">
@@ -71,11 +75,11 @@
                             </tr>
                         </c:forEach>
                     </table>
-                    <ul class="list-group text-right">
-                        <li class="list-group-item">
-                            ${paginationHtml}
-                        </li>
-                    </ul>
+                    <div class="container-fluid">
+                        <div class="btn-toolbar" role="toolbar">
+                            <div class="btn-group pull-right">${paginationHtmlRows}</div><div class="btn-group pull-right">${paginationHtml}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         
