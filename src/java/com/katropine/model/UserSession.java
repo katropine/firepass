@@ -38,6 +38,8 @@ public class UserSession {
     private User user;
     private Date loginTime;
     
+    private int rowsPerPage = 10;
+    
     public User getUser() {
         return user;
     }
@@ -53,5 +55,14 @@ public class UserSession {
     public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
     }
+
+    public int getRowsPerPage() {
+        return rowsPerPage;
+    }
+
+    public void setRowsPerPage(int rowsPerPage) {
+        this.rowsPerPage = rowsPerPage;
+    }
     
+     
 }

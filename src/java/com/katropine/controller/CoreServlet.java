@@ -31,14 +31,11 @@ package com.katropine.controller;
 import com.katropine.dao.AccessControlListDaoLocal;
 import com.katropine.dao.UserDaoLocal;
 import com.katropine.helper.Acl;
-import com.katropine.helper.Permission;
 import com.katropine.model.User;
 import com.katropine.model.UserSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +45,6 @@ import javax.servlet.http.HttpSession;
  *
  * @author kriss
  */
-@WebServlet(name = "CoreServlet", urlPatterns = {"/CoreServlet"})
 public class CoreServlet extends HttpServlet {
     
     @EJB
@@ -59,7 +55,7 @@ public class CoreServlet extends HttpServlet {
     
     protected UserSession userSess;
     
-    protected static int rowsPerPage = 10;
+    protected int rowsPerPage = 10;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -76,11 +72,10 @@ public class CoreServlet extends HttpServlet {
         response.setHeader("Pragma","no-cache"); //HTTP 1.0
         response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
         
-        
         HttpSession session = request.getSession();
-        userSess = (UserSession) session.getAttribute("userSession");
+        this.userSess = (UserSession) session.getAttribute("userSession");
         
-        request.setAttribute("sessionUserName", userSess.getUser().toString());
+        request.setAttribute("sessionUserName", this.userSess.getUser().toString());
         int user_id = userSess.getUser().getId();
         System.out.println("user_id: "+user_id);
         
@@ -97,7 +92,7 @@ public class CoreServlet extends HttpServlet {
         
         String rowsPerPageStr = request.getParameter("rows");
         if(rowsPerPageStr != null && !rowsPerPageStr.equals("")){
-            this.rowsPerPage = Integer.parseInt(rowsPerPageStr);
+            this.userSess.setRowsPerPage(Integer.parseInt(rowsPerPageStr));
         }
         
         

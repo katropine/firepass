@@ -135,7 +135,7 @@ public class ResourceServlet extends CoreServlet {
             resDao.deleteResource(resId);
         }
         
-        Pagination pagination = new Pagination(ResourceServlet.rowsPerPage, 10);
+        Pagination pagination = new Pagination(this.userSess.getRowsPerPage(), 5);
         
         int total;
         if(groupId == 0){

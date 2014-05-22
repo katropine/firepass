@@ -69,7 +69,8 @@ public class LoginServlet extends HttpServlet {
         System.out.println("LNG: "+request.getLocale());
         
         String message = "";
-        if(session.getAttribute("user") == null){
+        if(session.getAttribute("userSession") == null){
+            System.out.println("kaze da je null !!!");
             if(email!=null && password!=null && !email.equals("") && !password.equals("")){
 
                 User user = new User();
@@ -93,7 +94,13 @@ public class LoginServlet extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }else{
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+//            System.out.println("ulogovan si!!!!!!!!!!!");
+//            UserSession userSess = (UserSession) session.getAttribute("userSession");
+//            if(userSess.getUser().getId() > 0){
+//                response.sendRedirect("./secure/resource");
+//            }else{
+                request.getRequestDispatcher("login.jsp").forward(request, response);   
+//            }
         }
         
     }
