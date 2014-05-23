@@ -82,7 +82,6 @@ public class PaginationResource {
      * @param value 
      */
     public void setParam(String key, String value){
-        System.out.println("key: "+key+" value: "+value);
         this.params.put(key, value);
     }
     /**

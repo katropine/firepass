@@ -77,8 +77,7 @@ public class CoreServlet extends HttpServlet {
         
         request.setAttribute("sessionUserName", this.userSess.getUser().toString());
         int user_id = userSess.getUser().getId();
-        System.out.println("user_id: "+user_id);
-        
+               
        
         User user = userDao.getUser(user_id);
         

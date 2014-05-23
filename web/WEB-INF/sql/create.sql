@@ -46,3 +46,15 @@ CREATE TABLE IF NOT EXISTS `access_control_list` (
   `can_delete` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+
+CREATE TABLE IF NOT EXISTS `user_group_resource_group` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `usergroup_id` int(11) NOT NULL,
+  `resourcegroup_id` int(11) NOT NULL,
+  `can_view` tinyint(1) NOT NULL DEFAULT '1',
+  `can_insert` tinyint(1) NOT NULL DEFAULT '0',
+  `can_update` tinyint(1) NOT NULL DEFAULT '0',
+  `can_delete` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=105 ;

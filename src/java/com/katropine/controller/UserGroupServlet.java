@@ -30,14 +30,18 @@
 package com.katropine.controller;
 
 import com.katropine.dao.AccessControlListDaoLocal;
+import com.katropine.dao.ResourceGroupDaoLocal;
 import com.katropine.dao.UserGroupDaoLocal;
-import com.katropine.helper.PaginationResource;
 import com.katropine.helper.Pagination;
+import com.katropine.helper.PaginationResource;
 import com.katropine.helper.Permission;
 import com.katropine.model.AccessControlList;
+import com.katropine.model.ResourceGroup;
 import com.katropine.model.UserGroup;
+import com.katropine.model.UserGroupResourceGroup;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,6 +57,9 @@ public class UserGroupServlet extends CoreServlet {
     
     @EJB
     private UserGroupDaoLocal usrGrpDao;
+    
+    @EJB
+    private ResourceGroupDaoLocal groupDao;
     
     @EJB
     private AccessControlListDaoLocal aclDao;
@@ -95,6 +102,7 @@ public class UserGroupServlet extends CoreServlet {
             usergroup = usrGrpDao.getUserGroup(usergroupId);
         }
         
+        List<ResourceGroup> resourceGroup = groupDao.getAllResourceGroup("", 0, 9999999);
         
         if("Details".equalsIgnoreCase(action)){
             
@@ -104,6 +112,8 @@ public class UserGroupServlet extends CoreServlet {
                 usergroupId = 2;
             }
         }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
+            
+            // handle global ACL
             ArrayList<AccessControlList> aclList = new ArrayList<>();
                 
             for (Permission permission : Permission.values()) {
@@ -136,9 +146,50 @@ public class UserGroupServlet extends CoreServlet {
                     aclList.add(aclRow);
                 }
             }
+            
+            // handle resource ACL
+            ArrayList<UserGroupResourceGroup> userGroupResourceGroupList = new ArrayList<>();
+            for (ResourceGroup rg : resourceGroup) {
+                UserGroupResourceGroup aclUserGroupResourceGroupRow = new UserGroupResourceGroup();
+                
+                String aclUserGroupResourceGroupIdStr = request.getParameter("id_"+rg.getId());
+                int aclUserGroupResourceGroupId = 0;
+                if(aclUserGroupResourceGroupIdStr != null && !aclUserGroupResourceGroupIdStr.equals("")){
+                    aclUserGroupResourceGroupId = Integer.parseInt(aclUserGroupResourceGroupIdStr);
+                }
+                System.out.println("id_"+rg.getId()+": "+aclUserGroupResourceGroupId);
+                
+                if(aclUserGroupResourceGroupId > 0){
+                    if(usergroup.getId() > 0){   
+                        System.out.println("usergroup_id: "+ usergroup.getId());
+                        aclUserGroupResourceGroupRow.setId(aclUserGroupResourceGroupId);
+                    } 
+                                        
+                    boolean canView = Boolean.parseBoolean(request.getParameter(rg.getId()+"_can_view"));
+                    aclUserGroupResourceGroupRow.setCanView(canView);
+  
+                    boolean canInsert = Boolean.parseBoolean(request.getParameter(rg.getId()+"_can_insert"));
+                    aclUserGroupResourceGroupRow.setCanInsert(canInsert);
+
+                    boolean canUpdate = Boolean.parseBoolean(request.getParameter(rg.getId()+"_can_update"));
+                    aclUserGroupResourceGroupRow.setCanUpdate(canUpdate);
+
+                    boolean canDelete = Boolean.parseBoolean(request.getParameter(rg.getId()+"_can_delete"));
+                    aclUserGroupResourceGroupRow.setCanDelete(canDelete);
+
+                }
+                aclUserGroupResourceGroupRow.setUserGroup(usergroup);
+                aclUserGroupResourceGroupRow.setResourceGroup(rg);
+                
+                System.out.println(aclUserGroupResourceGroupRow.toString());
+                userGroupResourceGroupList.add(aclUserGroupResourceGroupRow);
+            }
+            
             usergroup.setName(name);
             usergroup.setAcl(aclList);    
-            if(usergroupId > 0){
+            usergroup.setAclUserResourceGroups(userGroupResourceGroupList);
+            
+            if(usergroup.getId() > 0){ 
                 usrGrpDao.editUserGroup(usergroup);
             }else{
                 usrGrpDao.addUserGroup(usergroup); 
@@ -156,7 +207,6 @@ public class UserGroupServlet extends CoreServlet {
         if(q==null){
             q = new String();
         }
-        System.out.println("total: "+total);
         pag.setParam("q", q);
         pag.setUrl(request.getContextPath()+"/secure/usergroup");
         request.setAttribute("userGroup", usergroup);
@@ -165,6 +215,7 @@ public class UserGroupServlet extends CoreServlet {
         
         if("Details".equalsIgnoreCase(action)){
             if(usergroup.getId() > 0){
+                request.setAttribute("allResourceGroups", resourceGroup);
                 request.setAttribute("allAcl", aclDao.getAclByUserGroup(usergroupId));
             }else{
                 ArrayList<AccessControlList> aclTmpList = new ArrayList<>();
@@ -176,8 +227,9 @@ public class UserGroupServlet extends CoreServlet {
                     aclTmpRow.setCanInsert(false);
                     aclTmpRow.setCanUpdate(false);
                     aclTmpList.add(aclTmpRow);
-                    request.setAttribute("allAcl", aclTmpList);
                 }
+                request.setAttribute("allAcl", aclTmpList);
+                
             }
             request.getRequestDispatcher("user-group-edit.jsp").forward(request, response);
         }else{

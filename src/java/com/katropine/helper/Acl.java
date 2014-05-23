@@ -49,8 +49,6 @@ public class Acl {
     public Acl(User user, AccessControlListDaoLocal aclDao){
         this.user = user;
         this.aclDao = aclDao;
-        int userId = this.user.getId();
-        System.out.println("acl_user_id: "+userId);
     }
     
     protected AccessControlList getFromDao(Permission permission) {

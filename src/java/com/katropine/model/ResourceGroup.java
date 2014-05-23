@@ -30,13 +30,20 @@
 package com.katropine.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -58,6 +65,9 @@ public class ResourceGroup  implements Serializable{
     @Column(unique=true)
     private String name;
     
+    @OneToMany(mappedBy = "resourceGroup", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER, orphanRemoval=true)
+    @JoinColumn(name = "resourcegroup_id")
+    private List<UserGroupResourceGroup> aclUserResourceGroups = new ArrayList<>();
     
     public int getId() {
         return id;
@@ -84,5 +94,13 @@ public class ResourceGroup  implements Serializable{
     }
     
     public ResourceGroup(){}
+
+    public List<UserGroupResourceGroup> getAclUserResourceGroups() {
+        return aclUserResourceGroups;
+    }
+
+    public void setAclUserResourceGroups(List<UserGroupResourceGroup> aclUserResourceGroups) {
+        this.aclUserResourceGroups = aclUserResourceGroups;
+    }
     
 }

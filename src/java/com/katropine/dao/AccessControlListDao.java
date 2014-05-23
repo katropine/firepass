@@ -49,7 +49,7 @@ public class AccessControlListDao implements AccessControlListDaoLocal {
     
     @Override
     public AccessControlList getByUserGroupAndPermission(int groupId, Permission permission) {
-        System.out.println("groupId: "+groupId+" permission: "+permission);
+        
         StringBuffer query = new StringBuffer("from AccessControlList acl ");
         query.append("where acl.userGroup.id=:userGroupId and acl.permission=:permission");
         
