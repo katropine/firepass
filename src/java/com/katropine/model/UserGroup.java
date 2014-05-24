@@ -68,14 +68,14 @@ public class UserGroup implements Serializable{
     @Column(columnDefinition="BOOLEAN NOT NULL DEFAULT '0'")
     private boolean locked = false;
     
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.DETACH, mappedBy="userGroup")
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="userGroup")
     private List<User> users;
     
-    @OneToMany(mappedBy="userGroup", fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="userGroup", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "usergroup_id") 
     private List<AccessControlList> acl;
     
-    @OneToMany(mappedBy="userGroup", fetch=FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy="userGroup", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "usergroup_id") 
     private List<UserGroupResourceGroup> aclUserResourceGroups;
     

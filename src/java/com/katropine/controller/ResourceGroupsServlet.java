@@ -30,6 +30,7 @@ package com.katropine.controller;
 
 import com.katropine.dao.ResourceGroupDaoLocal;
 import com.katropine.dao.UserGroupDaoLocal;
+import com.katropine.dao.UserGroupResourceGroupDaoLocal;
 import com.katropine.helper.Pagination;
 import com.katropine.helper.PaginationResource;
 import com.katropine.model.ResourceGroup;
@@ -53,7 +54,11 @@ public class ResourceGroupsServlet extends CoreServlet {
     @EJB
     private ResourceGroupDaoLocal groupDao;
     @EJB
-    private UserGroupDaoLocal userDao;
+    private UserGroupDaoLocal userGroupDao;
+    @EJB
+    private UserGroupResourceGroupDaoLocal usrResGroupDao;
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -86,69 +91,65 @@ public class ResourceGroupsServlet extends CoreServlet {
         
         String title = request.getParameter("title");
         
-        ResourceGroup group = new ResourceGroup(title);
+        ResourceGroup resourceGroup = new ResourceGroup(title);
 
         if(grpId > 0){
-            group.setId(grpId);
-            group = groupDao.getResourceGroup(grpId);
+            resourceGroup.setId(grpId);
+            resourceGroup = groupDao.getResourceGroup(grpId);
         }
         
         
-        List<UserGroup> userGroups = userDao.getAllUserGroups(this.userSess, "");
-        
+        List<UserGroup> userGroups = userGroupDao.getAllUserGroups(this.userSess, "");
+        //List<User> users = userDao.getAllUsers("");
         
         if("Details".equalsIgnoreCase(action)){
-            group = groupDao.getResourceGroup(grpId);
+            resourceGroup = groupDao.getResourceGroup(grpId);
         }else if("save".equalsIgnoreCase(action)){
             
-            /**
-             * TODO: add new insert default values !!!!!!! 666 
-             */
+            if(resourceGroup.getId()>0){
+                groupDao.editResourceGroup(resourceGroup);
+            }else{
+                groupDao.addResourceGroup(resourceGroup);
+            }
             
-            if(group.getId() > 0){ 
             // handle resource ACL
             ArrayList<UserGroupResourceGroup> userGroupResourceGroupList = new ArrayList<>();
             for (UserGroup ug : userGroups) {
-                UserGroupResourceGroup aclUserGroupResourceGroupRow = new UserGroupResourceGroup();
-
                 String aclUserGroupResourceGroupIdStr = request.getParameter("id_"+ug.getId());
                 int aclUserGroupResourceGroupId = 0;
                 if(aclUserGroupResourceGroupIdStr != null && !aclUserGroupResourceGroupIdStr.equals("")){
                     aclUserGroupResourceGroupId = Integer.parseInt(aclUserGroupResourceGroupIdStr);
                 }
+                UserGroupResourceGroup aclUserGroupResourceGroupRow = usrResGroupDao.getUserGroupResourceGroup(aclUserGroupResourceGroupId);
+                if(aclUserGroupResourceGroupRow == null){
+                    aclUserGroupResourceGroupRow = new UserGroupResourceGroup();
+                }  
+                
+                boolean canView = Boolean.parseBoolean(request.getParameter(ug.getId()+"_can_view"));
+                aclUserGroupResourceGroupRow.setCanView(canView);
 
-                if(aclUserGroupResourceGroupId > 0){
-                    if(group.getId() > 0){   
-                        aclUserGroupResourceGroupRow.setId(aclUserGroupResourceGroupId);
-                    } 
-                    boolean canView = Boolean.parseBoolean(request.getParameter(ug.getId()+"_can_view"));
-                    aclUserGroupResourceGroupRow.setCanView(canView);
+                boolean canInsert = Boolean.parseBoolean(request.getParameter(ug.getId()+"_can_insert"));
+                aclUserGroupResourceGroupRow.setCanInsert(canInsert);
 
-                    boolean canInsert = Boolean.parseBoolean(request.getParameter(ug.getId()+"_can_insert"));
-                    aclUserGroupResourceGroupRow.setCanInsert(canInsert);
+                boolean canUpdate = Boolean.parseBoolean(request.getParameter(ug.getId()+"_can_update"));
+                aclUserGroupResourceGroupRow.setCanUpdate(canUpdate);
 
-                    boolean canUpdate = Boolean.parseBoolean(request.getParameter(ug.getId()+"_can_update"));
-                    aclUserGroupResourceGroupRow.setCanUpdate(canUpdate);
+                boolean canDelete = Boolean.parseBoolean(request.getParameter(ug.getId()+"_can_delete"));
+                aclUserGroupResourceGroupRow.setCanDelete(canDelete);
+                System.out.println("--------------------------------"+ug.getId());
 
-                    boolean canDelete = Boolean.parseBoolean(request.getParameter(ug.getId()+"_can_delete"));
-                    aclUserGroupResourceGroupRow.setCanDelete(canDelete);
-                    System.out.println("--------------------------------"+aclUserGroupResourceGroupId);
-                }
                 aclUserGroupResourceGroupRow.setUserGroup(ug);
-                aclUserGroupResourceGroupRow.setResourceGroup(group);
+                aclUserGroupResourceGroupRow.setResourceGroup(resourceGroup);
 
                 userGroupResourceGroupList.add(aclUserGroupResourceGroupRow);
-               
+                System.out.println("-"+aclUserGroupResourceGroupRow.toString());
             }
-            group.setAclUserResourceGroups(userGroupResourceGroupList);
+            resourceGroup.setAclUserResourceGroups(userGroupResourceGroupList);
+            // persist again, now that the resourceGroup Entity has an ID
+            if(resourceGroup.getId()>0){
+                groupDao.editResourceGroup(resourceGroup);
             }
-            if(group.getId()==0){
-                
-                groupDao.addResourceGroup(group);
-            }else{
-                groupDao.editResourceGroup(group);
-            }
-        
+            
         }else if("Delete".equalsIgnoreCase(action)){
             groupDao.deleteResourceGroup(grpId);
         }
@@ -164,7 +165,7 @@ public class ResourceGroupsServlet extends CoreServlet {
         pag.setUrl(request.getContextPath()+"/secure/resourcegroup");
         System.out.println(total);
         if("Details".equalsIgnoreCase(action)){
-            userGroups = userDao.getAllUserGroups(this.userSess, "");
+            userGroups = userGroupDao.getAllUserGroups(this.userSess, "");
             if(grpId==0 && userGroups != null){
                 ArrayList<UserGroupResourceGroup> aclUserGroupResourceGroupTmpList = new ArrayList<>();
                 for (UserGroup ug : userGroups) {
@@ -175,16 +176,16 @@ public class ResourceGroupsServlet extends CoreServlet {
                     aclUserGroupResourceGroupTmpRow.setCanInsert(true);
                     aclUserGroupResourceGroupTmpRow.setCanUpdate(true);
                     aclUserGroupResourceGroupTmpRow.setUserGroup(ug);
-                    aclUserGroupResourceGroupTmpRow.setResourceGroup(group);
+                    aclUserGroupResourceGroupTmpRow.setResourceGroup(resourceGroup);
                     aclUserGroupResourceGroupTmpList.add(aclUserGroupResourceGroupTmpRow); 
                 }
-                group = new ResourceGroup();
-                group.setAclUserResourceGroups(aclUserGroupResourceGroupTmpList);
+                resourceGroup = new ResourceGroup();
+                resourceGroup.setAclUserResourceGroups(aclUserGroupResourceGroupTmpList);
             }
 
             
             request.setAttribute("allUserGroups", userGroups);
-            request.setAttribute("group", group);
+            request.setAttribute("group", resourceGroup);
             request.getRequestDispatcher("resource-group-edit.jsp").forward(request, response);
         }else{
             request.setAttribute("allGroups", groupDao.getAllResourceGroup(q, pagination.getOffset(), pagination.getLimit()));

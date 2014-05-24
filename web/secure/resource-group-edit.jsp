@@ -29,55 +29,55 @@
                                         <th><fmt:message key="can_delete"/></th>
                                     </tr>
                                 </thead>
-                                <c:forEach items="${group.aclUserResourceGroups}" var="grp">
+                                <c:forEach items="${group.aclUserResourceGroups}" var="acl">
 
 
                                             <tr>
-                                                <td>${grp.userGroup.name}</td>
+                                                <td>${acl.userGroup.name}</td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${grp.canView == true}">
-                                                            <input type="checkbox" name="${grp.userGroup.id}_can_view" value="true" checked="checked">
+                                                        <c:when test="${acl.canView == true}">
+                                                            <input type="checkbox" name="${acl.userGroup.id}_can_view" value="true" checked="checked">
                                                         </c:when> 
                                                         <c:otherwise>
-                                                            <input type="checkbox" name="${grp.userGroup.id}_can_view" value="true">
+                                                            <input type="checkbox" name="${acl.userGroup.id}_can_view" value="true">
                                                         </c:otherwise>
                                                     </c:choose>
 
                                                 </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${grp.canInsert == true}">
-                                                            <input type="checkbox" name="${grp.userGroup.id}_can_insert" value="true" checked="checked">
+                                                        <c:when test="${acl.canInsert == true}">
+                                                            <input type="checkbox" name="${acl.userGroup.id}_can_insert" value="true" checked="checked">
                                                         </c:when> 
                                                         <c:otherwise>
-                                                            <input type="checkbox" name="${grp.userGroup.id}_can_insert" value="true">
+                                                            <input type="checkbox" name="${acl.userGroup.id}_can_insert" value="true">
                                                         </c:otherwise>
                                                     </c:choose>
 
                                                 </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${grp.canUpdate == true}">
-                                                            <input type="checkbox" name="${grp.userGroup.id}_can_update" value="true" checked="checked">
+                                                        <c:when test="${acl.canUpdate == true}">
+                                                            <input type="checkbox" name="${acl.userGroup.id}_can_update" value="true" checked="checked">
                                                         </c:when> 
                                                         <c:otherwise>
-                                                            <input type="checkbox" name="${grp.userGroup.id}_can_update" value="true">
+                                                            <input type="checkbox" name="${acl.userGroup.id}_can_update" value="true">
                                                         </c:otherwise>
                                                     </c:choose>
 
                                                 </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${grp.canDelete == true}">
-                                                            <input type="checkbox" name="${grp.userGroup.id}_can_delete" value="true" checked="checked">
+                                                        <c:when test="${acl.canDelete == true}">
+                                                            <input type="checkbox" name="${acl.userGroup.id}_can_delete" value="true" checked="checked">
                                                         </c:when> 
                                                         <c:otherwise>
-                                                            <input type="checkbox" name="${grp.userGroup.id}_can_delete" value="true">
+                                                            <input type="checkbox" name="${acl.userGroup.id}_can_delete" value="true">
                                                         </c:otherwise>
                                                     </c:choose>
-                                                    <input type="hidden" name="id_${grp.userGroup.id}" value="${grp.id}">   
-                                                     
+                                                    <input type="hidden" name="id_${acl.userGroup.id}" value="${acl.id}">   
+                                                    <input type="hidden" name="id_usergroup_${acl.id}" value="${acl.id}"> 
                                                 </td>
                                             </tr>
 

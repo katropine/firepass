@@ -6,6 +6,7 @@
 
 package com.katropine.dao;
 
+import com.katropine.model.UserGroupResourceGroup;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface UserGroupResourceGroupDaoLocal {
+    
+    UserGroupResourceGroup getUserGroupResourceGroup(int id);
     
 }

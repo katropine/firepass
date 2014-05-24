@@ -6,7 +6,10 @@
 
 package com.katropine.dao;
 
+import com.katropine.model.UserGroupResourceGroup;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -15,6 +18,12 @@ import javax.ejb.Stateless;
 @Stateless
 public class UserGroupResourceGroupDao implements UserGroupResourceGroupDaoLocal {
 
-    // no need for this
+    @PersistenceContext
+    private EntityManager em;
+    
+    @Override
+    public UserGroupResourceGroup getUserGroupResourceGroup(int id) {
+        return this.em.find(UserGroupResourceGroup.class, id);
+    }
     
 }

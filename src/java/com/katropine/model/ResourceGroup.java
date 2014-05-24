@@ -43,7 +43,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -65,7 +64,7 @@ public class ResourceGroup  implements Serializable{
     @Column(unique=true)
     private String name;
     
-    @OneToMany(mappedBy = "resourceGroup", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER, orphanRemoval=true)
+    @OneToMany(mappedBy = "resourceGroup", cascade = CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
     @JoinColumn(name = "resourcegroup_id")
     private List<UserGroupResourceGroup> aclUserResourceGroups = new ArrayList<>();
     

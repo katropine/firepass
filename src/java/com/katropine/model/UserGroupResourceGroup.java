@@ -52,11 +52,11 @@ public class UserGroupResourceGroup implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     
-    @ManyToOne(targetEntity = UserGroup.class, cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @ManyToOne(targetEntity = UserGroup.class, cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
     @JoinColumn(name="usergroup_id")
     private UserGroup userGroup;
     
-    @ManyToOne(targetEntity = ResourceGroup.class, cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @ManyToOne(targetEntity = ResourceGroup.class, cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
     @JoinColumn(name="resourcegroup_id")
     private ResourceGroup resourceGroup;
     
