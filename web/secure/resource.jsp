@@ -15,14 +15,16 @@
                 <a href="${pageContext.request.contextPath}/secure/resource?group=0" class="btn btn-default btn-block"><fmt:message key="_all_"/></a>
                 </c:if>
                 <c:forEach items="${allResourceGroups}" var="resGrp">
-                    <c:choose>
-                    <c:when test="${groupId == resGrp.id}">
-                    <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-primary btn-block active">${resGrp.name}</a>
-                    </c:when>    
-                    <c:otherwise>
-                     <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-default btn-block">${resGrp.name}</a>   
-                    </c:otherwise>
-                    </c:choose>
+                    <c:if test="${aclGrp.allowView(resGrp)}">
+                        <c:choose>
+                            <c:when test="${groupId == resGrp.id}">
+                                <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-primary btn-block active">${resGrp.name}</a>
+                            </c:when>    
+                            <c:otherwise>
+                                <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-default btn-block">${resGrp.name}</a>   
+                            </c:otherwise>
+                        </c:choose>
+                     </c:if>
                 </c:forEach>
             </div>
             <div class="col-md-10">
@@ -70,6 +72,7 @@
                             <th></th>
                         </tr>
                         <c:forEach items="${allResources}" var="res">
+                            <c:if test="${aclGrp.allowView(res.group)}">
                             <tr>
                                 <td class="icon-row"><span class="row-icon resource-row-icon"></span></td>
                                 <td>${res.id}</td>
@@ -78,13 +81,18 @@
                                 <td><fmt:formatDate value="${res.modified}" pattern="d MMM yyyy, HH:mm" timeZone="${timezone}"/></td>
                                 <td align="right">
                                     <c:if test="${acl.allowUpdate('RESOURCE')}">
-                                    <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&group=${res.group.id}&action=details" class="btn btn-success btn-xs"><fmt:message key="edit"/></a>
+                                        <c:if test="${aclGrp.allowUpdate(res.group)}">
+                                            <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&group=${res.group.id}&action=details" class="btn btn-success btn-xs"><fmt:message key="edit"/></a>
+                                        </c:if>
                                     </c:if>
                                     <c:if test="${acl.allowDelete('RESOURCE')}">
-                                    <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&action=delete" class="btn btn-danger btn-xs"><fmt:message key="delete"/></a>
+                                        <c:if test="${aclGrp.allowDelete(res.group)}">
+                                            <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&action=delete" class="btn btn-danger btn-xs"><fmt:message key="delete"/></a>
+                                        </c:if>
                                     </c:if>
                                 </td>
                             </tr>
+                            </c:if>
                         </c:forEach>
                     </table>
                     <div class="container-fluid">

@@ -18,4 +18,6 @@ public interface UserGroupResourceGroupDaoLocal {
     
     UserGroupResourceGroup getUserGroupResourceGroup(int id);
     
+    UserGroupResourceGroup getIdByUserId(int userId, int resGrpId);
+    
 }

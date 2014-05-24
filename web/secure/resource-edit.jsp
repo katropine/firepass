@@ -19,6 +19,7 @@
                     <select name="resource_group_id" class="form-control">
                         <option value=""><fmt:message key="select"/></option>
                         <c:forEach items="${allResourceGroups}" var="grp">
+                            <c:if test="${aclGrp.allowUpdate(grp) or aclGrp.allowInsert(grp)}">
                             <c:choose>
                                 <c:when test="${grp.id==resource.group.id || grp.id==groupId}">
                                     <option value="${grp.id}" selected="selected">${grp.name}</option>
@@ -27,6 +28,7 @@
                                     <option value="${grp.id}">${grp.name}</option>
                                 </c:otherwise>    
                             </c:choose>
+                            </c:if>        
                         </c:forEach>
                     </select>
                 </div>    

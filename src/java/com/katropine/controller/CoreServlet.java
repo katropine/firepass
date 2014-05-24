@@ -30,8 +30,11 @@ package com.katropine.controller;
 
 import com.katropine.dao.AccessControlListDaoLocal;
 import com.katropine.dao.UserDaoLocal;
+import com.katropine.dao.UserGroupResourceGroupDaoLocal;
 import com.katropine.helper.Acl;
+import com.katropine.helper.AclResourceGroup;
 import com.katropine.model.User;
+import com.katropine.model.UserGroupResourceGroup;
 import com.katropine.model.UserSession;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -52,6 +55,10 @@ public class CoreServlet extends HttpServlet {
     
     @EJB
     private UserDaoLocal userDao;
+    
+    @EJB
+    private UserGroupResourceGroupDaoLocal usrGrpResGrpDao;
+    
     
     protected UserSession userSess;
     
@@ -82,8 +89,10 @@ public class CoreServlet extends HttpServlet {
         User user = userDao.getUser(user_id);
         
         Acl acl = new Acl(user, aclDao);
+        AclResourceGroup aclGrp = new AclResourceGroup(user, usrGrpResGrpDao);
         
         request.setAttribute("acl", acl);
+        request.setAttribute("aclGrp", aclGrp);
         request.setAttribute("language", userSess.getUser().getLanguage());
         request.setAttribute("timezone", userSess.getUser().getTimeZone());
         

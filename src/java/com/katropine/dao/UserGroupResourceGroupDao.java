@@ -7,6 +7,7 @@
 package com.katropine.dao;
 
 import com.katropine.model.UserGroupResourceGroup;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,5 +26,21 @@ public class UserGroupResourceGroupDao implements UserGroupResourceGroupDaoLocal
     public UserGroupResourceGroup getUserGroupResourceGroup(int id) {
         return this.em.find(UserGroupResourceGroup.class, id);
     }
-    
+    @Override
+    public UserGroupResourceGroup getIdByUserId(int userGrpId, int resGrpId) {
+        StringBuffer query = new StringBuffer("from UserGroupResourceGroup acl ");
+        query.append("where acl.userGroup.id=:userGroupId and acl.resourceGroup.id=:resourceGroupId");
+        
+        List<UserGroupResourceGroup> aclList = em.createQuery(query.toString())
+                .setParameter("userGroupId", userGrpId)
+                .setParameter("resourceGroupId", resGrpId)
+                .getResultList();
+        
+        UserGroupResourceGroup acl = new UserGroupResourceGroup();
+        if(!aclList.isEmpty()){
+            acl = (UserGroupResourceGroup) aclList.get(0);
+        }
+ 
+        return acl; 
+    }
 }
