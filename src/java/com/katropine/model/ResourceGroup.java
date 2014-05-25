@@ -53,7 +53,8 @@ import javax.persistence.Table;
 @Table(name="resource_group")
 @NamedQueries({
     @NamedQuery(name="ResourceGroup.getAll", query="SELECT e FROM ResourceGroup e WHERE e.name LIKE :name"),
-    @NamedQuery(name="ResourceGroup.countAll", query="SELECT COUNT(e) FROM ResourceGroup e WHERE e.name LIKE :name")
+    @NamedQuery(name="ResourceGroup.countAll", query="SELECT COUNT(e) FROM ResourceGroup e WHERE e.name LIKE :name"),
+    @NamedQuery(name="ResourceGroup.getAllCanView", query="SELECT e FROM ResourceGroup e WHERE e.aclUserResourceGroups.userGroup.id=:userGroupId AND e.aclUserResourceGroups.canView=:canView")
 })
 public class ResourceGroup  implements Serializable{
     

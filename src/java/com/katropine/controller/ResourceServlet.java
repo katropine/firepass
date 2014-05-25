@@ -139,9 +139,9 @@ public class ResourceServlet extends CoreServlet {
         
         int total;
         if(groupId == 0){
-            total = resDao.countAllResources(q);
+            total = resDao.countAllResources(this.userSess.getAclResourceGroupList(), q);
         }else{
-            total = resDao.countAllResourcesByGroup(groupId);
+            total = resDao.countAllResourcesByGroup(this.userSess.getAclResourceGroupList(), groupId);
         }
         PaginationResource pag = pagination.calc(page, total);
         
@@ -160,9 +160,9 @@ public class ResourceServlet extends CoreServlet {
                 if(q!=null && !q.isEmpty()){
                     pag.setParam("q", q);
                 }
-                request.setAttribute("allResources", resDao.getAllResources(q, pagination.getOffset(), pagination.getLimit()));
+                request.setAttribute("allResources", resDao.getAllResources(this.userSess.getAclResourceGroupList(), q, pagination.getOffset(), pagination.getLimit()));
             }else{
-                request.setAttribute("allResources", resDao.getAllResourcesByGroup(groupId, pagination.getOffset(), pagination.getLimit()));
+                request.setAttribute("allResources", resDao.getAllResourcesByGroup(this.userSess.getAclResourceGroupList(), groupId, pagination.getOffset(), pagination.getLimit()));
             }
             request.setAttribute("paginationHtml", pag.getUi());
             request.setAttribute("paginationHtmlRows", pag.getUiRowsPerPage());

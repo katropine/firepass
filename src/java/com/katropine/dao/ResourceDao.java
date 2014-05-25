@@ -30,6 +30,9 @@
 package com.katropine.dao;
 
 import com.katropine.model.Resource;
+import com.katropine.model.ResourceGroup;
+import com.katropine.model.UserGroupResourceGroup;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -69,7 +72,7 @@ public class ResourceDao implements ResourceDaoLocal {
     
     
     @Override
-    public List<Resource> getAllResources(String search, int offset, int limit) {
+    public List<Resource> getAllResources(List<ResourceGroup> aclList, String search, int offset, int limit) {
         Query query = this.em.createNamedQuery("Resource.getAll");
         if(search!=null && !search.isEmpty()){
             query.setParameter("title", "%" + search + "%");
@@ -77,19 +80,36 @@ public class ResourceDao implements ResourceDaoLocal {
             query.setParameter("title", "%%");
         }
         
+        // optimise this
+//        int[] ret = new int[aclList.size()];
+//        int i = 0;
+//        for(UserGroupResourceGroup ug : aclList){
+//            ret[i++] = ug.getId();
+//        }
+//        
+        
         return query.setFirstResult(offset)
+                .setParameter("resourceGroup", aclList)
                 .setMaxResults(limit)
                 .getResultList();
     }
     @Override
-    public int countAllResources(String search) {
+    public int countAllResources(List<ResourceGroup> aclList, String search) {
         Query query = this.em.createNamedQuery("Resource.countAll");
         if(search!=null && !search.isEmpty()){
             query.setParameter("title", "%" + search + "%");
         }else{
             query.setParameter("title", "%%");
         }
-        return ((Number) query.getSingleResult()).intValue();
+        
+        // optimise this
+//        int[] ret = new int[aclList.size()];
+//        int i = 0;
+//        for(UserGroupResourceGroup ug : aclList){
+//            ret[i++] = ug.getId();
+//        }
+//        
+        return ((Number) query.setParameter("resourceGroup", aclList).getSingleResult()).intValue();
     }
 
     @Override
@@ -98,22 +118,37 @@ public class ResourceDao implements ResourceDaoLocal {
     }
 
     @Override
-    public List<Resource> getAllResourcesByGroup(int groupId, int offset, int limit) {
+    public List<Resource> getAllResourcesByGroup(List<ResourceGroup> aclList, int groupId, int offset, int limit) {
+        // optimise this
+//        int[] ret = new int[aclList.size()];
+//        int i = 0;
+//        for(UserGroupResourceGroup ug : aclList){
+//            ret[i++] = ug.getId();
+//        }
+        
         List<Resource> res =this.em.createNamedQuery("Resource.getAllByGroup")
                 .setParameter("groupid", groupId)
+                .setParameter("resourceGroup", aclList)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
         return res;
     }
     @Override
-    public int countAllResourcesByGroup(int groupId){
+    public int countAllResourcesByGroup(List<ResourceGroup> aclList, int groupId){
         
         Query query = this.em.createNamedQuery("Resource.countAllByGroup");
         query.setParameter("groupid", groupId);
        
-        return ((Number) query.getSingleResult()).intValue();
+//        // optimise this
+//        int[] ret = new int[aclList.size()];
+//        int i = 0;
+//        for(UserGroupResourceGroup ug : aclList){
+//            ret[i++] = ug.get;
+//        }
+        return ((Number) query.setParameter("resourceGroup", aclList).getSingleResult()).intValue();
     }
+    
     
     
     

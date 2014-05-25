@@ -6,6 +6,7 @@
 
 package com.katropine.dao;
 
+import com.katropine.model.ResourceGroup;
 import com.katropine.model.UserGroupResourceGroup;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -43,4 +44,5 @@ public class UserGroupResourceGroupDao implements UserGroupResourceGroupDaoLocal
  
         return acl; 
     }
+    
 }

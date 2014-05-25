@@ -30,6 +30,8 @@
 package com.katropine.dao;
 
 import com.katropine.model.Resource;
+import com.katropine.model.ResourceGroup;
+import com.katropine.model.UserGroupResourceGroup;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -48,14 +50,14 @@ public interface ResourceDaoLocal {
 
     Resource getResource(int id);
     
-    List<Resource> getAllResources(String search, int offset, int limit);
+    List<Resource> getAllResources(List<ResourceGroup> aclList, String search, int offset, int limit);
     
-    int countAllResources(String search);
+    int countAllResources(List<ResourceGroup> aclList, String search);
     
     void getResource();
 
-    List<Resource> getAllResourcesByGroup(int groupId, int offset, int limit);
+    List<Resource> getAllResourcesByGroup(List<ResourceGroup> aclList, int groupId, int offset, int limit);
     
-    int countAllResourcesByGroup(int groupId);
+    int countAllResourcesByGroup(List<ResourceGroup> aclList, int groupId);
     
 }

@@ -96,4 +96,13 @@ public class ResourceGroupDao implements ResourceGroupDaoLocal {
     public void getResourceGroup() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    // ACL
+    @Override
+    public List<ResourceGroup> getAllowedResourceGroups(int userGrpId){
+        return this.em.createNamedQuery("ResourceGroup.getAllCanView")
+                .setParameter("userGroupId", userGrpId)
+                .setParameter("canView", true)
+                .getResultList();
+        
+    }
 }

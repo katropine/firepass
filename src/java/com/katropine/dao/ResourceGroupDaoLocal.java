@@ -54,5 +54,5 @@ public interface ResourceGroupDaoLocal {
     List<ResourceGroup> getAllResourceGroup();
     
     void getResourceGroup();
-    
+    List<ResourceGroup> getAllowedResourceGroups(int userGrpId);
 }

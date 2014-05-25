@@ -29,14 +29,17 @@
 package com.katropine.controller;
 
 import com.katropine.dao.AccessControlListDaoLocal;
+import com.katropine.dao.ResourceGroupDaoLocal;
 import com.katropine.dao.UserDaoLocal;
 import com.katropine.dao.UserGroupResourceGroupDaoLocal;
 import com.katropine.helper.Acl;
 import com.katropine.helper.AclResourceGroup;
+import com.katropine.model.ResourceGroup;
 import com.katropine.model.User;
 import com.katropine.model.UserGroupResourceGroup;
 import com.katropine.model.UserSession;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -59,6 +62,8 @@ public class CoreServlet extends HttpServlet {
     @EJB
     private UserGroupResourceGroupDaoLocal usrGrpResGrpDao;
     
+    @EJB
+    private ResourceGroupDaoLocal resGrpDao;
     
     protected UserSession userSess;
     
@@ -91,6 +96,11 @@ public class CoreServlet extends HttpServlet {
         Acl acl = new Acl(user, aclDao);
         AclResourceGroup aclGrp = new AclResourceGroup(user, usrGrpResGrpDao);
         
+        List<ResourceGroup> aclList = resGrpDao.getAllowedResourceGroups(user.getId());
+        //this.userSess.setAclResourceGroupList(aclList);
+        for(ResourceGroup rg : aclList){
+            System.out.println(rg.toString());
+        }
         request.setAttribute("acl", acl);
         request.setAttribute("aclGrp", aclGrp);
         request.setAttribute("language", userSess.getUser().getLanguage());

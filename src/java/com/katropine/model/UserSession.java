@@ -33,10 +33,12 @@ package com.katropine.model;
  * @author kriss
  */
 import java.util.Date;
+import java.util.List;
  
 public class UserSession {
     private User user;
     private Date loginTime;
+    private List<ResourceGroup> aclResourceGroupList;
     
     private int rowsPerPage = 10;
     
@@ -63,6 +65,15 @@ public class UserSession {
     public void setRowsPerPage(int rowsPerPage) {
         this.rowsPerPage = rowsPerPage;
     }
+
+    public List<ResourceGroup> getAclResourceGroupList() {
+        return aclResourceGroupList;
+    }
+
+    public void setAclResourceGroupList(List<ResourceGroup> aclResourceGroupList) {
+        this.aclResourceGroupList = aclResourceGroupList;
+    }
+    
     
      
 }
