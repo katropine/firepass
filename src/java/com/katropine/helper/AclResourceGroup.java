@@ -49,8 +49,8 @@ public class AclResourceGroup {
         this.usrResGroupDao = aclDao;
     }
     
-    protected UserGroupResourceGroup getFromDao(ResourceGroup resGrp) {
-        UserGroupResourceGroup acl = usrResGroupDao.getIdByUserId(this.user.getUserGroup().getId(), resGrp.getId());
+    protected UserGroupResourceGroup getFromDao(ResourceGroup resGrp) { 
+        UserGroupResourceGroup acl = this.usrResGroupDao.getIdByUserId(this.user.getUserGroup().getId(), resGrp.getId());
         return acl;
     }
 

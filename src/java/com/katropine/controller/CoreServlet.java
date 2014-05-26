@@ -96,7 +96,7 @@ public class CoreServlet extends HttpServlet {
         Acl acl = new Acl(user, aclDao);
         AclResourceGroup aclGrp = new AclResourceGroup(user, usrGrpResGrpDao);
         
-        List<ResourceGroup> aclList = resGrpDao.getAllowedResourceGroups(user.getId());
+        List<ResourceGroup> aclList = resGrpDao.getAllowedResourceGroups(user.getUserGroup());
         //this.userSess.setAclResourceGroupList(aclList);
         for(ResourceGroup rg : aclList){
             System.out.println(rg.toString());

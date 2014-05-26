@@ -41,7 +41,10 @@ public class UserGroupResourceGroupDao implements UserGroupResourceGroupDaoLocal
         if(!aclList.isEmpty()){
             acl = (UserGroupResourceGroup) aclList.get(0);
         }
- 
+             
+            System.out.println("acl: "+ acl.toString() );
+        
+        
         return acl; 
     }
     

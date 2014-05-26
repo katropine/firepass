@@ -29,6 +29,7 @@
 package com.katropine.dao;
 
 import com.katropine.model.ResourceGroup;
+import com.katropine.model.UserGroup;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -98,9 +99,9 @@ public class ResourceGroupDao implements ResourceGroupDaoLocal {
     }
     // ACL
     @Override
-    public List<ResourceGroup> getAllowedResourceGroups(int userGrpId){
+    public List<ResourceGroup> getAllowedResourceGroups(UserGroup userGrp){
         return this.em.createNamedQuery("ResourceGroup.getAllCanView")
-                .setParameter("userGroupId", userGrpId)
+                .setParameter("userGroup", userGrp)
                 .setParameter("canView", true)
                 .getResultList();
         

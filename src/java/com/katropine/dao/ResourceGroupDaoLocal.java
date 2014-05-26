@@ -29,6 +29,7 @@
 package com.katropine.dao;
 
 import com.katropine.model.ResourceGroup;
+import com.katropine.model.UserGroup;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -54,5 +55,5 @@ public interface ResourceGroupDaoLocal {
     List<ResourceGroup> getAllResourceGroup();
     
     void getResourceGroup();
-    List<ResourceGroup> getAllowedResourceGroups(int userGrpId);
+    List<ResourceGroup> getAllowedResourceGroups(UserGroup userGrp);
 }

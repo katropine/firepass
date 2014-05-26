@@ -54,11 +54,11 @@ public class UserGroupResourceGroup implements Serializable{
     
     @ManyToOne(targetEntity = UserGroup.class, cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
     @JoinColumn(name="usergroup_id")
-    private UserGroup userGroup;
+    private UserGroup userGroup = new UserGroup();
     
     @ManyToOne(targetEntity = ResourceGroup.class, cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
     @JoinColumn(name="resourcegroup_id")
-    private ResourceGroup resourceGroup;
+    private ResourceGroup resourceGroup = new ResourceGroup();
     
     @Column(name="can_view")
     private boolean canView;

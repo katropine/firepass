@@ -54,12 +54,12 @@
                         <td>${gr.name}</td>
                         <td align="right">
                             <c:if test="${acl.allowUpdate('RESOURCE_GROUP')}">
-                                <c:if test="${aclGrp.allowUpdate(res.group)}">
+                                <c:if test="${aclGrp.allowUpdate(gr)}">
                                     <a href="${pageContext.request.contextPath}/secure/resourcegroup?id=${gr.id}&action=details" class="btn btn-success btn-xs"><fmt:message key="edit"/></a>
                                 </c:if>
                             </c:if>
                             <c:if test="${acl.allowDelete('RESOURCE_GROUP')}">
-                                <c:if test="${aclGrp.allowUpdate(res.group)}">
+                                <c:if test="${aclGrp.allowUpdate(gr)}">
                                     <a href="${pageContext.request.contextPath}/secure/resourcegroup?id=${gr.id}&action=delete" class="btn btn-danger btn-xs"><fmt:message key="delete"/></a>
                                 </c:if>
                             </c:if>
