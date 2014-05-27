@@ -5,7 +5,7 @@
 <t:layout>
     <jsp:body>
         <fmt:setLocale value="${language}"/>
-        <c:if test="${(acl.allowUpdate('RESOURCE_GROUP') and group.id gt 0 and aclGrp.allowUpdate(group)) or (acl.allowInsert('RESOURCE_GROUP') and aclGrp.allowInsert(group))}">
+        <c:if test="${(acl.allowUpdate('RESOURCE_GROUP') and group.id gt 0 and aclGrp.allowUpdate(group)) or (acl.allowInsert('RESOURCE_GROUP'))}">
         <h1 class="page-heading resource-groups"><fmt:message key="resource_group"/></h1>
         <div>
             <form method="post" action="${pageContext.request.contextPath}/secure/resourcegroup">

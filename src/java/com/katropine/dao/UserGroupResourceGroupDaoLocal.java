@@ -22,4 +22,5 @@ public interface UserGroupResourceGroupDaoLocal {
     
     UserGroupResourceGroup getIdByUserId(int userId, int resGrpId);
     
+    UserGroupResourceGroup getResource(int userGroupId, int resourceId);
 }

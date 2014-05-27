@@ -55,7 +55,7 @@ import javax.persistence.Table;
     @NamedQuery(name="ResourceGroup.getAll", query="SELECT e FROM ResourceGroup e WHERE e.name LIKE :name"),
     @NamedQuery(name="ResourceGroup.countAll", query="SELECT COUNT(e) FROM ResourceGroup e WHERE e.name LIKE :name"),
     //@NamedQuery(name="ResourceGroup.getAllCanView", query="SELECT e FROM ResourceGroup e WHERE e.aclUserResourceGroups.userGroup=:userGroup AND e.aclUserResourceGroups.canView=:canView"),
-    @NamedQuery(name="ResourceGroup.getAllCanView", query="SELECT e FROM ResourceGroup e inner join e.aclUserResourceGroups acl WHERE acl.userGroup=:userGroup AND acl.canView=:canView")
+    @NamedQuery(name="ResourceGroup.getAllCanView", query="SELECT e FROM ResourceGroup e INNER JOIN e.aclUserResourceGroups acl WHERE acl.userGroup=:userGroup AND acl.canView=:canView")
 })
 public class ResourceGroup  implements Serializable{
     
@@ -69,6 +69,9 @@ public class ResourceGroup  implements Serializable{
     @OneToMany(mappedBy = "resourceGroup", cascade = CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
     @JoinColumn(name = "resourcegroup_id")
     private List<UserGroupResourceGroup> aclUserResourceGroups;
+    
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="group")
+    private List<Resource> resources;
     
     public int getId() {
         return id;
@@ -104,6 +107,15 @@ public class ResourceGroup  implements Serializable{
         this.aclUserResourceGroups = aclUserResourceGroups;
     }
 
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
+    }
+    
+    
     
     
 }

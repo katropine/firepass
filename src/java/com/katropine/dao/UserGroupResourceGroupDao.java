@@ -41,11 +41,27 @@ public class UserGroupResourceGroupDao implements UserGroupResourceGroupDaoLocal
         if(!aclList.isEmpty()){
             acl = (UserGroupResourceGroup) aclList.get(0);
         }
+                
+        return acl; 
+    }
+    @Override
+    public UserGroupResourceGroup getResource(int userGroupId, int resourceId){
+        StringBuffer query = new StringBuffer("from UserGroupResourceGroup acl INNER JOIN acl.resourceGroup.resources r ");
+        query.append("where acl.userGroup.id=:userGroupId AND r.id=:resourceId");
+        
+        List<UserGroupResourceGroup> aclList = em.createQuery(query.toString())
+                .setParameter("userGroupId", userGroupId)
+                .setParameter("resourceId", resourceId)
+                .getResultList();
+        
+        UserGroupResourceGroup acl = new UserGroupResourceGroup();
+        if(!aclList.isEmpty()){
+            acl = (UserGroupResourceGroup) aclList.get(0);
+        }
              
             System.out.println("acl: "+ acl.toString() );
         
         
         return acl; 
     }
-    
 }

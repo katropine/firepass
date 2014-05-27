@@ -79,15 +79,7 @@ public class ResourceDao implements ResourceDaoLocal {
         }else{
             query.setParameter("title", "%%");
         }
-        
-        // optimise this
-//        int[] ret = new int[aclList.size()];
-//        int i = 0;
-//        for(UserGroupResourceGroup ug : aclList){
-//            ret[i++] = ug.getId();
-//        }
-//        
-        
+
         return query.setFirstResult(offset)
                 .setParameter("resourceGroup", aclList)
                 .setMaxResults(limit)
@@ -101,31 +93,18 @@ public class ResourceDao implements ResourceDaoLocal {
         }else{
             query.setParameter("title", "%%");
         }
-        
-        // optimise this
-//        int[] ret = new int[aclList.size()];
-//        int i = 0;
-//        for(UserGroupResourceGroup ug : aclList){
-//            ret[i++] = ug.getId();
-//        }
-//        
+
         return ((Number) query.setParameter("resourceGroup", aclList).getSingleResult()).intValue();
     }
 
     @Override
     public void getResource() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
     public List<Resource> getAllResourcesByGroup(List<ResourceGroup> aclList, int groupId, int offset, int limit) {
-        // optimise this
-//        int[] ret = new int[aclList.size()];
-//        int i = 0;
-//        for(UserGroupResourceGroup ug : aclList){
-//            ret[i++] = ug.getId();
-//        }
-        
+
         List<Resource> res =this.em.createNamedQuery("Resource.getAllByGroup")
                 .setParameter("groupid", groupId)
                 .setParameter("resourceGroup", aclList)
@@ -139,13 +118,7 @@ public class ResourceDao implements ResourceDaoLocal {
         
         Query query = this.em.createNamedQuery("Resource.countAllByGroup");
         query.setParameter("groupid", groupId);
-       
-//        // optimise this
-//        int[] ret = new int[aclList.size()];
-//        int i = 0;
-//        for(UserGroupResourceGroup ug : aclList){
-//            ret[i++] = ug.get;
-//        }
+
         return ((Number) query.setParameter("resourceGroup", aclList).getSingleResult()).intValue();
     }
     

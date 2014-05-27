@@ -62,10 +62,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="resource")
 @NamedQueries({
-    @NamedQuery(name="Resource.getAll", query="SELECT e FROM Resource e WHERE e.title LIKE :title AND e.group IN (:resourceGroup)"),
-    @NamedQuery(name="Resource.countAll", query="SELECT COUNT(e) FROM Resource e WHERE e.title LIKE :title AND e.group IN (:resourceGroup)"),
-    @NamedQuery(name="Resource.getAllByGroup", query="SELECT e FROM Resource e WHERE e.group.id=:groupid AND e.group IN (:resourceGroup)"),
-    @NamedQuery(name="Resource.countAllByGroup", query="SELECT COUNT(e) FROM Resource e WHERE e.group.id=:groupid AND e.group IN (:resourceGroup)")
+    @NamedQuery(name="Resource.getAll", query="SELECT e FROM Resource e WHERE e.title LIKE :title AND e.group IN :resourceGroup"),
+    @NamedQuery(name="Resource.countAll", query="SELECT COUNT(e) FROM Resource e WHERE e.title LIKE :title AND e.group IN :resourceGroup"),
+    @NamedQuery(name="Resource.getAllByGroup", query="SELECT e FROM Resource e WHERE e.group.id=:groupid AND e.group IN :resourceGroup"),
+    @NamedQuery(name="Resource.countAllByGroup", query="SELECT COUNT(e) FROM Resource e WHERE e.group.id=:groupid AND e.group IN :resourceGroup")
 })
 public class Resource implements Serializable{
     

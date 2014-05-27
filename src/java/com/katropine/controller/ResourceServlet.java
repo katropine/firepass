@@ -30,8 +30,10 @@ package com.katropine.controller;
 
 import com.katropine.dao.ResourceDaoLocal;
 import com.katropine.dao.ResourceGroupDaoLocal;
-import com.katropine.helper.PaginationResource;
+import com.katropine.dao.UserGroupResourceGroupDaoLocal;
+import com.katropine.helper.AclResource;
 import com.katropine.helper.Pagination;
+import com.katropine.helper.PaginationResource;
 import com.katropine.model.Resource;
 import com.katropine.model.ResourceGroup;
 import java.io.IOException;
@@ -52,6 +54,8 @@ public class ResourceServlet extends CoreServlet {
     
     @EJB
     private ResourceGroupDaoLocal resGrpDao;
+    @EJB
+    private UserGroupResourceGroupDaoLocal usrGrpResGrpDao;
     
     private String requestMethod = null;
     /**
@@ -108,7 +112,14 @@ public class ResourceServlet extends CoreServlet {
         
         
         if("Details".equalsIgnoreCase(action)){
-            resource = resDao.getResource(resId);
+            // I dont like this, access should be limited by fetch resource?
+            AclResource aclres = new AclResource(this.userSess.getUser(), usrGrpResGrpDao);
+            if(aclres.allowView(resource)){
+                resource = resDao.getResource(resId);
+            }else{
+                request.getRequestDispatcher("404.jsp").forward(request, response);
+                return;
+            }
         }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
             
             if(resGrpId == 0){

@@ -36,7 +36,6 @@ import com.katropine.helper.Acl;
 import com.katropine.helper.AclResourceGroup;
 import com.katropine.model.ResourceGroup;
 import com.katropine.model.User;
-import com.katropine.model.UserGroupResourceGroup;
 import com.katropine.model.UserSession;
 import java.io.IOException;
 import java.util.List;
@@ -97,10 +96,8 @@ public class CoreServlet extends HttpServlet {
         AclResourceGroup aclGrp = new AclResourceGroup(user, usrGrpResGrpDao);
         
         List<ResourceGroup> aclList = resGrpDao.getAllowedResourceGroups(user.getUserGroup());
-        //this.userSess.setAclResourceGroupList(aclList);
-        for(ResourceGroup rg : aclList){
-            System.out.println(rg.toString());
-        }
+        this.userSess.setAclResourceGroupList(aclList);
+        
         request.setAttribute("acl", acl);
         request.setAttribute("aclGrp", aclGrp);
         request.setAttribute("language", userSess.getUser().getLanguage());
