@@ -43,7 +43,13 @@ public class AclResourceGroup {
     private final UserGroupResourceGroupDaoLocal usrResGroupDao;
     
     private User user = null;
+    private ResourceGroup resGrp = null;
     
+    /**
+     * Used in JSP loop
+     * @param user
+     * @param aclDao 
+     */
     public AclResourceGroup(User user, UserGroupResourceGroupDaoLocal aclDao){
         this.user = user;
         this.usrResGroupDao = aclDao;
@@ -69,5 +75,40 @@ public class AclResourceGroup {
     public boolean allowDelete(ResourceGroup resGrp){
         return this.getFromDao(resGrp).isCanDelete();
     }
+    
+    
+    /**
+     * Used in servlet
+     * @param user
+     * @param aclDao
+     * @param resGrp 
+     */
+    public AclResourceGroup(User user, UserGroupResourceGroupDaoLocal aclDao, ResourceGroup resGrp){
+        this.user = user;
+        this.usrResGroupDao = aclDao;
+        this.resGrp = resGrp;
+    }
+    
+    protected UserGroupResourceGroup getFromDao() { 
+        UserGroupResourceGroup acl = this.usrResGroupDao.getIdByUserId(this.user.getUserGroup().getId(), this.resGrp.getId());
+        return acl;
+    }
+
+    public boolean allowView(){
+        return this.getFromDao().isCanView();
+    }
+    
+    public boolean allowInsert(){
+        return this.getFromDao().isCanInsert();
+    }
+    
+    public boolean allowUpdate(){
+        return this.getFromDao().isCanUpdate();
+    }
+    
+    public boolean allowDelete(){
+        return this.getFromDao().isCanDelete();
+    }
+    
     
 }

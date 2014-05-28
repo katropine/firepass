@@ -29,10 +29,9 @@
 
 package com.katropine.dao;
 
+import com.katropine.helper.AclResourceGroup;
 import com.katropine.model.Resource;
 import com.katropine.model.ResourceGroup;
-import com.katropine.model.UserGroupResourceGroup;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -50,27 +49,36 @@ public class ResourceDao implements ResourceDaoLocal {
     private EntityManager em;
 
     @Override
-    public void addResource(Resource resource) {
-        this.em.persist(resource);
+    public void addResource(AclResourceGroup aclResGrp, Resource resource) {
+        if(aclResGrp.allowInsert()){
+            this.em.persist(resource);
+        }
     }
 
     @Override
-    public void editResource(Resource resource) {
-        this.em.merge(resource);
+    public void editResource(AclResourceGroup aclResGrp, Resource resource) {
+        if(aclResGrp.allowUpdate()){
+            this.em.merge(resource);
+        }
     }
 
     @Override
-    public void deleteResource(int id) {
-        this.em.remove(this.getResource(id));
+    public void deleteResource(AclResourceGroup aclResGrp, int id) {
+        Resource res = this.em.find(Resource.class, id);
+        if(aclResGrp.allowDelete()){
+            this.em.remove(res);
+        }
     }
 
     @Override
-    public Resource getResource(int id) {
-        return this.em.find(Resource.class, id);
+    public Resource getResource(AclResourceGroup aclResGrp, int id) {
+        Resource res = this.em.find(Resource.class, id);
+        if(aclResGrp.allowView()){
+            return res;
+        }
+        return null;
     }
-    
-    
-    
+
     @Override
     public List<Resource> getAllResources(List<ResourceGroup> aclList, String search, int offset, int limit) {
         Query query = this.em.createNamedQuery("Resource.getAll");

@@ -8,16 +8,16 @@
         <c:if test="${acl.allowView('RESOURCE')}">
         <div class="row">
             <div class="col-sm-2">
-                <c:if test="${groupId==0}">
+                <c:if test="${group==null}">
                 <a href="${pageContext.request.contextPath}/secure/resource?group=0" class="btn btn-primary btn-block active"><fmt:message key="_all_"/></a>
                 </c:if>
-                <c:if test="${groupId!=0}">
+                <c:if test="${group!=null}">
                 <a href="${pageContext.request.contextPath}/secure/resource?group=0" class="btn btn-default btn-block"><fmt:message key="_all_"/></a>
                 </c:if>
                 <c:forEach items="${allResourceGroups}" var="resGrp">
                     <c:if test="${aclGrp.allowView(resGrp)}">
                         <c:choose>
-                            <c:when test="${groupId == resGrp.id}">
+                            <c:when test="${group.id == resGrp.id}">
                                 <a href="${pageContext.request.contextPath}/secure/resource?group=${resGrp.id}" class="btn btn-primary btn-block active">${resGrp.name}</a>
                             </c:when>    
                             <c:otherwise>
@@ -42,7 +42,16 @@
                             </form>
                             <div class="navbar-form navbar-right">
                                 <c:if test="${acl.allowInsert('RESOURCE')}">
-                                <a href="${pageContext.request.contextPath}/secure/resource?id=0&group=${groupId}&action=details" class="btn btn-primary"><fmt:message key="add_new"/></a>
+                                    <c:choose>
+                                        <c:when test="${group.id > 0 && aclGrp.allowUpdate(group)}">
+                                            <a href="${pageContext.request.contextPath}/secure/resource?id=0&group=${group.id}&action=details" class="btn btn-primary"><fmt:message key="add_new"/></a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:if test="${group== null}">
+                                                <a href="${pageContext.request.contextPath}/secure/resource?id=0&group=0&action=details" class="btn btn-primary"><fmt:message key="add_new"/></a> 
+                                            </c:if>
+                                        </c:otherwise>   
+                                    </c:choose>
                                 </c:if>
                             </div>
                         </div>
@@ -87,7 +96,7 @@
                                     </c:if>
                                     <c:if test="${acl.allowDelete('RESOURCE')}">
                                         <c:if test="${aclGrp.allowDelete(res.group)}">
-                                            <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&action=delete" class="btn btn-danger btn-xs"><fmt:message key="delete"/></a>
+                                            <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&group=${res.group.id}&action=delete" class="btn btn-danger btn-xs"><fmt:message key="delete"/></a>
                                         </c:if>
                                     </c:if>
                                 </td>

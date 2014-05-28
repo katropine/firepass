@@ -29,9 +29,9 @@
 
 package com.katropine.dao;
 
+import com.katropine.helper.AclResourceGroup;
 import com.katropine.model.Resource;
 import com.katropine.model.ResourceGroup;
-import com.katropine.model.UserGroupResourceGroup;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -42,13 +42,13 @@ import javax.ejb.Local;
 @Local
 public interface ResourceDaoLocal {
 
-    void addResource(Resource resource);
+    void addResource(AclResourceGroup aclResGrp, Resource resource);
 
-    void editResource(Resource resource);
+    void editResource(AclResourceGroup aclResGrp, Resource resource);
 
-    void deleteResource(int id);
+    void deleteResource(AclResourceGroup aclResGrp, int id);
 
-    Resource getResource(int id);
+    Resource getResource(AclResourceGroup aclResGrp, int id);
     
     List<Resource> getAllResources(List<ResourceGroup> aclList, String search, int offset, int limit);
     

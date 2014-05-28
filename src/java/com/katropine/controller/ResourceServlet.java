@@ -32,6 +32,7 @@ import com.katropine.dao.ResourceDaoLocal;
 import com.katropine.dao.ResourceGroupDaoLocal;
 import com.katropine.dao.UserGroupResourceGroupDaoLocal;
 import com.katropine.helper.AclResource;
+import com.katropine.helper.AclResourceGroup;
 import com.katropine.helper.Pagination;
 import com.katropine.helper.PaginationResource;
 import com.katropine.model.Resource;
@@ -86,18 +87,20 @@ public class ResourceServlet extends CoreServlet {
         if(resIdStr != null && !resIdStr.equals("")){
             resId = Integer.parseInt(resIdStr);
         }
-        String resGrpIdStr = request.getParameter("resource_group_id");
-        int resGrpId = 0;
-        if(resGrpIdStr != null && !resGrpIdStr.equals("")){
-            resGrpId = Integer.parseInt(resGrpIdStr);
-        }
+        // ufff!
         String groupIdStr = request.getParameter("group");
         int groupId = 0;
         if(groupIdStr != null && !groupIdStr.equals("")){
             groupId = Integer.parseInt(groupIdStr);
         }
-        
-        System.out.println("action: "+action+", request: "+this.requestMethod);
+        // ufff!
+        String resGrpIdStr = request.getParameter("resource_group_id");
+        int resGrpId = 0;
+        if(resGrpIdStr != null && !resGrpIdStr.equals("")){
+            resGrpId = Integer.parseInt(resGrpIdStr);
+        }else{
+            resGrpId = groupId;
+        }
         
         String title = request.getParameter("title");
         String body = request.getParameter("body");
@@ -110,16 +113,18 @@ public class ResourceServlet extends CoreServlet {
         resource.setGroup(group);            
                 
         
-        
+        AclResourceGroup resAcl = new AclResourceGroup(this.userSess.getUser(), usrGrpResGrpDao, group);
         if("Details".equalsIgnoreCase(action)){
-            // I dont like this, access should be limited by fetch resource?
-            AclResource aclres = new AclResource(this.userSess.getUser(), usrGrpResGrpDao);
-            if(aclres.allowView(resource)){
-                resource = resDao.getResource(resId);
+            if(resId==0){
+                
             }else{
-                request.getRequestDispatcher("404.jsp").forward(request, response);
-                return;
+                resource = resDao.getResource(resAcl, resId);
+                if(resource==null){
+                    request.getRequestDispatcher("401.jsp").forward(request, response);
+                    return;
+                }
             }
+        
         }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
             
             if(resGrpId == 0){
@@ -133,17 +138,17 @@ public class ResourceServlet extends CoreServlet {
                 resource.setId(resId);
                 resource.setBody(body);
                 resource.setGroup(group);
-                resDao.editResource(resource); 
+                resDao.editResource(resAcl, resource); 
             }else{
                 resource.setTitle(title);
                 resource.setBody(body);
                 resource.setGroup(group);
-                resDao.addResource(resource);                
+                resDao.addResource(resAcl, resource);                
             }
             response.sendRedirect("../secure/resource");
             return;
         }else if("Delete".equalsIgnoreCase(action)){
-            resDao.deleteResource(resId);
+            resDao.deleteResource(resAcl, resId);
         }
         
         Pagination pagination = new Pagination(this.userSess.getRowsPerPage(), 5);
@@ -161,7 +166,7 @@ public class ResourceServlet extends CoreServlet {
         pag.setUrl(request.getContextPath()+"/secure/resource");
         
         request.setAttribute("resource", resource);
-        request.setAttribute("groupId", groupId);
+        request.setAttribute("group", group);
         request.setAttribute("allResourceGroups", resGrpDao.getAllResourceGroup());
         if("Details".equalsIgnoreCase(action)){
             

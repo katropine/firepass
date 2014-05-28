@@ -19,3 +19,12 @@ INSERT INTO `user_group` (`id`, `name`, `locked`) VALUES
 (1, 'Super Administrator', 1),
 (2, 'User', 1),
 (3, 'Administrator', 0);
+
+INSERT INTO `resource_group` (`id`, `name`) VALUES
+(1, 'Default');
+
+
+INSERT INTO `user_group_resource_group` (`id`, `usergroup_id`, `resourcegroup_id`, `can_view`, `can_insert`, `can_update`, `can_delete`) VALUES
+(1, 1, 1, 1, 1, 1, 1),
+(2, 2, 1, 1, 0, 0, 0),
+(3, 3, 1, 1, 0, 0, 0);
