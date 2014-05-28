@@ -5,7 +5,7 @@
 * @since March 24, 2014
 * @licence MIT
 *
-* Copyright (c) 2014 Katropine, http://www.katropine.com/
+* Copyright (c) 2014 Katropine - Kristian Beres, http://www.katropine.com/
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -31,9 +31,7 @@ package com.katropine.controller;
 import com.katropine.dao.LanguageService;
 import com.katropine.dao.UserDaoLocal;
 import com.katropine.model.User;
-import com.katropine.model.UserSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.TimeZone;
 import javax.ejb.EJB;

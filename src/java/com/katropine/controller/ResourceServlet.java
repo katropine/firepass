@@ -5,7 +5,7 @@
 * @since March 24, 2014
 * @licence MIT
 *
-* Copyright (c) 2014 Katropine, http://www.katropine.com/
+* Copyright (c) 2014 Katropine - Kristian Beres, http://www.katropine.com/
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -31,7 +31,6 @@ package com.katropine.controller;
 import com.katropine.dao.ResourceDaoLocal;
 import com.katropine.dao.ResourceGroupDaoLocal;
 import com.katropine.dao.UserGroupResourceGroupDaoLocal;
-import com.katropine.helper.AclResource;
 import com.katropine.helper.AclResourceGroup;
 import com.katropine.helper.Pagination;
 import com.katropine.helper.PaginationResource;

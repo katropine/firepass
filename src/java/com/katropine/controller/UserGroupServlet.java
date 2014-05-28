@@ -5,7 +5,7 @@
 * @since March 24, 2014
 * @licence MIT
 *
-* Copyright (c) 2014 Katropine, http://www.katropine.com/
+* Copyright (c) 2014 Katropine - Kristian Beres, http://www.katropine.com/
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -102,16 +102,40 @@ public class UserGroupServlet extends CoreServlet {
             usergroup = usrGrpDao.getUserGroup(usergroupId);
         }
         
-        List<ResourceGroup> resourceGroup = groupDao.getAllResourceGroup("", 0, 9999999);
-        
+        List<ResourceGroup> resourceGroups = groupDao.getAllResourceGroup();
+        System.out.println("goups cnt: "+groupDao.countAllResourceGroup(""));
         if("Details".equalsIgnoreCase(action)){
             
             if(usergroup == null){
-                usergroup = new UserGroup();
+                usergroup = new UserGroup();                
                 // use USER as template
                 usergroupId = 2;
             }
+            if(usergroup.getId() == 0){
+                ArrayList<UserGroupResourceGroup> aclUserGroupResourceGroupTmpList = new ArrayList<>();
+                for(ResourceGroup rg : resourceGroups){
+                    UserGroupResourceGroup aclUserGroupResourceGroupTmpRow = new UserGroupResourceGroup();
+                    aclUserGroupResourceGroupTmpRow.setCanView(true);
+                    aclUserGroupResourceGroupTmpRow.setCanDelete(true);
+                    aclUserGroupResourceGroupTmpRow.setCanInsert(true);
+                    aclUserGroupResourceGroupTmpRow.setCanUpdate(true);
+                    aclUserGroupResourceGroupTmpRow.setResourceGroup(rg);
+                    aclUserGroupResourceGroupTmpRow.setUserGroup(usergroup);
+                    aclUserGroupResourceGroupTmpList.add(aclUserGroupResourceGroupTmpRow); 
+                    System.out.println("goups: "+rg.getName());
+                }
+
+                usergroup.setAclUserResourceGroups(aclUserGroupResourceGroupTmpList);
+            }
         }else if("save".equalsIgnoreCase(action) && "POST".equals(this.requestMethod)){
+            // first save
+            usergroup.setName(name);
+            if(usergroup.getId() > 0){ 
+                
+            }else{
+                usrGrpDao.addUserGroup(usergroup); 
+            }
+            
             
             // handle global ACL
             ArrayList<AccessControlList> aclList = new ArrayList<>();
@@ -124,32 +148,34 @@ public class UserGroupServlet extends CoreServlet {
                 if(aclIdStr != null && !aclIdStr.equals("")){
                     aclId = Integer.parseInt(aclIdStr);
                 }
-                if(aclId > 0){ // if group was rendered in html due permitions
-                    if(usergroup.getId() > 0){   
-                        aclRow.setId(aclId);
-                    }
-                    boolean canView = Boolean.parseBoolean(request.getParameter(permission+"_can_view"));
-                    aclRow.setCanView(canView);
-  
-                    boolean canInsert = Boolean.parseBoolean(request.getParameter(permission+"_can_insert"));
-                    aclRow.setCanInsert(canInsert);
-
-                    boolean canUpdate = Boolean.parseBoolean(request.getParameter(permission+"_can_update"));
-                    aclRow.setCanUpdate(canUpdate);
-
-                    boolean canDelete = Boolean.parseBoolean(request.getParameter(permission+"_can_delete"));
-                    aclRow.setCanDelete(canDelete);
-
-                    aclRow.setUserGroup(usergroup);
-                    aclRow.setPermission(permission);
-               
-                    aclList.add(aclRow);
+                
+                if(usergroup.getId() > 0){   
+                    aclRow.setId(aclId);
                 }
+                boolean canView = Boolean.parseBoolean(request.getParameter(permission+"_can_view"));
+                aclRow.setCanView(canView);
+
+                boolean canInsert = Boolean.parseBoolean(request.getParameter(permission+"_can_insert"));
+                aclRow.setCanInsert(canInsert);
+
+                boolean canUpdate = Boolean.parseBoolean(request.getParameter(permission+"_can_update"));
+                aclRow.setCanUpdate(canUpdate);
+
+                boolean canDelete = Boolean.parseBoolean(request.getParameter(permission+"_can_delete"));
+                aclRow.setCanDelete(canDelete);
+
+                aclRow.setUserGroup(usergroup);
+                aclRow.setPermission(permission);
+
+                aclList.add(aclRow);
+                
             }
+            
+            
             
             // handle resource ACL
             ArrayList<UserGroupResourceGroup> userGroupResourceGroupList = new ArrayList<>();
-            for (ResourceGroup rg : resourceGroup) {
+            for (ResourceGroup rg : resourceGroups) {
                 UserGroupResourceGroup aclUserGroupResourceGroupRow = new UserGroupResourceGroup();
                 
                 String aclUserGroupResourceGroupIdStr = request.getParameter("id_"+rg.getId());
@@ -185,14 +211,11 @@ public class UserGroupServlet extends CoreServlet {
                 userGroupResourceGroupList.add(aclUserGroupResourceGroupRow);
             }
             
-            usergroup.setName(name);
-            usergroup.setAcl(aclList);    
+               
             usergroup.setAclUserResourceGroups(userGroupResourceGroupList);
-            
+            usergroup.setAcl(aclList); 
             if(usergroup.getId() > 0){ 
                 usrGrpDao.editUserGroup(usergroup);
-            }else{
-                usrGrpDao.addUserGroup(usergroup); 
             }
             
         }else if("Delete".equalsIgnoreCase(action)){
@@ -210,12 +233,11 @@ public class UserGroupServlet extends CoreServlet {
         pag.setParam("q", q);
         pag.setUrl(request.getContextPath()+"/secure/usergroup");
         request.setAttribute("userGroup", usergroup);
-       
-        
+
         
         if("Details".equalsIgnoreCase(action)){
             if(usergroup.getId() > 0){
-                request.setAttribute("allResourceGroups", resourceGroup);
+                request.setAttribute("allResourceGroups", resourceGroups);
                 request.setAttribute("allAcl", aclDao.getAclByUserGroup(usergroupId));
             }else{
                 ArrayList<AccessControlList> aclTmpList = new ArrayList<>();
