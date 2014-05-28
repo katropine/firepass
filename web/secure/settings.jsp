@@ -8,7 +8,7 @@
         <div>
             <h2 class="page-heading user"><fmt:message key="settings"/></h2></div>
             
-                <form role="form" method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/settings">
+                <form id="settings" role="form" method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/settings">
                     
                     <div class="clear"></div>
                     <div class="form-group">

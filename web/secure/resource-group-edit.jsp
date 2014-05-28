@@ -8,7 +8,7 @@
         <c:if test="${(acl.allowUpdate('RESOURCE_GROUP') and group.id gt 0 and aclGrp.allowUpdate(group)) or (acl.allowInsert('RESOURCE_GROUP'))}">
         <h1 class="page-heading resource-groups"><fmt:message key="resource_group"/></h1>
         <div>
-            <form method="post" action="${pageContext.request.contextPath}/secure/resourcegroup">
+            <form id="resource-group-save" method="post" action="${pageContext.request.contextPath}/secure/resourcegroup">
                 <div class="form-group">
                 
                     <label><fmt:message key="title"/></label>
@@ -93,7 +93,7 @@
                         <input type="hidden" name="id" value="${group.id}">
                         </c:if>
                         <input type="hidden" name="action" value="save">
-                        <input type="submit" name="action" value="<fmt:message key="save"/>" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary"><fmt:message key="save"/></button>
                         <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default"><fmt:message key="back"/></button>
                     
             </form>

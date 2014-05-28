@@ -9,7 +9,7 @@
         <c:if test="${(acl.allowUpdate('USER_GROUP') and userGroup.id gt 0) or (acl.allowInsert('USER_GROUP'))}">
         <h2 class="page-heading user-groups"><fmt:message key="user_groups"/></h2>
         <div>
-            <form method="post" action="${pageContext.request.contextPath}/secure/usergroup">
+            <form id="user-group-save" method="post" action="${pageContext.request.contextPath}/secure/usergroup">
                 <div class="form-group">
                 
                     <label><fmt:message key="title"/></label>
@@ -221,7 +221,7 @@
                     <c:if test="${userGroup.locked == false}">
                     <input type="hidden" name="id" value="${userGroup.id}">
                     <input type="hidden" name="action" value="save">
-                    <input type="submit" name="action" value="<fmt:message key="save"/>" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary"><fmt:message key="save"/></button>
                     </c:if>
                 </c:if>
                 <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default"><fmt:message key="back"/></button>

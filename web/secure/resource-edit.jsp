@@ -8,7 +8,7 @@
         <c:if test="${(acl.allowUpdate('RESOURCE') and resource.id gt 0) or (acl.allowInsert('RESOURCE'))}">
         <h1 class="page-heading resource"><fmt:message key="resource"/></h1>
         <div>
-            <form method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/resource">
+            <form id="resource-save" method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/resource">
                 <div class="form-group">
                 
                     <label><fmt:message key="title"/></label>
@@ -41,7 +41,7 @@
                         <c:if test="${acl.allowUpdate('RESOURCE')}">
                         <input type="hidden" name="id" value="${resource.id}">
                         </c:if>
-                        <input type="submit" value="<fmt:message key="save"/>" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary"><fmt:message key="save"/></button>
                         <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default"><fmt:message key="back"/></button>
                     
             </form>

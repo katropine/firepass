@@ -7,18 +7,18 @@
         <div id="master-loginform" class="master-loginform clearfix">
             <h1>Log in:</h1>
             <div>${message}</div>
-            <form action="./login" method="post">
-                <div class="formField">
-                    <div class="formLabel"><label for="username">Email</label></div>
-                    <div class="formInput"><input type="text" name="email" class="form-control"></div>
+            <form id="login" action="./login" method="post">
+                <div class="form-group">
+                    <label for="username">Email</label>
+                    <input type="text" name="email" class="form-control" value="">
                 </div>
-                <div class="formField">
-                    <div class="formLabel"><label for="password">Password</label></div>
-                    <div class="formInput"><input name="password" type="password" class="form-control" value=""></div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input name="password" type="password" class="form-control" value="">
                 </div>  
-                <div class="formField">
-                    <input name="submit" type="submit" id="submitbutton" class="btn btn-primary" value="Login">
-                </div>
+               
+                <button type="submit" class="btn btn-primary">Sign up</button>
+               
             </form>
         </div>   
     </jsp:body>

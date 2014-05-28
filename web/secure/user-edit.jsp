@@ -9,7 +9,7 @@
         <c:if test="${(acl.allowUpdate('USER') and user.id gt 0) or (acl.allowInsert('USER'))}">
         <h1 class="page-heading user"><fmt:message key="user"/></h1>
         <div>
-            <form method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/user">
+            <form id="user-save" method="post" autocomplete="off" action="${pageContext.request.contextPath}/secure/user">
                 <div class="form-group">
                 
                     <label><fmt:message key="first_name"/></label>
@@ -79,7 +79,7 @@
                         <c:if test="${acl.allowUpdate('USER')}">
                         <input type="hidden" name="id" value="${user.id}">
                         </c:if>
-                        <input type="submit" name="action" value="<fmt:message key="save"/>" class="btn btn-primary">
+                       <button type="submit" class="btn btn-primary"><fmt:message key="save"/></button>
                         <button type="button" onclick="javascript: history.back(-1)" class="btn btn-default"><fmt:message key="back"/></button>
                     
             </form>

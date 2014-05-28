@@ -11,9 +11,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="${pageContext.request.contextPath}/assets/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/assets/css/bootstrap-validator.css" media="screen" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/assets/css/main.css" media="screen" rel="stylesheet" type="text/css">
         <script src="${pageContext.request.contextPath}/assets/js/jquery-1.9.0.min.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/bootstrap-validator.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/firepass-form-validation.js" type="text/javascript"></script>
     </head>
     <body>
         <c:if test="${loggedin > 0}">
