@@ -12,10 +12,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="${pageContext.request.contextPath}/assets/css/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/assets/css/bootstrap-validator.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/assets/css/bootstrap-wysihtml5.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/assets/css/bootstrap3-wysiwyg5-color.css" media="screen" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/assets/css/main.css" media="screen" rel="stylesheet" type="text/css">
+        <script src="${pageContext.request.contextPath}/assets/js/wysihtml5.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/assets/js/jquery-1.9.0.min.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/assets/js/bootstrap-validator.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/bootstrap3-wysihtml5.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/assets/js/firepass-form-validation.js" type="text/javascript"></script>
     </head>
     <body>

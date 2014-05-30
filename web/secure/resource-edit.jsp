@@ -34,7 +34,7 @@
                 </div>    
                 <div class="form-group">
                     <label><fmt:message key="data"/></label>
-                    <textarea type="text" name="body" class="form-control">${resource.body}</textarea>
+                    <textarea id="resource-body" class="form-control" rows="10" name="body">${resource.body}</textarea>
                 </div> 
                 
                         <input type="hidden" name="action" value="save">
