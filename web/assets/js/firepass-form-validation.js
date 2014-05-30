@@ -111,6 +111,18 @@ $(document).ready(function() {
                         message: 'Password is required and cannot be empty'
                     }
                 }
+            },
+            password: {
+                validators: {
+                    notEmpty: {
+                        message: 'Password is required and cannot be empty'
+                    },
+                    stringLength: {
+                        min: 10,
+                        max: 50,
+                        message: 'Password is required to have minimum 8 characters'
+                    }
+                }
             }
         }
     });
