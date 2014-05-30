@@ -19,6 +19,9 @@
         <script src="${pageContext.request.contextPath}/assets/js/firepass-form-validation.js" type="text/javascript"></script>
     </head>
     <body>
+        <NOSCRIPT>
+            Javascript is required to run this pages.  Please turn it on or ask help from techsupport if you dont know how to enable it.
+        </NOSCRIPT>
         <c:if test="${loggedin > 0}">
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
