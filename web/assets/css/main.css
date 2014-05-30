@@ -116,3 +116,11 @@ body{
 .label-no-form{
     padding-left: 0;
 }
+.secured{
+    background-image: url(../../assets/images/secured-pattern.png);
+    background-repeat: repeat;
+}
+.hr{
+    height: 40px;
+    margin: 20px 0 20px 0;
+}

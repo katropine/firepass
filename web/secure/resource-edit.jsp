@@ -31,11 +31,13 @@
                             </c:if>        
                         </c:forEach>
                     </select>
-                </div>    
+                </div>
+                <div class="hr secured"></div>
                 <div class="form-group">
                     <label><fmt:message key="data"/></label>
                     <textarea id="resource-body" class="form-control" rows="10" name="body">${resource.body}</textarea>
                 </div> 
+                <div class="hr secured"></div>   
                 
                         <input type="hidden" name="action" value="save">
                         <c:if test="${acl.allowUpdate('RESOURCE')}">
