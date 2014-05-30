@@ -79,7 +79,11 @@
 
         <div class="footer navbar-fixed-bottom" >
             <div class="container credit">
-                <p class="text-muted credit text-center">© Katropine, <a href="http://www.katropine.com">www.katropine.com</a></p>
+                <p class="text-muted credit text-center">© Katropine, <a href="http://www.katropine.com">www.katropine.com</a>,
+                <fmt:bundle basename="resources.version" prefix="project.">
+                    <fmt:message key="version.number.major"/>.<fmt:message key="version.number.minor"/>-<fmt:message key="version.status"/>
+                </fmt:bundle>
+                </p>
             </div>
         </div>
 </html>
