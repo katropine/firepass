@@ -44,11 +44,11 @@
                                 <c:if test="${acl.allowInsert('RESOURCE')}">
                                     <c:choose>
                                         <c:when test="${group.id > 0 && aclGrp.allowUpdate(group)}">
-                                            <a href="${pageContext.request.contextPath}/secure/resource?id=0&group=${group.id}&action=details" class="btn btn-primary"><fmt:message key="add_new"/></a>
+                                            <a href="${pageContext.request.contextPath}/secure/resource?id=0&group=${group.id}&action=edit" class="btn btn-primary"><fmt:message key="add_new"/></a>
                                         </c:when>
                                         <c:otherwise>
                                             <c:if test="${group== null}">
-                                                <a href="${pageContext.request.contextPath}/secure/resource?id=0&group=0&action=details" class="btn btn-primary"><fmt:message key="add_new"/></a> 
+                                                <a href="${pageContext.request.contextPath}/secure/resource?id=0&group=0&action=edit" class="btn btn-primary"><fmt:message key="add_new"/></a> 
                                             </c:if>
                                         </c:otherwise>   
                                     </c:choose>
@@ -85,13 +85,15 @@
                             <tr>
                                 <td class="icon-row"><span class="row-icon resource-row-icon"></span></td>
                                 <td>${res.id}</td>
-                                <td>${res.title}</td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&group=${res.group.id}&action=details" class="">${res.title}</a>
+                                </td>
                                 <td><fmt:formatDate value="${res.created}" pattern="d MMM yyyy, HH:mm" timeZone="${timezone}"/></td>
                                 <td><fmt:formatDate value="${res.modified}" pattern="d MMM yyyy, HH:mm" timeZone="${timezone}"/></td>
                                 <td align="right">
                                     <c:if test="${acl.allowUpdate('RESOURCE')}">
                                         <c:if test="${aclGrp.allowUpdate(res.group)}">
-                                            <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&group=${res.group.id}&action=details" class="btn btn-success btn-xs"><fmt:message key="edit"/></a>
+                                            <a href="${pageContext.request.contextPath}/secure/resource?id=${res.id}&group=${res.group.id}&action=edit" class="btn btn-success btn-xs"><fmt:message key="edit"/></a>
                                         </c:if>
                                     </c:if>
                                     <c:if test="${acl.allowDelete('RESOURCE')}">

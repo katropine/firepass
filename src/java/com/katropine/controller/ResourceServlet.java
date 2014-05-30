@@ -113,7 +113,7 @@ public class ResourceServlet extends CoreServlet {
                 
         
         AclResourceGroup resAcl = new AclResourceGroup(this.userSess.getUser(), usrGrpResGrpDao, group);
-        if("Details".equalsIgnoreCase(action)){
+        if("Edit".equalsIgnoreCase(action) || "Details".equalsIgnoreCase(action)){
             if(resId==0){
                 
             }else{
@@ -167,9 +167,12 @@ public class ResourceServlet extends CoreServlet {
         request.setAttribute("resource", resource);
         request.setAttribute("group", group);
         request.setAttribute("allResourceGroups", resGrpDao.getAllResourceGroup());
-        if("Details".equalsIgnoreCase(action)){
+        if("Edit".equalsIgnoreCase(action)){
             
             request.getRequestDispatcher("resource-edit.jsp").forward(request, response);
+        }else if("Details".equalsIgnoreCase(action)){
+        
+            request.getRequestDispatcher("resource-details.jsp").forward(request, response);
         }else{
             if(groupId == 0){
                 if(q!=null && !q.isEmpty()){
